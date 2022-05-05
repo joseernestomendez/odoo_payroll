@@ -24,16 +24,16 @@ from openerp.exceptions import ValidationError
 
 class HrSalaryRule(models.Model):
 
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     accrual_line_ids = fields.One2many(
-        'hr.holidays.status.accrual.line',
-        'salary_rule_id',
-        'Accrual Lines',
+        "hr.holidays.status.accrual.line",
+        "salary_rule_id",
+        "Accrual Lines",
     )
     leave_type_id = fields.Many2one(
-        'hr.holidays.status',
-        'Leave Accrual',
+        "hr.holidays.status",
+        "Leave Accrual",
     )
 
     @api.multi
@@ -46,10 +46,13 @@ class HrSalaryRule(models.Model):
 
         if not self.leave_type_id:
             raise ValidationError(
-                _('Error'),
-                _('Salary rule %s is used to read leave '
-                    'accruals but it has no related leave accrual.') % (
-                    self.name))
+                _("Error"),
+                _(
+                    "Salary rule %s is used to read leave "
+                    "accruals but it has no related leave accrual."
+                )
+                % (self.name),
+            )
 
         return self.leave_type_id
 
@@ -62,7 +65,8 @@ class HrSalaryRule(models.Model):
         self.ensure_one()
 
         accrual = payslip.employee_id.get_leave_accrual(
-            leave_type_id=self.leave_type_id.id)
+            leave_type_id=self.leave_type_id.id
+        )
 
         return accrual.sum_leaves_available(payslip.date_to, in_cash=in_cash)
 
@@ -91,7 +95,8 @@ class HrSalaryRule(models.Model):
         categories = self.payslip_input_ids
 
         return sum(
-            l.amount for l in payslip.input_line_ids
+            l.amount
+            for l in payslip.input_line_ids
             if l.category_id in categories
         )
 
@@ -109,7 +114,8 @@ class HrSalaryRule(models.Model):
         categories.ensure_one()
 
         input_lines = payslip.input_line_ids.filtered(
-            lambda l: l.category_id in categories)
+            lambda l: l.category_id in categories
+        )
 
         for input_line in input_lines:
             if reduction == 0:
@@ -118,5 +124,5 @@ class HrSalaryRule(models.Model):
             current_reduction = min(input_line.amount, reduction)
             new_amount = input_line.amount - current_reduction
 
-            input_line.write({'amount': new_amount})
+            input_line.write({"amount": new_amount})
             reduction = reduction - current_reduction

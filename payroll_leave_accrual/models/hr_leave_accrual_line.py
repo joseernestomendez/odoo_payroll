@@ -24,28 +24,28 @@ from openerp import fields, models, _
 class HrLeaveAccrualLine(models.AbstractModel):
     """Leave Accrual Line"""
 
-    _name = 'hr.leave.accrual.line'
+    _name = "hr.leave.accrual.line"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Name',
+        "Name",
         required=True,
     )
     source = fields.Selection(
         [
-            ('payslip', 'Payslip Line'),
-            ('allocation', 'Allocation'),
-            ('manual', 'Entered Manually'),
+            ("payslip", "Payslip Line"),
+            ("allocation", "Allocation"),
+            ("manual", "Entered Manually"),
         ],
-        type='char',
+        type="char",
         string="Source",
         required=True,
-        default='manual',
+        default="manual",
     )
     date = fields.Date(
-        'Date',
+        "Date",
         required=True,
         default=fields.Date.today,
     )
 
-    _order = 'date desc'
+    _order = "date desc"

@@ -23,47 +23,47 @@ from openerp import api, fields, models
 
 class HrPayslip(models.Model):
 
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     accrual_line_hours_ids = fields.One2many(
-        'hr.leave.accrual.line.hours',
-        'payslip_id',
-        'Accruded Leaves in Cash',
+        "hr.leave.accrual.line.hours",
+        "payslip_id",
+        "Accruded Leaves in Cash",
     )
 
     accrual_line_cash_ids = fields.One2many(
-        'hr.leave.accrual.line.cash',
-        'payslip_id',
-        'Accruded Leaves in Hours',
+        "hr.leave.accrual.line.cash",
+        "payslip_id",
+        "Accruded Leaves in Hours",
     )
 
     @api.multi
     def compute_sheet(self):
         res = super(HrPayslip, self).compute_sheet()
 
-        self = self.with_context({'disable_leave_accrual_update': True})
+        self = self.with_context({"disable_leave_accrual_update": True})
         self.remove_accrual_lines()
         self.compute_leave_accrual_lines()
-        self = self.with_context({'disable_leave_accrual_update': False})
+        self = self.with_context({"disable_leave_accrual_update": False})
 
         return res
 
     @api.multi
     def process_sheet(self):
         res = super(HrPayslip, self).process_sheet()
-        self.mapped('employee_id.leave_accrual_ids').update_totals()
+        self.mapped("employee_id.leave_accrual_ids").update_totals()
         return res
 
     @api.multi
     def cancel_sheet(self):
         res = super(HrPayslip, self).cancel_sheet()
-        self.mapped('employee_id.leave_accrual_ids').update_totals()
+        self.mapped("employee_id.leave_accrual_ids").update_totals()
         return res
 
     @api.multi
     def remove_accrual_lines(self):
-        self.mapped('accrual_line_hours_ids').unlink()
-        self.mapped('accrual_line_cash_ids').unlink()
+        self.mapped("accrual_line_hours_ids").unlink()
+        self.mapped("accrual_line_cash_ids").unlink()
 
     @api.one
     def compute_leave_accrual_lines(self):
@@ -72,16 +72,17 @@ class HrPayslip(models.Model):
         payslip.
         """
         salary_rules = self.details_by_salary_rule_category.mapped(
-            'salary_rule_id')
+            "salary_rule_id"
+        )
 
-        leave_accrual_lines = salary_rules.mapped('accrual_line_ids')
+        leave_accrual_lines = salary_rules.mapped("accrual_line_ids")
 
-        required_rules = leave_accrual_lines.mapped('salary_rule_id')
+        required_rules = leave_accrual_lines.mapped("salary_rule_id")
 
-        leave_types_required = leave_accrual_lines.mapped('leave_type_id')
+        leave_types_required = leave_accrual_lines.mapped("leave_type_id")
 
         employee = self.employee_id
-        accruals = self.env['hr.leave.accrual']
+        accruals = self.env["hr.leave.accrual"]
 
         for leave_type in leave_types_required:
             # If the leave accrual does not exist, it will be created
@@ -97,8 +98,8 @@ class HrPayslip(models.Model):
             if line.salary_rule_id in required_rules
         }
 
-        hours_line_obj = self.env['hr.leave.accrual.line.hours']
-        cash_line_obj = self.env['hr.leave.accrual.line.cash']
+        hours_line_obj = self.env["hr.leave.accrual.line.hours"]
+        cash_line_obj = self.env["hr.leave.accrual.line.cash"]
 
         for accrual in accruals:
             for line in accrual.leave_type_id.accrual_line_ids:
@@ -107,7 +108,7 @@ class HrPayslip(models.Model):
                 if salary_rule_id in payslip_line_dict:
                     payslip_line = payslip_line_dict[salary_rule_id]
 
-                    if line.amount_type == 'cash':
+                    if line.amount_type == "cash":
                         accrual_line_obj = cash_line_obj
                         amount = payslip_line.amount
                     else:
@@ -121,13 +122,15 @@ class HrPayslip(models.Model):
                         amount *= -1
 
                     if payslip_line.amount:
-                        accrual_line_obj.create({
-                            'accrual_id': accrual.id,
-                            'name': payslip_line.name,
-                            'source': 'payslip',
-                            'payslip_id': self.id,
-                            'payslip_line_id': payslip_line.id,
-                            'amount': amount,
-                            'accrual_id': accrual.id,
-                            'date': self.date_from,
-                        })
+                        accrual_line_obj.create(
+                            {
+                                "accrual_id": accrual.id,
+                                "name": payslip_line.name,
+                                "source": "payslip",
+                                "payslip_id": self.id,
+                                "payslip_line_id": payslip_line.id,
+                                "amount": amount,
+                                "accrual_id": accrual.id,
+                                "date": self.date_from,
+                            }
+                        )

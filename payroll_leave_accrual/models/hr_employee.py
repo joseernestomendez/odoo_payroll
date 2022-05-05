@@ -23,12 +23,12 @@ from openerp import api, fields, models
 
 class HrEmployee(models.Model):
 
-    _inherit = 'hr.employee'
+    _inherit = "hr.employee"
 
     leave_accrual_ids = fields.One2many(
-        'hr.leave.accrual',
-        'employee_id',
-        'Leave Accruals',
+        "hr.leave.accrual",
+        "employee_id",
+        "Leave Accruals",
     )
 
     @api.multi
@@ -42,19 +42,22 @@ class HrEmployee(models.Model):
         """
         self.ensure_one()
 
-        leave_type = self.env['hr.holidays.status'].browse(leave_type_id)
+        leave_type = self.env["hr.holidays.status"].browse(leave_type_id)
 
         existing_accrual = self.leave_accrual_ids.filtered(
-            lambda a: a.leave_type_id == leave_type)
+            lambda a: a.leave_type_id == leave_type
+        )
 
         if existing_accrual:
             return existing_accrual[0]
 
         # If the employee doesn't have the accrual of the given type,
         # create it
-        new_accrual = self.env['hr.leave.accrual'].create({
-            'employee_id': self.id,
-            'leave_type_id': leave_type_id,
-        })
+        new_accrual = self.env["hr.leave.accrual"].create(
+            {
+                "employee_id": self.id,
+                "leave_type_id": leave_type_id,
+            }
+        )
 
         return new_accrual

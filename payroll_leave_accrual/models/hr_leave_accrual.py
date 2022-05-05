@@ -25,46 +25,48 @@ import openerp.addons.decimal_precision as dp
 class HrLeaveAccrual(models.Model):
     """Leave Accrual"""
 
-    _name = 'hr.leave.accrual'
+    _name = "hr.leave.accrual"
     _description = _(__doc__)
 
     leave_type_id = fields.Many2one(
-        'hr.holidays.status',
-        string='Leave Type',
-        ondelete='restrict',
+        "hr.holidays.status",
+        string="Leave Type",
+        ondelete="restrict",
         required=True,
     )
     employee_id = fields.Many2one(
-        'hr.employee',
-        'Employee',
+        "hr.employee",
+        "Employee",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     line_cash_ids = fields.One2many(
-        'hr.leave.accrual.line.cash',
-        'accrual_id',
-        string='Cash Accruded',
+        "hr.leave.accrual.line.cash",
+        "accrual_id",
+        string="Cash Accruded",
     )
     line_hours_ids = fields.One2many(
-        'hr.leave.accrual.line.hours',
-        'accrual_id',
-        string='Hours Accruded',
+        "hr.leave.accrual.line.hours",
+        "accrual_id",
+        string="Hours Accruded",
     )
     total_cash = fields.Float(
-        'Cash Accruded',
+        "Cash Accruded",
         readonly=True,
-        digits_compute=dp.get_precision('Payroll'),
+        digits_compute=dp.get_precision("Payroll"),
     )
     total_hours = fields.Float(
-        'Hours Accruded',
+        "Hours Accruded",
         readonly=True,
-        digits_compute=dp.get_precision('Payroll Hours'),
+        digits_compute=dp.get_precision("Payroll Hours"),
     )
 
     @api.one
     def name_get(self):
-        return (self.id, '%s - %s' % (
-            self.leave_type_id.name, self.employee_id.name))
+        return (
+            self.id,
+            "%s - %s" % (self.leave_type_id.name, self.employee_id.name),
+        )
 
     @api.multi
     def update_totals(self):
@@ -81,18 +83,17 @@ class HrLeaveAccrual(models.Model):
 
     @api.one
     def update_total_cash(self):
-        if self.env.context.get('disable_leave_accrual_update'):
+        if self.env.context.get("disable_leave_accrual_update"):
             return
 
-        query = (
-            """SELECT sum(l.amount)
+        query = """SELECT sum(l.amount)
             FROM hr_leave_accrual a, hr_leave_accrual_line_cash l
             WHERE l.accrual_id = a.id AND a.id = %s
             AND (l.state = 'done' or l.source != 'payslip')
-            """)
+            """
 
         cr = self.env.cr
-        cr.execute(query, (self.id, ))
+        cr.execute(query, (self.id,))
 
         res = cr.fetchone()
         self.total_cash = res[0] if res else 0
@@ -101,18 +102,17 @@ class HrLeaveAccrual(models.Model):
 
     @api.one
     def update_total_hours(self):
-        if self.env.context.get('disable_leave_accrual_update'):
+        if self.env.context.get("disable_leave_accrual_update"):
             return
 
-        query = (
-            """SELECT sum(l.amount)
+        query = """SELECT sum(l.amount)
             FROM hr_leave_accrual a, hr_leave_accrual_line_hours l
             WHERE l.accrual_id = a.id AND a.id = %s
             AND (l.state = 'done' or l.source != 'payslip')
-            """)
+            """
 
         cr = self.env.cr
-        cr.execute(query, (self.id, ))
+        cr.execute(query, (self.id,))
 
         res = cr.fetchone()
         self.total_hours = res[0] if res else 0

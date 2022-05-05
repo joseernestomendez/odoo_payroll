@@ -23,15 +23,15 @@ from openerp import fields, models
 
 class HrHolidaysStatus(models.Model):
 
-    _inherit = 'hr.holidays.status'
+    _inherit = "hr.holidays.status"
 
     increase_accrual_on_allocation = fields.Boolean(
-        'Increase Accruals on Allocations',
+        "Increase Accruals on Allocations",
         help="Add hours to the related leave accruals when allocating "
-        "leaves to employees."
+        "leaves to employees.",
     )
     accrual_line_ids = fields.One2many(
-        'hr.holidays.status.accrual.line',
-        'leave_type_id',
-        'Accrual Lines',
+        "hr.holidays.status.accrual.line",
+        "leave_type_id",
+        "Accrual Lines",
     )

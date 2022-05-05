@@ -19,23 +19,23 @@
 ##############################################################################
 
 {
-    'name': 'Leave Accruals',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com/',
-    'depends': [
-        'payroll_base',
+    "name": "Leave Accruals",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com/",
+    "depends": [
+        "payroll_base",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'security/ir_rule.xml',
-        'views/hr_employee.xml',
-        'views/hr_leave_accrual.xml',
-        'views/hr_holidays_status.xml',
-        'views/hr_salary_rule.xml',
-        'views/res_company.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "security/ir_rule.xml",
+        "views/hr_employee.xml",
+        "views/hr_leave_accrual.xml",
+        "views/hr_holidays_status.xml",
+        "views/hr_salary_rule.xml",
+        "views/res_company.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

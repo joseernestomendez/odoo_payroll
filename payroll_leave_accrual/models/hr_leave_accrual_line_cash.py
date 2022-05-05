@@ -25,40 +25,40 @@ import openerp.addons.decimal_precision as dp
 class HrLeaveAccrualLineCash(models.Model):
     """Leave Accrual Line Cash"""
 
-    _name = 'hr.leave.accrual.line.cash'
-    _inherit = 'hr.leave.accrual.line'
+    _name = "hr.leave.accrual.line.cash"
+    _inherit = "hr.leave.accrual.line"
     _description = _(__doc__)
 
     amount = fields.Float(
-        'Amount',
-        digits_compute=dp.get_precision('Payroll'),
+        "Amount",
+        digits_compute=dp.get_precision("Payroll"),
     )
     accrual_id = fields.Many2one(
-        'hr.leave.accrual',
-        'Leave Accrual',
-        ondelete='restrict',
+        "hr.leave.accrual",
+        "Leave Accrual",
+        ondelete="restrict",
         required=True,
     )
     payslip_id = fields.Many2one(
-        'hr.payslip',
-        'Payslip',
-        ondelete='cascade',
+        "hr.payslip",
+        "Payslip",
+        ondelete="cascade",
     )
     payslip_line_id = fields.Many2one(
-        'hr.payslip.line',
-        'Payslip Line',
-        ondelete='cascade',
+        "hr.payslip.line",
+        "Payslip Line",
+        ondelete="cascade",
         readonly=True,
     )
     state = fields.Selection(
-        string='State',
-        related='payslip_id.state',
+        string="State",
+        related="payslip_id.state",
         readonly=True,
         store=True,
     )
     is_refund = fields.Boolean(
-        'Is Refund',
-        related='payslip_id.credit_note',
+        "Is Refund",
+        related="payslip_id.credit_note",
         readonly=True,
         store=True,
     )
@@ -67,7 +67,7 @@ class HrLeaveAccrualLineCash(models.Model):
     def create(self, vals):
         res = super(HrLeaveAccrualLineCash, self).create(vals)
 
-        if not self.env.context.get('disable_leave_accrual_update'):
+        if not self.env.context.get("disable_leave_accrual_update"):
             res.accrual_id.update_total_cash()
 
         return res
@@ -75,13 +75,13 @@ class HrLeaveAccrualLineCash(models.Model):
     @api.multi
     def write(self, vals):
         res = super(HrLeaveAccrualLineCash, self).write(vals)
-        if not self.env.context.get('disable_leave_accrual_update'):
-            self.mapped('accrual_id').update_total_cash()
+        if not self.env.context.get("disable_leave_accrual_update"):
+            self.mapped("accrual_id").update_total_cash()
         return res
 
     @api.multi
     def unlink(self):
-        accruals = self.mapped('accrual_id')
+        accruals = self.mapped("accrual_id")
         res = super(HrLeaveAccrualLineCash, self).unlink()
 
         accruals.refresh()

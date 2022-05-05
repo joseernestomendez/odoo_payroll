@@ -24,27 +24,27 @@ from openerp import fields, models, _
 class HrHolidaysStatusAccrualLine(models.Model):
     """Leave Type Accrual Line"""
 
-    _name = 'hr.holidays.status.accrual.line'
+    _name = "hr.holidays.status.accrual.line"
     _description = _(__doc__)
 
     leave_type_id = fields.Many2one(
-        'hr.holidays.status',
-        'Leave Type',
+        "hr.holidays.status",
+        "Leave Type",
         required=True,
     )
     salary_rule_id = fields.Many2one(
-        'hr.salary.rule',
-        'Leave Accrual Rule',
+        "hr.salary.rule",
+        "Leave Accrual Rule",
     )
     substract = fields.Boolean(
-        'Substract Amount',
+        "Substract Amount",
         default=False,
     )
     amount_type = fields.Selection(
         [
-            ('cash', 'Monetary'),
-            ('hours', 'Hours'),
+            ("cash", "Monetary"),
+            ("hours", "Hours"),
         ],
         string="Amount Type",
-        default='cash',
+        default="cash",
     )

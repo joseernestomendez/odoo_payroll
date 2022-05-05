@@ -22,9 +22,10 @@ from openerp import api, fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = "res.company"
     holidays_hours_per_day = fields.Float(
-        'Number of Hours per Leave Day',
+        "Number of Hours per Leave Day",
         digits=(2, 2),
-        required=False, default=8
+        required=False,
+        default=8,
     )

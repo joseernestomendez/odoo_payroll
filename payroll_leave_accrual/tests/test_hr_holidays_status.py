@@ -23,80 +23,99 @@ from datetime import datetime
 
 
 class TestHrHolidaysStatus(common.TransactionCase):
-
     def setUp(self):
         super(TestHrHolidaysStatus, self).setUp()
 
-        self.company_model = self.env['res.company']
-        self.employee_model = self.env['hr.employee']
+        self.company_model = self.env["res.company"]
+        self.employee_model = self.env["hr.employee"]
         self.user_model = self.env["res.users"]
-        self.leave_model = self.env['hr.holidays.status']
-        self.request_model = self.env['hr.holidays']
+        self.leave_model = self.env["hr.holidays.status"]
+        self.request_model = self.env["hr.holidays"]
 
-        self.company = self.company_model.create({
-            'name': 'Company Test',
-            'currency_id': self.env.ref('base.CAD').id,
-            'holidays_hours_per_day': 7.5,
-        })
+        self.company = self.company_model.create(
+            {
+                "name": "Company Test",
+                "currency_id": self.env.ref("base.CAD").id,
+                "holidays_hours_per_day": 7.5,
+            }
+        )
 
-        self.user_1 = self.user_model.create({
-            'login': 'user_1',
-            'name': 'User Test 1',
-            'email': 'test@localhost',
-            'company_id': self.company.id,
-            'company_ids': [(4, self.company.id)],
-            'groups_id': [(4, self.ref('payroll_base.group_hr_payroll_user'))],
-        })
+        self.user_1 = self.user_model.create(
+            {
+                "login": "user_1",
+                "name": "User Test 1",
+                "email": "test@localhost",
+                "company_id": self.company.id,
+                "company_ids": [(4, self.company.id)],
+                "groups_id": [
+                    (4, self.ref("payroll_base.group_hr_payroll_user"))
+                ],
+            }
+        )
 
-        self.user_2 = self.user_model.create({
-            'login': 'user_2',
-            'name': 'User Test 2',
-            'email': 'test@localhost',
-            'company_id': self.company.id,
-            'company_ids': [(4, self.company.id)],
-        })
+        self.user_2 = self.user_model.create(
+            {
+                "login": "user_2",
+                "name": "User Test 2",
+                "email": "test@localhost",
+                "company_id": self.company.id,
+                "company_ids": [(4, self.company.id)],
+            }
+        )
 
-        self.user_3 = self.user_model.create({
-            'login': 'user_3',
-            'name': 'User Test 3',
-            'company_id': self.company.id,
-            'company_ids': [(4, self.company.id)],
-        })
+        self.user_3 = self.user_model.create(
+            {
+                "login": "user_3",
+                "name": "User Test 3",
+                "company_id": self.company.id,
+                "company_ids": [(4, self.company.id)],
+            }
+        )
 
-        self.manager = self.employee_model.create({
-            'name': 'Manager',
-            'user_id': self.user_1.id,
-            'company_id': self.company.id,
-        })
+        self.manager = self.employee_model.create(
+            {
+                "name": "Manager",
+                "user_id": self.user_1.id,
+                "company_id": self.company.id,
+            }
+        )
 
-        self.employee = self.employee_model.create({
-            'name': 'Employee 1',
-            'parent_id': self.manager.id,
-            'user_id': self.user_2.id,
-            'company_id': self.company.id,
-        })
+        self.employee = self.employee_model.create(
+            {
+                "name": "Employee 1",
+                "parent_id": self.manager.id,
+                "user_id": self.user_2.id,
+                "company_id": self.company.id,
+            }
+        )
 
-        self.employee_2 = self.employee_model.create({
-            'name': 'Employee 2',
-            'user_id': self.user_3.id,
-            'company_id': self.company.id,
-        })
+        self.employee_2 = self.employee_model.create(
+            {
+                "name": "Employee 2",
+                "user_id": self.user_3.id,
+                "company_id": self.company.id,
+            }
+        )
 
-        self.leave_type = self.leave_model.create({
-            'name': 'Test',
-            'limit': True,
-            'increase_accrual_on_allocation': True,
-        })
+        self.leave_type = self.leave_model.create(
+            {
+                "name": "Test",
+                "limit": True,
+                "increase_accrual_on_allocation": True,
+            }
+        )
 
-        self.request = self.request_model.create({
-            'employee_id': self.employee.id,
-            'holiday_status_id': self.leave_type.id,
-            'date_from': '2015-01-01',
-            'date_to': '2015-01-03',
-            'number_of_days_temp': 3,
-            'type': 'add',
-            'holiday_type': 'employee',
-        })
+        self.request = self.request_model.create(
+            {
+                "employee_id": self.employee.id,
+                "holiday_status_id": self.leave_type.id,
+                "date_from": "2015-01-01",
+                "date_to": "2015-01-03",
+                "number_of_days_temp": 3,
+                "type": "add",
+                "holiday_type": "employee",
+            }
+        )
 
     def test_holidays_validate(self):
         """
@@ -113,38 +132,55 @@ class TestHrHolidaysStatus(common.TransactionCase):
         and hr.leave.accrual.line
         """
         accrual = self.employee.get_leave_accrual(self.leave_type.id)
-        accrual.write({
-            'line_ids': [(0, 0, {
-                'name': 'Test',
-                'amount_cash': 100,
-                'date': datetime.now(),
-            })],
-        })
+        accrual.write(
+            {
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test",
+                            "amount_cash": 100,
+                            "date": datetime.now(),
+                        },
+                    )
+                ],
+            }
+        )
+
+        self.assertRaises(
+            Exception, accrual.sudo(self.user_3.id).check_access_rule, "read"
+        )
 
         self.assertRaises(
             Exception,
-            accrual.sudo(self.user_3.id).check_access_rule, 'read')
+            accrual.sudo(self.user_2.id).check_access_rights,
+            "write",
+        )
 
-        self.assertRaises(
-            Exception,
-            accrual.sudo(self.user_2.id).check_access_rights, 'write')
-
-        accrual.sudo(self.user_1.id).check_access_rule('read')
+        accrual.sudo(self.user_1.id).check_access_rule("read")
         self.assertTrue(
-            accrual.sudo(self.user_1.id).check_access_rights('read'))
+            accrual.sudo(self.user_1.id).check_access_rights("read")
+        )
 
         # The manager can not access the leave accruals of the employee 2
         # because he is not the employee's manager
         accrual_2 = self.employee_2.get_leave_accrual(self.leave_type.id)
 
         self.assertRaises(
-            Exception,
-            accrual_2.sudo(self.user_1.id).check_access_rule, 'read')
+            Exception, accrual_2.sudo(self.user_1.id).check_access_rule, "read"
+        )
 
-        self.user_1.write({
-            'groups_id': [(4, self.ref('payroll_base.group_hr_payroll_manager'))]})
+        self.user_1.write(
+            {
+                "groups_id": [
+                    (4, self.ref("payroll_base.group_hr_payroll_manager"))
+                ]
+            }
+        )
 
-        for operation in ['read', 'write', 'create', 'unlink']:
+        for operation in ["read", "write", "create", "unlink"]:
             accrual_2.sudo(self.user_1.id).check_access_rule(operation)
             self.assertTrue(
-                accrual_2.sudo(self.user_1.id).check_access_rights(operation))
+                accrual_2.sudo(self.user_1.id).check_access_rights(operation)
+            )

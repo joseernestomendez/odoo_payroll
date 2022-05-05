@@ -22,83 +22,98 @@ from openerp.tests import common
 
 
 class TestHrLeaveAccrual(common.TransactionCase):
-
     def setUp(self):
         super(TestHrLeaveAccrual, self).setUp()
 
-        self.employee = self.env['hr.employee'].create({
-            'name': 'Employee 1'
-        })
+        self.employee = self.env["hr.employee"].create({"name": "Employee 1"})
 
-        self.leave_type = self.env['hr.holidays.status'].create({
-            'name': 'Leave Test',
-        })
+        self.leave_type = self.env["hr.holidays.status"].create(
+            {
+                "name": "Leave Test",
+            }
+        )
 
         self.accrual = self.employee.get_leave_accrual(self.leave_type.id)
 
     def test_accrual_amount_precision(self):
-        self.env['hr.leave.accrual.line.hours'].create({
-            'accrual_id': self.accrual.id,
-            'amount': 1.2345,
-            'name': 'Test',
-        })
+        self.env["hr.leave.accrual.line.hours"].create(
+            {
+                "accrual_id": self.accrual.id,
+                "amount": 1.2345,
+                "name": "Test",
+            }
+        )
 
-        self.env['hr.leave.accrual.line.cash'].create({
-            'accrual_id': self.accrual.id,
-            'amount': 1.25,
-            'name': 'Test',
-        })
+        self.env["hr.leave.accrual.line.cash"].create(
+            {
+                "accrual_id": self.accrual.id,
+                "amount": 1.25,
+                "name": "Test",
+            }
+        )
 
         self.assertEquals(self.accrual.total_hours, 1.2345)
         self.assertEquals(self.accrual.total_cash, 1.25)
 
     def test_accrual_from_payslip(self):
 
-        self.contract = self.env['hr.contract'].create({
-            'employee_id': self.employee.id,
-            'name': 'Contract 1',
-            'wage': 50000,
-        })
+        self.contract = self.env["hr.contract"].create(
+            {
+                "employee_id": self.employee.id,
+                "name": "Contract 1",
+                "wage": 50000,
+            }
+        )
 
-        self.payslip = self.env['hr.payslip'].create({
-            'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
-            'date_from': '2015-01-01',
-            'date_to': '2015-01-31',
-            'credit_note': True,
-        })
+        self.payslip = self.env["hr.payslip"].create(
+            {
+                "employee_id": self.employee.id,
+                "contract_id": self.contract.id,
+                "date_from": "2015-01-01",
+                "date_to": "2015-01-31",
+                "credit_note": True,
+            }
+        )
 
-        self.env['hr.leave.accrual.line.hours'].create({
-            'accrual_id': self.accrual.id,
-            'amount': 7,
-            'name': 'Test',
-        })
+        self.env["hr.leave.accrual.line.hours"].create(
+            {
+                "accrual_id": self.accrual.id,
+                "amount": 7,
+                "name": "Test",
+            }
+        )
 
-        self.env['hr.leave.accrual.line.hours'].create({
-            'accrual_id': self.accrual.id,
-            'amount': -3,
-            'name': 'Test',
-            'payslip_id': self.payslip.id,
-            'source': 'payslip',
-        })
+        self.env["hr.leave.accrual.line.hours"].create(
+            {
+                "accrual_id": self.accrual.id,
+                "amount": -3,
+                "name": "Test",
+                "payslip_id": self.payslip.id,
+                "source": "payslip",
+            }
+        )
 
-        self.env['hr.leave.accrual.line.cash'].create({
-            'accrual_id': self.accrual.id,
-            'amount': 5,
-            'name': 'Test',
-        })
+        self.env["hr.leave.accrual.line.cash"].create(
+            {
+                "accrual_id": self.accrual.id,
+                "amount": 5,
+                "name": "Test",
+            }
+        )
 
-        self.env['hr.leave.accrual.line.cash'].create({
-            'accrual_id': self.accrual.id,
-            'amount': -2,
-            'name': 'Test',
-            'payslip_id': self.payslip.id,
-            'source': 'payslip',
-        })
+        self.env["hr.leave.accrual.line.cash"].create(
+            {
+                "accrual_id": self.accrual.id,
+                "amount": -2,
+                "name": "Test",
+                "payslip_id": self.payslip.id,
+                "source": "payslip",
+            }
+        )
 
         self.assertEquals(self.accrual.total_hours, 7)
         self.assertEquals(self.accrual.total_cash, 5)
-        self.payslip.write({'state': 'done'})
+        self.payslip.write({"state": "done"})
         self.accrual.update_totals()
         self.assertEquals(self.accrual.total_hours, 4)
         self.assertEquals(self.accrual.total_cash, 3)
