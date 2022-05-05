@@ -18,13 +18,12 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, exceptions, _
+from odoo import models, fields, api, exceptions, _
 
 
 class HrContract(models.Model):
     _inherit = "hr.contract"
 
-    @api.one
     @api.depends("contract_job_ids")
     def _get_main_job_position(self):
         """
@@ -50,7 +49,6 @@ class HrContract(models.Model):
         store=True,
     )
 
-    @api.multi
     @api.constrains("contract_job_ids")
     def _check_one_main_job(self):
         if self.env.context.get("defer_constrains"):
@@ -70,13 +68,11 @@ class HrContract(models.Model):
                         )
                     )
 
-    @api.multi
     def write(self, vals):
         if vals.get("job_id") and not vals.get("contract_job_ids"):
             self.set_main_job(vals.get("job_id"))
         return super(HrContract, self).write(vals)
 
-    @api.one
     def add_job(self, job_id, main_job):
         self.write(
             {
@@ -93,7 +89,6 @@ class HrContract(models.Model):
             }
         )
 
-    @api.one
     def set_main_job(self, job_id):
         assert isinstance(job_id, (int, long)), "Expected Integer"
 

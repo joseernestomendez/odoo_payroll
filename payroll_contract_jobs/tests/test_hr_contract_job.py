@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp.tests.common import TransactionCase
-from openerp import exceptions
+from odoo.tests.common import TransactionCase
+from odoo import exceptions
 
 
 class TestContractMultiJob(TransactionCase):
