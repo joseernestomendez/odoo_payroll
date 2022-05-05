@@ -24,12 +24,12 @@ from openerp.tools.safe_eval import safe_eval as eval
 
 
 class HrSalaryRule(models.Model):
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     variable_ids = fields.One2many(
-        'hr.salary.rule.variable',
-        'salary_rule_id',
-        'Variables',
+        "hr.salary.rule.variable",
+        "salary_rule_id",
+        "Variables",
     )
 
     @api.multi
@@ -52,21 +52,28 @@ class HrSalaryRule(models.Model):
         # Find the salary rule variable related to that rule for the
         # requested period
         variable = self.variable_ids.filtered(
-            lambda v: v.date_from <= date <= v.date_to)
+            lambda v: v.date_from <= date <= v.date_to
+        )
 
         if not variable:
             raise ValidationError(
-                _("The salary rule variable related to %s does not "
-                    "exist for the date %s") %
-                (self.code, date))
+                _(
+                    "The salary rule variable related to %s does not "
+                    "exist for the date %s"
+                )
+                % (self.code, date)
+            )
 
         if len(variable) > 1:
             raise ValidationError(
-                _("%s salary rule variables related to %s exist for "
-                    "the date %s") %
-                (len(variable), self.code, date))
+                _(
+                    "%s salary rule variables related to %s exist for "
+                    "the date %s"
+                )
+                % (len(variable), self.code, date)
+            )
 
-        if variable.variable_type == 'python':
+        if variable.variable_type == "python":
             return eval(variable.python_code, localdict or {})
         else:
             return variable.fixed_amount

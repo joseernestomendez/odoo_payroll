@@ -19,18 +19,18 @@
 ##############################################################################
 
 {
-    'name': 'Salary Rule Variables',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_base',
+    "name": "Salary Rule Variables",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_base",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/hr_salary_rule_variable.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/hr_salary_rule_variable.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

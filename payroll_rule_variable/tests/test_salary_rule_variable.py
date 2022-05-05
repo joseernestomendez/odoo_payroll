@@ -24,7 +24,7 @@ from openerp.tests import common
 class TestSalaryRuleVariable(common.TransactionCase):
     def setUp(self):
         super(TestSalaryRuleVariable, self).setUp()
-        self.employee_model = self.env['hr.employee']
+        self.employee_model = self.env["hr.employee"]
         self.user_model = self.env["res.users"]
         self.payslip_model = self.env["hr.payslip"]
         self.contract_model = self.env["hr.contract"]
@@ -34,84 +34,118 @@ class TestSalaryRuleVariable(common.TransactionCase):
         self.structure_model = self.env["hr.payroll.structure"]
 
         # Create an employee
-        self.employee = self.employee_model.create({
-            'name': 'Employee 1',
-        })
+        self.employee = self.employee_model.create(
+            {
+                "name": "Employee 1",
+            }
+        )
 
         # Get any existing category
         self.category = self.rule_category_model.search([], limit=1)[0]
 
         # Create salary rules
-        self.rule = self.rule_model.create({
-            'name': 'Test 1',
-            'sequence': 1,
-            'code': 'TEST_1',
-            'category_id': self.category.id,
-            'appears_on_payslip': True,
-            'active': True,
-            'amount_python_compute': """\
+        self.rule = self.rule_model.create(
+            {
+                "name": "Test 1",
+                "sequence": 1,
+                "code": "TEST_1",
+                "category_id": self.category.id,
+                "appears_on_payslip": True,
+                "active": True,
+                "amount_python_compute": """\
 result = rule.variable(payslip.date_from)
 """,
-        })
-        self.rule_2 = self.rule_model.create({
-            'name': 'Test 2',
-            'sequence': 2,
-            'code': 'TEST_2',
-            'category_id': self.category.id,
-            'appears_on_payslip': True,
-            'active': True,
-            'amount_python_compute': """\
+            }
+        )
+        self.rule_2 = self.rule_model.create(
+            {
+                "name": "Test 2",
+                "sequence": 2,
+                "code": "TEST_2",
+                "category_id": self.category.id,
+                "appears_on_payslip": True,
+                "active": True,
+                "amount_python_compute": """\
 result = rule.variable(payslip.date_from)
 """,
-        })
+            }
+        )
 
         self.variables = {}
         # Create salary rule variables
         for variable in [
-            (1, self.rule.id, '2014-01-01', '2014-01-31',
-                'fixed', 500, False),
-            (2, self.rule_2.id, '2014-01-01', '2014-01-31',
-                'fixed', 75, False),
+            (1, self.rule.id, "2014-01-01", "2014-01-31", "fixed", 500, False),
+            (
+                2,
+                self.rule_2.id,
+                "2014-01-01",
+                "2014-01-31",
+                "fixed",
+                75,
+                False,
+            ),
             # One record for testing with a python dict
-            (3, self.rule.id, '2014-02-01', '2014-02-28',
-                'python', False, {'TEST': 200}),
+            (
+                3,
+                self.rule.id,
+                "2014-02-01",
+                "2014-02-28",
+                "python",
+                False,
+                {"TEST": 200},
+            ),
             # One record for testing with a python list
-            (4, self.rule_2.id, '2014-02-01', '2014-02-28',
-                'python', False, [300]),
+            (
+                4,
+                self.rule_2.id,
+                "2014-02-01",
+                "2014-02-28",
+                "python",
+                False,
+                [300],
+            ),
         ]:
-            self.variables[variable[0]] = self.variable_model.create({
-                'salary_rule_id': variable[1],
-                'date_from': variable[2],
-                'date_to': variable[3],
-                'variable_type': variable[4],
-                'fixed_amount': variable[5],
-                'python_code': variable[6],
-            })
+            self.variables[variable[0]] = self.variable_model.create(
+                {
+                    "salary_rule_id": variable[1],
+                    "date_from": variable[2],
+                    "date_to": variable[3],
+                    "variable_type": variable[4],
+                    "fixed_amount": variable[5],
+                    "python_code": variable[6],
+                }
+            )
 
         # Create a structure
-        self.structure = self.structure_model.create({
-            'name': 'TEST',
-            'parent_id': False,
-            'code': 'TEST',
-            'rule_ids': [(6, 0, [self.rule.id, self.rule_2.id])]
-        })
+        self.structure = self.structure_model.create(
+            {
+                "name": "TEST",
+                "parent_id": False,
+                "code": "TEST",
+                "rule_ids": [(6, 0, [self.rule.id, self.rule_2.id])],
+            }
+        )
 
         # Create a contract for the employee
-        self.contract = self.contract_model.create({
-            'employee_id': self.employee.id,
-            'name': 'Contract 1',
-            'wage': 50000,
-            'struct_id': self.structure.id,
-        })
+        self.contract = self.contract_model.create(
+            {
+                "employee_id": self.employee.id,
+                "name": "Contract 1",
+                "wage": 50000,
+                "struct_id": self.structure.id,
+            }
+        )
 
         # Create a payslip
-        self.payslip = self.payslip_model.create({
-            'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
-            'date_from': '2014-01-01',
-            'date_to': '2014-01-31',
-            'struct_id': self.structure.id,
-        })
+        self.payslip = self.payslip_model.create(
+            {
+                "employee_id": self.employee.id,
+                "contract_id": self.contract.id,
+                "date_from": "2014-01-01",
+                "date_to": "2014-01-31",
+                "struct_id": self.structure.id,
+            }
+        )
 
     def test_rule_variable(self):
         self.payslip.compute_sheet()
@@ -131,24 +165,30 @@ result = rule.variable(payslip.date_from)
                 self.assertTrue(False)
 
     def test_rule_variable_with_python_code(self):
-        self.payslip.write({
-            'date_from': '2014-02-01',
-            'date_to': '2014-02-28',
-        })
+        self.payslip.write(
+            {
+                "date_from": "2014-02-01",
+                "date_to": "2014-02-28",
+            }
+        )
 
-        self.rule.write({
-            'amount_python_compute': """\
+        self.rule.write(
+            {
+                "amount_python_compute": """\
 variable = rule.variable(payslip.date_from)
 result = variable['TEST']
 """
-        })
+            }
+        )
 
-        self.rule_2.write({
-            'amount_python_compute': """\
+        self.rule_2.write(
+            {
+                "amount_python_compute": """\
 variable = rule.variable(payslip.date_from)
 result = variable[0]
 """
-        })
+            }
+        )
 
         self.payslip.compute_sheet()
         self.payslip.refresh()

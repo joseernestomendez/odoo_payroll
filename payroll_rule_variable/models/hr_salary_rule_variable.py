@@ -24,35 +24,32 @@ from openerp import models, fields, _
 class HrSalaryRuleVariable(models.Model):
     """Salary Rule Variable"""
 
-    _name = 'hr.salary.rule.variable'
+    _name = "hr.salary.rule.variable"
     _description = _(__doc__)
 
     salary_rule_id = fields.Many2one(
-        'hr.salary.rule',
-        'Salary Rule',
-        ondelete='cascade',
+        "hr.salary.rule",
+        "Salary Rule",
+        ondelete="cascade",
         required=True,
         index=True,
     )
     date_from = fields.Date(
-        'Date From',
+        "Date From",
         required=True,
     )
     date_to = fields.Date(
-        'Date To',
+        "Date To",
     )
     variable_type = fields.Selection(
-        [
-            ('python', 'Python Code'),
-            ('fixed', 'Fixed Amount')
-        ],
-        type='char',
-        string='Type',
+        [("python", "Python Code"), ("fixed", "Fixed Amount")],
+        type="char",
+        string="Type",
         default="python",
     )
     python_code = fields.Text(
-        'Python Code',
+        "Python Code",
     )
     fixed_amount = fields.Float(
-        'Fixed Amount',
+        "Fixed Amount",
     )
