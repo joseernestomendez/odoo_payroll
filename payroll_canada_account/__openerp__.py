@@ -18,22 +18,22 @@
 #
 ##############################################################################
 {
-    'name': 'Canada - Payroll Accounting',
-    'category': 'Localization',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'author': "Savoir-faire Linux",
-    'website': 'https://savoirfairelinux.com/',
-    'depends': [
-        'l10n_ca',
-        'payroll_canada',
-        'payroll_account',
+    "name": "Canada - Payroll Accounting",
+    "category": "Localization",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "author": "Savoir-faire Linux",
+    "website": "https://savoirfairelinux.com/",
+    "depends": [
+        "l10n_ca",
+        "payroll_canada",
+        "payroll_account",
     ],
-    'data': [
-        'data/account_journal.xml',
-        'data/hr_salary_rule.xml',
-        'data/res_company.xml',
+    "data": [
+        "data/account_journal.xml",
+        "data/hr_salary_rule.xml",
+        "data/res_company.xml",
     ],
-    'test': [],
-    'installable': True,
+    "test": [],
+    "installable": True,
 }
