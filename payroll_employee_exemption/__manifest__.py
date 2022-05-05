@@ -1,4 +1,3 @@
-# coding: utf-8
 ##############################################################################
 #
 #    Copyright (C) 2016 Savoir-faire Linux. All Rights Reserved.
@@ -20,7 +19,7 @@
 
 {
     "name": "Employee Exemption",
-    "version": "1.0.0",
+    "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "category": "Human Resources",
     "author": "Savoir-faire Linux",

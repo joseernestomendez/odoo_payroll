@@ -1,4 +1,3 @@
-# coding: utf-8
 ##############################################################################
 #
 #    Copyright (C) 2016 Savoir-faire Linux. All Rights Reserved.
@@ -19,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 class TestHrEmployeeExemption(common.TransactionCase):

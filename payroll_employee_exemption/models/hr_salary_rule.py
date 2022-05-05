@@ -1,4 +1,3 @@
-# coding: utf-8
 ##############################################################################
 #
 #    Copyright (C) 2016 Savoir-faire Linux. All Rights Reserved.
@@ -19,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, models, fields
+from odoo import api, models, fields
 
 
 class HrSalaryRule(models.Model):
@@ -31,7 +30,6 @@ class HrSalaryRule(models.Model):
         "Exemption",
     )
 
-    @api.multi
     def compute_rule(self, localdict):
         self.ensure_one()
 
@@ -40,7 +38,6 @@ class HrSalaryRule(models.Model):
 
         return super(HrSalaryRule, self).compute_rule(localdict)
 
-    @api.multi
     def check_exemption(self, localdict):
         """Check whether the employee is exempted for the given rule"""
         self.ensure_one()

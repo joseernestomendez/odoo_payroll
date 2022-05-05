@@ -1,4 +1,3 @@
-# coding: utf-8
 ##############################################################################
 #
 #    Copyright (C) 2016 Savoir-faire Linux. All Rights Reserved.
@@ -19,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, models, fields
+from odoo import api, models, fields
 
 
 class HrEmployee(models.Model):
@@ -32,7 +31,6 @@ class HrEmployee(models.Model):
         groups="payroll_base.group_hr_payroll_manager",
     )
 
-    @api.multi
     def exempted_from(self, exemption, date):
         """
         The method to call from a salary rule to check whether an employee
