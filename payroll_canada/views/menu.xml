@@ -1,5 +1,4 @@
-<openerp>
-    <data>
+<odoo>
 
         <menuitem
             id="menu_fiscal_slips"
@@ -20,5 +19,4 @@
             <field name="groups_id" eval="[(6, 0, [ref('base.group_user')])]"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

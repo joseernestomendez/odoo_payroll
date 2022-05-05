@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="rpp" model="hr.employee.benefit.category">
             <field name="name">Registered Pension Plan</field>
@@ -29,5 +28,4 @@
             <field name="description">Contribution to a Pooled Registered Pension Plan</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

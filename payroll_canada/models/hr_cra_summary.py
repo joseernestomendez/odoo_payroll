@@ -22,8 +22,8 @@ import iso3166
 from collections import OrderedDict
 from lxml import etree
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 def dict_to_etree(element, d):
@@ -328,7 +328,6 @@ xsi:noNamespaceSchemaLocation="layout-topologie.xsd">
         states={"draft": [("readonly", False)]},
     )
 
-    @api.multi
     @api.constrains("contact_area_code", "contact_phone")
     def _check_contact_phone(self):
         """

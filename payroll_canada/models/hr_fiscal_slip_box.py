@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrFiscalSlipBox(models.Model):
@@ -91,7 +91,6 @@ class HrFiscalSlipBox(models.Model):
         "appears_on_summary": True,
     }
 
-    @api.multi
     def compute_amount(self, payslip_ids):
         """
         Return the amount for a year for a given fiscal slip box

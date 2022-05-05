@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <record id="rule_ca_vac_available" model="hr.salary.rule">
             <field name="name">Vacation available</field>
             <field name="sequence" eval="20"/>
@@ -141,5 +140,4 @@ result = PAID_HOURS * contract.weeks_of_vacation * 0.02
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

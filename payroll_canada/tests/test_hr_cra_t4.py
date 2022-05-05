@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from odoo.osv import orm
 
 from .test_payroll_structure import TestPayrollStructureBase
 

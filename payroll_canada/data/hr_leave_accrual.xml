@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- Vacations -->
         <record id="accrual_vacation_line_1" model="hr.holidays.status.accrual.line">
             <field name="leave_type_id" ref="payroll_activity.holiday_status_vacation"/>
@@ -90,5 +89,4 @@
             <field name="substract" eval="True"/>
             <field name="amount_type">hours</field>
         </record>
-    </data>
-</openerp>
+</odoo>

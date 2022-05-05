@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrCRAT4Box(models.Model):
@@ -35,7 +35,6 @@ class HrCRAT4Box(models.Model):
         ondelete="cascade",
     )
 
-    @api.multi
     def compute_amount(self, payslip_ids):
         self.ensure_one()
         return self.fiscal_slip_box_id.compute_amount(payslip_ids)

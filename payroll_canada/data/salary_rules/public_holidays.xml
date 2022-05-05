@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <record id="rule_ca_public_available" model="hr.salary.rule">
             <field name="name">Public holidays available</field>
             <field name="sequence" eval="50"/>
@@ -65,5 +64,4 @@ else:
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -20,7 +20,7 @@
 
 from datetime import datetime, timedelta
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 from_string = fields.Date.from_string
 to_string = fields.Date.to_string
@@ -31,12 +31,10 @@ class HrPayslip(models.Model):
 
     _inherit = "hr.payslip"
 
-    @api.multi
     def compute_sheet(self):
         self.check_employee_data()
         super(HrPayslip, self).compute_sheet()
 
-    @api.multi
     def check_employee_data(self):
         """
         Check that no standard information is missing on the
@@ -45,7 +43,6 @@ class HrPayslip(models.Model):
         """
         self.mapped("employee_id").check_personal_info()
 
-    @api.multi
     def get_4_weeks_of_gross(self, leave_date):
         """
         Get the gross salary of an employee within the 4 weeks that

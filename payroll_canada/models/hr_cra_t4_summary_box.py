@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrCRAT4SummaryBox(models.Model):
@@ -39,7 +39,6 @@ class HrCRAT4SummaryBox(models.Model):
         string="Related T4 Boxes",
     )
 
-    @api.multi
     def compute_amount(self, slip_ids):
         """
         Return the amount of a T4 Summary box from the given

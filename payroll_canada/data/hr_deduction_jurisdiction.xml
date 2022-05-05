@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="jurisdiction_federal" model="hr.deduction.jurisdiction">
             <field name="name">Federal</field>
@@ -10,5 +9,4 @@
             <field name="name">Federal and Provincial</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="payslip_input_bonus" model="hr.payslip.input.category">
             <field name="name">Bonus</field>
@@ -27,5 +26,4 @@
             <field name="salary_rule_ids" eval="[(6, 0, [ref('rule_ca_unused_sl_taken_cash')])]"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

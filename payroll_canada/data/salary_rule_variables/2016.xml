@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- CANADA PENSION PLAN -->
         <!-- CPP - Employee Contribution (CPP_EE_C) -->
         <record id="rule_ca_cpp_ee_c_2016" model="hr.salary.rule.variable">
@@ -121,5 +120,4 @@
             <field name="python_code">{'contribution_ratio': 1.4, 'max_annual': 1337.06}</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

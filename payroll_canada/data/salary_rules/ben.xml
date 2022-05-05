@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <record id="rule_ca_ben_ee_c" model="hr.salary.rule">
             <field name="name">Employee Benefits - Employee Contribution</field>
             <field name="sequence" eval="255"/>
@@ -29,5 +28,4 @@ result = rule.sum_benefits(payslip, employer=True)
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

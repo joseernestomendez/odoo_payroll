@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <!--
             This file contains the standard inputs on the T4
@@ -156,5 +155,4 @@
             <field name="salary_rule_ids" eval="[(6, 0, [ref('rule_ca_ei_er_c')])]"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

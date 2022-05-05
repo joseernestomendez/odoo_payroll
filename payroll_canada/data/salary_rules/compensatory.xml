@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <record id="rule_ca_comp_available" model="hr.salary.rule">
             <field name="name">Compensatory days available</field>
             <field name="sequence" eval="40"/>
@@ -142,5 +141,4 @@ result = COMP_ADDED / HOURLY_RATE
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

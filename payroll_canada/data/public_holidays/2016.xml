@@ -25,5 +25,4 @@
             <field name="name">Christmas</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

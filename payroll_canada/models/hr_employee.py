@@ -18,14 +18,13 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-    @api.multi
     def check_personal_info(self):
         """
         Check the employee's personal data before creating

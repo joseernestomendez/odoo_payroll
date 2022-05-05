@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.report import report_sxw
+from odoo.report import report_sxw
 
 
 def display_address_no_blank_line(partner, name):

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- activity field inherited from payroll_activity -->
         <record id="view_hr_payslip_activity_form" model="ir.ui.view">
             <field name="name">hr.payslip.activity.form</field>
@@ -62,5 +61,4 @@
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

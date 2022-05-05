@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="standard_vacation_entitlement" model="hr.holidays.entitlement">
             <field name="name">Standard Vacation Entitlement</field>
@@ -9,5 +8,4 @@
             <field name="leave_id" ref="payroll_activity.holiday_status_vacation"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -18,9 +18,9 @@
 #
 ##############################################################################
 
-from openerp.report import report_sxw
-from openerp.osv import orm
-from openerp.tools.translate import _
+from odoo.report import report_sxw
+from odoo.osv import orm
+from odoo.tools.translate import _
 
 
 class report_cra_summary(report_sxw.report_sxw):

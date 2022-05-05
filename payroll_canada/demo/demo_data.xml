@@ -251,5 +251,4 @@
             <field name="date_start">2014-01-01</field>
             <field name="rate_id" ref="linda_rpp_rate"/>
         </record>
-    </data>
-</openerp>
+</odoo>

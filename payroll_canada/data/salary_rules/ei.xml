@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="rule_ca_ei_ee_maxie" model="hr.salary.rule">
             <field name="name">EI - Employee - Maximum Insurable Earnings</field>
@@ -69,5 +68,4 @@ result = max(result, 0)
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

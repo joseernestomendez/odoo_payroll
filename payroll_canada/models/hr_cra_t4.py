@@ -21,9 +21,9 @@
 
 from datetime import datetime, date
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 to_string = fields.Date.to_string
 
@@ -113,7 +113,6 @@ class HrCraT4(models.Model):
         states={"draft": [("readonly", False)]},
     )
 
-    @api.one
     @api.constrains("amount_ids")
     def _check_amounts(self):
         # Check that their is maximum 6 amounts
@@ -131,15 +130,12 @@ class HrCraT4(models.Model):
 
         return True
 
-    @api.multi
     def button_set_to_draft(self):
         self.write({"state": "draft"})
 
-    @api.multi
     def button_confirm(self):
         self.write({"state": "confirmed"})
 
-    @api.one
     def compute_amounts(self):
         self.write({"amount_ids": [(5, 0)]})
 

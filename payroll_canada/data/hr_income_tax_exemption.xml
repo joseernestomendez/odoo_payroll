@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="ei_exempt" model="hr.income.tax.exemption">
             <field name="name">Employment Insurance Exempt</field>
@@ -18,5 +17,4 @@
             <field name="name">Provincial Insurance Plan Exempt</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

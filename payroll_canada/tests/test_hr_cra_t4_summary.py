@@ -22,7 +22,7 @@ import subprocess
 import codecs
 import os
 
-from openerp.osv import orm
+from odoo.osv import orm
 
 from .test_hr_cra_t4 import TestHrCraT4Base
 

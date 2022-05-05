@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class HrEmployeeBenefitCategory(models.Model):
@@ -31,7 +31,6 @@ class HrEmployeeBenefitCategory(models.Model):
         "or a Deferred Profit Sharing Plan",
     )
 
-    @api.one
     @api.constrains("is_rpp_dpsp", "reference")
     def _check_rpp_dpsp_number(self):
         """

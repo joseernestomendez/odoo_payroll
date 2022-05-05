@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 def get_states(self):
@@ -139,7 +139,6 @@ class HrFiscalSlip(models.AbstractModel):
 
         return number
 
-    @api.multi
     def get_amount(self, code=None, xml_tag=None):
         self.ensure_one()
 
@@ -158,7 +157,6 @@ class HrFiscalSlip(models.AbstractModel):
 
         return amount.amount if amount else False
 
-    @api.multi
     def get_other_amount(self, index):
         self.ensure_one()
 
@@ -169,19 +167,16 @@ class HrFiscalSlip(models.AbstractModel):
 
         return amounts[index]
 
-    @api.multi
     def get_other_amount_value(self, index):
         self.ensure_one()
         amount = self.get_other_amount(index)
         return amount.amount if amount else ""
 
-    @api.multi
     def get_other_amount_code(self, index):
         self.ensure_one()
         amount = self.get_other_amount(index)
         return amount.box_id.code if amount else ""
 
-    @api.multi
     @api.constrains("year")
     def _check_year(self):
         for slip in self:

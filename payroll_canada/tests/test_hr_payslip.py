@@ -20,7 +20,7 @@
 
 from datetime import datetime
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 class TestPayslipBase(common.TransactionCase):

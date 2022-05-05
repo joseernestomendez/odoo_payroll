@@ -21,8 +21,8 @@
 from collections import OrderedDict
 from lxml import etree
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 from .hr_cra_summary import dict_to_etree
 
@@ -34,7 +34,6 @@ class HrCraT4Summary(models.Model):
     _inherit = "hr.cra.summary"
     _description = _(__doc__)
 
-    @api.multi
     def button_confirm(self):
         self.ensure_one()
         self.write({"state": "sent"})
@@ -53,19 +52,16 @@ class HrCraT4Summary(models.Model):
 
         self.generate_xml()
 
-    @api.multi
     def button_confirm_slips(self):
         self.ensure_one()
         slips = self.t4_slip_ids.filtered(lambda t4: t4.state == "draft")
         slips.write({"state": "confirmed"})
 
-    @api.multi
     def button_cancel(self):
         self.ensure_one()
         self.t4_slip_ids.write({"state": "cancelled"})
         self.write({"state": "cancelled"})
 
-    @api.multi
     def get_payslips(self):
         self.ensure_one()
 
@@ -84,7 +80,6 @@ class HrCraT4Summary(models.Model):
 
         return payslips
 
-    @api.multi
     def generate_slips(self):
         self.ensure_one()
 
@@ -122,7 +117,6 @@ class HrCraT4Summary(models.Model):
 
         self.compute_totals()
 
-    @api.multi
     def generate_xml(self):
         self.ensure_one()
 
@@ -259,12 +253,10 @@ class HrCraT4Summary(models.Model):
         # We write the resulting XML structure to the XML field
         self.write({"xml": t619_xml})
 
-    @api.multi
     def _count_slips(self):
         for summary in self:
             summary.number_of_slips = len(summary.t4_slip_ids)
 
-    @api.multi
     def compute_totals(self):
         self.ensure_one()
 
