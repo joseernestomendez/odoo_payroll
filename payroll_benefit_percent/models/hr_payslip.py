@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models
+import odoo.addons.decimal_precision as dp
 
 
 class HrPayslip(models.Model):
@@ -36,7 +36,6 @@ class HrPayslip(models.Model):
         default=0,
     )
 
-    @api.multi
     def set_gross_salary(self, gross):
         """
         Allow to set payslip fields directly from the salary rules.
