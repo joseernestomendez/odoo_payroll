@@ -24,33 +24,26 @@ from openerp import models, fields
 
 
 class HrPublicHolidaysLine(models.Model):
-    _name = 'hr.holidays.public.line'
-    _description = 'Public Holidays Lines'
+    _name = "hr.holidays.public.line"
+    _description = "Public Holidays Lines"
     _order = "date, name desc"
 
-    name = fields.Char(
-        'Name',
-        required=True,
-        translate=True
-    )
-    date = fields.Date(
-        'Date',
-        required=True
-    )
+    name = fields.Char("Name", required=True, translate=True)
+    date = fields.Date("Date", required=True)
     holidays_id = fields.Many2one(
-        'hr.holidays.public',
-        'Holiday Calendar Year',
+        "hr.holidays.public",
+        "Holiday Calendar Year",
     )
     state_ids = fields.Many2many(
-        'res.country.state',
-        'hr_holiday_public_state_rel',
-        'line_id',
-        'state_id',
-        'Related states',
+        "res.country.state",
+        "hr_holiday_public_state_rel",
+        "line_id",
+        "state_id",
+        "Related states",
     )
     country_id = fields.Many2one(
-        'res.country',
-        'Country',
-        related='holidays_id.country_id',
+        "res.country",
+        "Country",
+        related="holidays_id.country_id",
         store=True,
     )

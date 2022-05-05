@@ -24,20 +24,24 @@ from openerp.exceptions import ValidationError
 
 class HrPayslip(models.Model):
 
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     @api.multi
-    @api.returns('hr.holidays.public.line')
+    @api.returns("hr.holidays.public.line")
     def get_public_holidays(self):
         """
         Return a list of public holidays for the payslip's period
         """
         self.ensure_one()
         if not self.employee_id.address_id:
-            raise ValidationError(_(
-                'Insuffisant configuration. You must set the working address '
-                'for employee %s') % self.employee_id.name)
+            raise ValidationError(
+                _(
+                    "Insuffisant configuration. You must set the working address "
+                    "for employee %s"
+                )
+                % self.employee_id.name
+            )
 
-        return self.env['hr.holidays.public'].get_holidays_lines(
-            self.date_from, self.date_to,
-            self.employee_id.address_id.id)
+        return self.env["hr.holidays.public"].get_holidays_lines(
+            self.date_from, self.date_to, self.employee_id.address_id.id
+        )

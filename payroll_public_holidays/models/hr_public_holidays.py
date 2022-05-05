@@ -27,46 +27,49 @@ from openerp.exceptions import ValidationError
 
 
 class HrPublicHolidays(models.Model):
-    _name = 'hr.holidays.public'
-    _description = 'Public Holidays'
-    _rec_name = 'year'
-    _order = 'year'
+    _name = "hr.holidays.public"
+    _description = "Public Holidays"
+    _rec_name = "year"
+    _order = "year"
 
     year = fields.Char(
         "Calendar Year",
         required=True,
-        help="Enter the year with a numeric value "
-        "e.g. '2015' or '2016'."
+        help="Enter the year with a numeric value " "e.g. '2015' or '2016'.",
     )
     line_ids = fields.One2many(
-        'hr.holidays.public.line',
-        'holidays_id',
-        'Holiday Dates'
+        "hr.holidays.public.line", "holidays_id", "Holiday Dates"
     )
     country_id = fields.Many2one(
-        'res.country',
-        'Country',
+        "res.country",
+        "Country",
         required=True,
     )
 
     @api.one
-    @api.constrains('year')
+    @api.constrains("year")
     def _check_year(self):
         try:
-            datetime.strptime(self.year, '%Y')
+            datetime.strptime(self.year, "%Y")
         except:
             raise ValidationError(
-                _("The year %s must be written with a numeric value "
-                  "e.g. '2015' or '2016'.") % self.year)
+                _(
+                    "The year %s must be written with a numeric value "
+                    "e.g. '2015' or '2016'."
+                )
+                % self.year
+            )
 
     _sql_constraints = [
-        ('year_unique',
-         'UNIQUE(year,country_id)',
-         _('Duplicate year and country!')),
+        (
+            "year_unique",
+            "UNIQUE(year,country_id)",
+            _("Duplicate year and country!"),
+        ),
     ]
 
     @api.model
-    @api.returns('hr.holidays.public.line')
+    @api.returns("hr.holidays.public.line")
     def get_holidays_lines(self, date_from, date_to, partner_id):
         """
         Get a recordset of hr.holidays.public.line
@@ -80,18 +83,24 @@ class HrPublicHolidays(models.Model):
 
         :return: recordset of hr.holidays.public.line
         """
-        partner = self.env['res.partner'].browse(partner_id)
+        partner = self.env["res.partner"].browse(partner_id)
 
         if not partner.country_id:
             raise ValidationError(
-                _('The country of %s is not set.') % partner.country_id.name)
+                _("The country of %s is not set.") % partner.country_id.name
+            )
 
-        return self.env['hr.holidays.public.line'].search([
-            ('date', '>=', date_from),
-            ('date', '<=', date_to),
-            ('country_id', '=', partner.country_id.id),
-            '|',
-            ('state_ids', '=',
-                partner.state_id and partner.state_id.id or False),
-            ('state_ids', '=', False),
-        ])
+        return self.env["hr.holidays.public.line"].search(
+            [
+                ("date", ">=", date_from),
+                ("date", "<=", date_to),
+                ("country_id", "=", partner.country_id.id),
+                "|",
+                (
+                    "state_ids",
+                    "=",
+                    partner.state_id and partner.state_id.id or False,
+                ),
+                ("state_ids", "=", False),
+            ]
+        )

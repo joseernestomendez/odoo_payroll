@@ -20,19 +20,19 @@
 ##############################################################################
 
 {
-    'name': 'Public Holidays',
-    'version': '1.0.0',
-    'category': 'Human Resources',
-    'author': "Michael Telahun Makonnen <mmakonnen@gmail.com>,"
-              "Savoir-faire Linux",
-    'website': 'https://savoirfairelinux.com',
-    'license': 'AGPL-3',
-    'depends': [
-        'payroll_base',
+    "name": "Public Holidays",
+    "version": "1.0.0",
+    "category": "Human Resources",
+    "author": "Michael Telahun Makonnen <mmakonnen@gmail.com>,"
+    "Savoir-faire Linux",
+    "website": "https://savoirfairelinux.com",
+    "license": "AGPL-3",
+    "depends": [
+        "payroll_base",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/hr_public_holidays_view.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/hr_public_holidays_view.xml",
     ],
-    'installable': True,
+    "installable": True,
 }
