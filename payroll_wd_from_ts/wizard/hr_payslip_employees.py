@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrPayslipEmployees(models.TransientModel):
@@ -30,7 +30,6 @@ class HrPayslipEmployees(models.TransientModel):
         default=True,
     )
 
-    @api.multi
     def action_before_computing_sheets(self):
         self.ensure_one()
         res = super(HrPayslipEmployees, self).action_before_computing_sheets()
@@ -40,6 +39,5 @@ class HrPayslipEmployees(models.TransientModel):
 
         return res
 
-    @api.multi
     def import_timesheets(self):
         self.payslip_ids.import_worked_days()

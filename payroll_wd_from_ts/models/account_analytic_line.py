@@ -21,8 +21,8 @@
 
 from itertools import groupby
 
-from openerp import _, api, fields, models
-from openerp.exceptions import ValidationError
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class AccountAnalyticLine(models.Model):
@@ -34,7 +34,6 @@ class AccountAnalyticLine(models.Model):
         "Payslip Worked Days",
     )
 
-    @api.multi
     def export_to_worked_days(self, payslip_id):
         """
         Export a record set of timesheets to the worked days
@@ -94,7 +93,6 @@ class AccountAnalyticLine(models.Model):
                 ),
             )
 
-    @api.multi
     def worked_days_mapping(self):
         """
         Map a single timesheet record to a dict of field values
