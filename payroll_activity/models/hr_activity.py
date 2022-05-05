@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrActivity(models.Model):
@@ -58,7 +58,6 @@ class HrActivity(models.Model):
 
     _order = "activity_type,name"
 
-    @api.one
     @api.depends("activity_type", "job_id", "leave_id")
     def _compute_name(self):
         if self.activity_type == "job" and self.job_id:

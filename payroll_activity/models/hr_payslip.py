@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class HrPayslip(models.Model):
@@ -37,7 +37,6 @@ class HrPayslip(models.Model):
         domain=[("activity_type", "=", "job")],
     )
 
-    @api.multi
     def count_unpaid_leaves(self):
         """
         Count unpaid leaves in worked days for a given payslip
@@ -50,7 +49,6 @@ class HrPayslip(models.Model):
 
         return sum(l.number_of_hours for l in leave_days)
 
-    @api.multi
     def count_paid_worked_days(self, in_cash=False):
         """
         Count paid worked days for a given payslip

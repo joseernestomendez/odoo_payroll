@@ -18,13 +18,12 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrContract(models.Model):
     _inherit = "hr.contract"
 
-    @api.multi
     def _get_hourly_rate_from_wage(self):
         """
         :param ids: ID of contract

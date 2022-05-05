@@ -34,5 +34,4 @@
         <record id="hr_holidays.holiday_status_cl" model="hr.holidays.status">
             <field name="paid_leave">1</field>
         </record>
-    </data>
-</openerp>
+</odoo>

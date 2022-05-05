@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models
+import odoo.addons.decimal_precision as dp
 
 
 class HrPayslipWorkedDays(models.Model):
@@ -61,7 +61,6 @@ class HrPayslipWorkedDays(models.Model):
             vals["number_of_hours_allowed"] = vals.get("number_of_hours")
         return super(HrPayslipWorkedDays, self).create(vals)
 
-    @api.one
     @api.depends(
         "hourly_rate", "number_of_hours", "rate", "number_of_hours_allowed"
     )
@@ -74,7 +73,6 @@ class HrPayslipWorkedDays(models.Model):
                 self.hourly_rate * self.number_of_hours_allowed * self.rate
             ) / 100
 
-    @api.one
     @api.depends("hourly_rate", "number_of_hours", "rate")
     def _compute_amount_requested(self):
         self.amount_requested = (

@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import fields, models, api
+from odoo import fields, models, api
 
 
 class HrSalaryRule(models.Model):
@@ -30,7 +30,6 @@ class HrSalaryRule(models.Model):
         string="Related Leave Activities",
     )
 
-    @api.multi
     def _get_leave_activities(self):
         if isinstance(self.ids, (int, long)):
             ids = [ids]
@@ -39,7 +38,6 @@ class HrSalaryRule(models.Model):
 
         return self.leave_activity_ids
 
-    @api.multi
     def reduce_leaves(self, payslip, reduction, in_cash=False):
         """
         When the leave hours computed in worked days are greater than the
@@ -89,7 +87,6 @@ class HrSalaryRule(models.Model):
                 else current_reduction
             )
 
-    @api.multi
     def sum_leaves_requested(self, payslip, in_cash=False):
         """
         Used in salary rules to sum leave hours from worked_days
@@ -113,7 +110,6 @@ class HrSalaryRule(models.Model):
 
         return sum(wd.number_of_hours for wd in worked_days)
 
-    @api.multi
     def sum_leaves_taken(self, payslip, in_cash=False):
         """
         Used in salary rules to sum leave hours from worked_days

@@ -31,5 +31,4 @@
             <field name="leave_id" ref="holiday_status_public"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -21,7 +21,7 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 class TestHrWorkedDays(common.TransactionCase):
