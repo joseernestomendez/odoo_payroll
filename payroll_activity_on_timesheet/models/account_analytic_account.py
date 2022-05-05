@@ -22,21 +22,21 @@ from openerp import fields, models
 
 
 class AccountAnalyticAccount(models.Model):
-    _inherit = 'account.analytic.account'
+    _inherit = "account.analytic.account"
 
     authorized_activity_ids = fields.Many2many(
-        'hr.activity',
-        'account_analytic_activity_rel',
-        'analytic_account_id',
-        'activity_id',
-        'Authorized Activities',
+        "hr.activity",
+        "account_analytic_activity_rel",
+        "analytic_account_id",
+        "activity_id",
+        "Authorized Activities",
     )
     activity_type = fields.Selection(
         [
-            ('leave', 'Leaves'),
-            ('job', 'Job Positions'),
+            ("leave", "Leaves"),
+            ("job", "Job Positions"),
         ],
-        'Activity Type',
+        "Activity Type",
         required=True,
-        default='job'
+        default="job",
     )

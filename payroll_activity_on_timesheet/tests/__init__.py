@@ -18,10 +18,6 @@
 #
 ##############################################################################
 
-from . import (
-    test_activity_on_timesheet
-)
+from . import test_activity_on_timesheet
 
-checks = [
-    test_activity_on_timesheet
-]
+checks = [test_activity_on_timesheet]

@@ -22,13 +22,13 @@ from openerp import api, fields, models
 
 
 class AccountAnalyticLine(models.Model):
-    _inherit = 'account.analytic.line'
+    _inherit = "account.analytic.line"
     activity_id = fields.Many2one(
-        'hr.activity',
-        'Activity',
+        "hr.activity",
+        "Activity",
     )
 
-    @api.onchange('project_id')
+    @api.onchange("project_id")
     def onchange_project_id(self):
 
         # If an activity and an account are given, check if the activity
@@ -44,8 +44,8 @@ class AccountAnalyticLine(models.Model):
             activity = self.activity_id
 
             if activity in auth_activities or (
-                not auth_activities and
-                account.activity_type == activity.activity_type
+                not auth_activities
+                and account.activity_type == activity.activity_type
             ):
                 self.activity_id = activity_id
             elif auth_activities:

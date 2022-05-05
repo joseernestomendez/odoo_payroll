@@ -29,7 +29,7 @@ to_string = fields.Date.to_string
 
 
 class HrActivity(models.Model):
-    _inherit = 'hr.activity'
+    _inherit = "hr.activity"
 
     def _get_authorized_user_ids(self):
         """
@@ -39,17 +39,19 @@ class HrActivity(models.Model):
         now = to_string(datetime.now())
 
         for activity in self:
-            if activity.activity_type != 'job':
+            if activity.activity_type != "job":
                 activity.authorized_user_ids = False
 
             else:
                 contract_jobs = activity.job_id.contract_job_ids.filtered(
-                    lambda j: j.contract_id.date_start <= now and (
-                        not j.contract_id.date_end or
-                        now <= j.contract_id.date_end
-                    ))
+                    lambda j: j.contract_id.date_start <= now
+                    and (
+                        not j.contract_id.date_end
+                        or now <= j.contract_id.date_end
+                    )
+                )
 
-                users = contract_jobs.mapped('contract_id.employee_id.user_id')
+                users = contract_jobs.mapped("contract_id.employee_id.user_id")
                 activity.authorized_user_ids = users.ids
 
     def _search_activities_from_user(self, operator=None, value=None):
@@ -63,8 +65,8 @@ class HrActivity(models.Model):
 
         # The context should contain the user id of the employee
         # to whom the timesheet belongs
-        if 'user_id' in context:
-            user = self.env['res.users'].browse(context['user_id'])
+        if "user_id" in context:
+            user = self.env["res.users"].browse(context["user_id"])
             if not user.employee_ids:
                 return []
 
@@ -73,46 +75,52 @@ class HrActivity(models.Model):
             return []
 
         if not employee.contract_id:
-            raise ValidationError(_(
-                "There is no available contract for employee %s." %
-                employee.name))
+            raise ValidationError(
+                _(
+                    "There is no available contract for employee %s."
+                    % employee.name
+                )
+            )
 
-        activities = self.env['hr.activity']
+        activities = self.env["hr.activity"]
 
-        account_model = self.env['account.analytic.account']
+        account_model = self.env["account.analytic.account"]
         account = (
-            account_model.browse(context['account_id'])
-            if 'account_id' in context else None
+            account_model.browse(context["account_id"])
+            if "account_id" in context
+            else None
         )
 
         # Get the activities related to the jobs
         # on the employee's contract
-        if not account or account.activity_type == 'job':
+        if not account or account.activity_type == "job":
             activities += employee.contract_id.contract_job_ids.mapped(
-                'job_id.activity_ids')
+                "job_id.activity_ids"
+            )
 
-        if not account or account.activity_type == 'leave':
-            activities += self.env['hr.activity'].search(
-                [('activity_type', '=', 'leave')])
+        if not account or account.activity_type == "leave":
+            activities += self.env["hr.activity"].search(
+                [("activity_type", "=", "leave")]
+            )
 
         # Return all activities if no account was given in context
         if not account or not account.authorized_activity_ids:
-            return [('id', 'in', activities.ids)]
+            return [("id", "in", activities.ids)]
 
         auth_activities = activities & account.authorized_activity_ids
 
-        return [('id', 'in', auth_activities.ids)]
+        return [("id", "in", auth_activities.ids)]
 
     authorized_user_ids = fields.Many2many(
-        compute='_get_authorized_user_ids',
-        search='_search_activities_from_user',
-        comodel_name='res.users',
-        string='Authorized Users',
+        compute="_get_authorized_user_ids",
+        search="_search_activities_from_user",
+        comodel_name="res.users",
+        string="Authorized Users",
     )
     authorized_account_ids = fields.Many2many(
-        'account.analytic.account',
-        'account_analytic_activity_rel',
-        'activity_id',
-        'analytic_account_id',
-        'Authorized Accounts',
+        "account.analytic.account",
+        "account_analytic_activity_rel",
+        "activity_id",
+        "analytic_account_id",
+        "Authorized Accounts",
     )
