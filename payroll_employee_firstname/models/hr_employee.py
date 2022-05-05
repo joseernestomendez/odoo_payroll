@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Odoo, Open Source Management Solution
@@ -20,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 class HrEmployee(models.Model):
@@ -48,7 +47,6 @@ class HrEmployee(models.Model):
                 }
             )
 
-    @api.multi
     def update_partner_firstname(self):
         for employee in self:
             partners = employee.user_id.partner_id + employee.address_home_id
@@ -84,7 +82,6 @@ class HrEmployee(models.Model):
 
         return super(HrEmployee, self).create(vals)
 
-    @api.multi
     def write(self, vals):
         if vals.get("firstname") or vals.get("lastname"):
             lastname = vals.get("lastname") or self.lastname or " "
