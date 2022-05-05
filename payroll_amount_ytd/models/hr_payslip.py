@@ -27,7 +27,7 @@ to_string = fields.Date.to_string
 
 class HrPayslip(models.Model):
 
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     @api.multi
     def compute_sheet(self):
@@ -40,8 +40,7 @@ class HrPayslip(models.Model):
         if not self.line_ids:
             return
 
-        query = (
-            """SELECT pl_1.id, sum(
+        query = """SELECT pl_1.id, sum(
                 case when p.credit_note then -pl_2.amount else pl_2.amount end)
             FROM hr_payslip_line pl_1, hr_payslip_line pl_2, hr_payslip p
             WHERE pl_1.id IN %(payslip_line_ids)s
@@ -53,26 +52,28 @@ class HrPayslip(models.Model):
             AND %(date_from)s <= p.date_payment
             AND p.date_payment <= %(date_to)s
             GROUP BY pl_1.id
-            """)
+            """
 
         date_payment = fields.Date.from_string(self.date_payment)
-        date_from = fields.Date.to_string(
-            datetime(date_payment.year, 1, 1))
+        date_from = fields.Date.to_string(datetime(date_payment.year, 1, 1))
 
         cr = self.env.cr
 
-        cr.execute(query, {
-            'date_from': date_from,
-            'date_to': self.date_payment,
-            'payslip_line_ids': tuple(self.line_ids.ids),
-            'employee_id': self.employee_id.id,
-            'company_id': self.company_id.id,
-            'payslip_id': self.id,
-        })
+        cr.execute(
+            query,
+            {
+                "date_from": date_from,
+                "date_to": self.date_payment,
+                "payslip_line_ids": tuple(self.line_ids.ids),
+                "employee_id": self.employee_id.id,
+                "company_id": self.company_id.id,
+                "payslip_id": self.id,
+            },
+        )
 
         res = cr.fetchall()
 
-        line_model = self.env['hr.payslip.line']
+        line_model = self.env["hr.payslip.line"]
 
         for (line_id, amount_ytd) in res:
             line = line_model.browse(line_id)
@@ -92,8 +93,7 @@ class HrPayslip(models.Model):
         date_slip = fields.Date.from_string(self.date_payment)
         date_from = to_string(datetime(date_slip.year, 1, 1))
 
-        query = (
-            """SELECT sum(
+        query = """SELECT sum(
                 case when p.credit_note then -pl.amount else pl.amount end)
             FROM hr_payslip_line pl, hr_payslip p
             WHERE pl.slip_id = p.id
@@ -104,16 +104,18 @@ class HrPayslip(models.Model):
             AND %(date_from)s <= p.date_payment
             AND p.date_payment <= %(date_to)s
             """
-        )
 
         cr = self.env.cr
 
-        cr.execute(query, {
-            'date_from': date_from,
-            'date_to': self.date_payment,
-            'company_id': self.company_id.id,
-            'employee_id': self.employee_id.id,
-            'code': code,
-        })
+        cr.execute(
+            query,
+            {
+                "date_from": date_from,
+                "date_to": self.date_payment,
+                "company_id": self.company_id.id,
+                "employee_id": self.employee_id.id,
+                "code": code,
+            },
+        )
 
         return cr.fetchone()[0] or 0

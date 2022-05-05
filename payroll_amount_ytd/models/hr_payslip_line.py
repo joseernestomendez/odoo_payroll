@@ -24,9 +24,9 @@ import openerp.addons.decimal_precision as dp
 
 class HrPayslipLine(models.Model):
 
-    _inherit = 'hr.payslip.line'
+    _inherit = "hr.payslip.line"
 
     amount_ytd = fields.Float(
-        'Amount YTD',
-        digits_compute=dp.get_precision('Payroll'),
+        "Amount YTD",
+        digits_compute=dp.get_precision("Payroll"),
     )

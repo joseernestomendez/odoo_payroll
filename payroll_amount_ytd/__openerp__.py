@@ -19,18 +19,18 @@
 ##############################################################################
 
 {
-    'name': 'Payslip Year-to-date Amount',
-    'version': '1.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com/',
-    'depends': [
-        'payroll_period',
+    "name": "Payslip Year-to-date Amount",
+    "version": "1.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com/",
+    "depends": [
+        "payroll_period",
     ],
-    'data': [
-        'report/report_payslip.xml',
-        'views/hr_payslip.xml',
+    "data": [
+        "report/report_payslip.xml",
+        "views/hr_payslip.xml",
     ],
-    'installable': True,
+    "installable": True,
 }
