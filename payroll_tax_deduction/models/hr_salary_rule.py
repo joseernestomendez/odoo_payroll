@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrSalaryRule(models.Model):
@@ -30,7 +30,6 @@ class HrSalaryRule(models.Model):
         string="Income Tax Deductions",
     )
 
-    @api.multi
     def sum_deductions(self, payslip):
         """
         Sum over an employee's income tax deductions

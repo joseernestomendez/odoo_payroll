@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrPayslip(models.Model):
@@ -34,12 +34,10 @@ class HrPayslip(models.Model):
         copy=True,
     )
 
-    @api.multi
     def compute_sheet(self):
         self.compute_deductions()
         super(HrPayslip, self).compute_sheet()
 
-    @api.one
     def compute_deductions(self):
         """
         Compute the deductions on the payslip.

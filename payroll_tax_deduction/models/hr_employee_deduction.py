@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrEmployeeDeduction(models.Model):
@@ -70,7 +70,6 @@ class HrEmployeeDeduction(models.Model):
         readonly=True,
     )
 
-    @api.multi
     def onchange_category_id(self, category_id, amount):
         if not category_id:
             return {}
