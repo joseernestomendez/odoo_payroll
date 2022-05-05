@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import fields, models
-import openerp.addons.decimal_precision as dp
+from odoo import fields, models
+import odoo.addons.decimal_precision as dp
 
 
 class HrPayslipLine(models.Model):

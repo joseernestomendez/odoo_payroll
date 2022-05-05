@@ -20,7 +20,7 @@
 
 from datetime import datetime
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 to_string = fields.Date.to_string
 
@@ -29,13 +29,11 @@ class HrPayslip(models.Model):
 
     _inherit = "hr.payslip"
 
-    @api.multi
     def compute_sheet(self):
         res = super(HrPayslip, self).compute_sheet()
         self.compute_ytd_amounts()
         return res
 
-    @api.one
     def compute_ytd_amounts(self):
         if not self.line_ids:
             return
@@ -79,7 +77,6 @@ class HrPayslip(models.Model):
             line = line_model.browse(line_id)
             line.amount_ytd = amount_ytd
 
-    @api.multi
     def ytd_amount(self, code):
         """
         Get the total amount since the beginning of the year
