@@ -24,15 +24,15 @@ import openerp.addons.decimal_precision as dp
 
 class HrPayslip(models.Model):
 
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     # Fields required to compute benefits based on
     # a percentage of the gross salary for the pay period
     gross_salary = fields.Float(
-        'Gross Salary',
-        digits_compute=dp.get_precision('Payroll'),
+        "Gross Salary",
+        digits_compute=dp.get_precision("Payroll"),
         readonly=True,
-        states={'draft': [('readonly', False)]},
+        states={"draft": [("readonly", False)]},
         default=0,
     )
 
@@ -48,4 +48,4 @@ class HrPayslip(models.Model):
         -------
         payslip.set_gross_salary(GROSS)
         """
-        self.write({'gross_salary': gross})
+        self.write({"gross_salary": gross})

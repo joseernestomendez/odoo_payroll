@@ -19,17 +19,17 @@
 ##############################################################################
 
 {
-    'name': 'Employee Benefit Percent',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_employee_benefit',
+    "name": "Employee Benefit Percent",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_employee_benefit",
     ],
-    'data': [
-        'views/hr_payslip.xml',
+    "data": [
+        "views/hr_payslip.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

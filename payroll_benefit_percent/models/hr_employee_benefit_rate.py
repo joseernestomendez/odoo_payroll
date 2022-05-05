@@ -22,20 +22,21 @@ from openerp import api, models, _
 
 
 class HrEmployeeBenefitRate(models.Model):
-    _inherit = 'hr.employee.benefit.rate'
+    _inherit = "hr.employee.benefit.rate"
 
     @api.model
     def get_all_amount_types(self):
         res = super(HrEmployeeBenefitRate, self).get_all_amount_types()
 
-        res.append(('percent_gross', _('Percent of Gross Salary')))
+        res.append(("percent_gross", _("Percent of Gross Salary")))
 
         return res
 
     @api.model
     def _get_line_base_ratio(self, line, payslip):
-        if line.amount_type == 'percent_gross':
+        if line.amount_type == "percent_gross":
             return payslip.gross_salary / 100
 
         return super(HrEmployeeBenefitRate, self)._get_line_base_ratio(
-            line, payslip)
+            line, payslip
+        )
