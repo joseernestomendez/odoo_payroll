@@ -23,15 +23,17 @@ from openerp import api, models
 
 class HrPayslipEmployees(models.TransientModel):
 
-    _inherit = 'hr.payslip.employees'
+    _inherit = "hr.payslip.employees"
 
     @api.multi
     def import_timesheets(self):
         wage_slips = self.payslip_ids.filtered(
-            lambda p: p.contract_id.salary_computation_method == 'yearly')
+            lambda p: p.contract_id.salary_computation_method == "yearly"
+        )
 
         hourly_slips = self.payslip_ids.filtered(
-            lambda p: p.contract_id.salary_computation_method == 'hourly')
+            lambda p: p.contract_id.salary_computation_method == "hourly"
+        )
 
         wage_slips.import_worked_days(raise_exception=False)
         hourly_slips.import_worked_days()

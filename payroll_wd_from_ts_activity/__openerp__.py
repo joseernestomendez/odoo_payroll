@@ -19,17 +19,17 @@
 ##############################################################################
 
 {
-    'name': 'Worked Days From Timesheet With Activities',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_activity_on_timesheet',
-        'payroll_wd_from_ts',
+    "name": "Worked Days From Timesheet With Activities",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_activity_on_timesheet",
+        "payroll_wd_from_ts",
     ],
-    'data': [],
-    'installable': True,
-    'auto_install': False,
+    "data": [],
+    "installable": True,
+    "auto_install": False,
 }
