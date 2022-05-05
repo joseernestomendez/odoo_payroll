@@ -21,13 +21,13 @@
 ##############################################################################
 
 {
-    'name': 'Canada - Provinces and Territories',
-    'version': '9.0.0.0.0',
-    'author': "Savoir-faire Linux,Odoo Community Association (OCA)",
-    'website': 'http://www.savoirfairelinux.com',
-    'category': 'Localisation/Canada',
-    'license': 'AGPL-3',
-    'description': """
+    "name": "Canada - Provinces and Territories",
+    "version": "9.0.0.0.0",
+    "author": "Savoir-faire Linux,Odoo Community Association (OCA)",
+    "website": "http://www.savoirfairelinux.com",
+    "category": "Localisation/Canada",
+    "license": "AGPL-3",
+    "description": """
 Provinces and territories of Canada.
 ====================================
 
@@ -39,9 +39,9 @@ Contributors
 * Maxime Chambreuil <maxime.chambreuil@savoirfairelinux.com>
 * Sandy Carter <sandy.carter@savoirfairelinux.com>
 """,
-    'depends': ['base'],
-    'data': [
-        'l10n_ca_toponyms.xml',
+    "depends": ["base"],
+    "data": [
+        "l10n_ca_toponyms.xml",
     ],
-    'installable': False,
+    "installable": False,
 }
