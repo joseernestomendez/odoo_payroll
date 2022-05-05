@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrHolidays(models.Model):
@@ -31,7 +31,6 @@ class HrHolidays(models.Model):
         "Leave Accrual Line",
     )
 
-    @api.multi
     def holidays_validate(self):
         """
         After an allocation of holidays is validated,
@@ -48,11 +47,9 @@ class HrHolidays(models.Model):
 
         return res
 
-    @api.multi
     def cancel_leave_accrual_lines(self):
         self.mapped("accrual_line_ids").unlink()
 
-    @api.one
     def compute_leave_accrual_lines(self):
         if (
             self.type == "add"

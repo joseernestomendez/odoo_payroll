@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models, _
+import odoo.addons.decimal_precision as dp
 
 
 class HrLeaveAccrualLineHours(models.Model):
@@ -77,14 +77,12 @@ class HrLeaveAccrualLineHours(models.Model):
 
         return res
 
-    @api.multi
     def write(self, vals):
         res = super(HrLeaveAccrualLineHours, self).write(vals)
         if not self.env.context.get("disable_leave_accrual_update"):
             self.mapped("accrual_id").update_total_hours()
         return res
 
-    @api.multi
     def unlink(self):
         accruals = self.mapped("accrual_id")
         res = super(HrLeaveAccrualLineHours, self).unlink()

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="rule_employee_own_leave_accrual"  model="ir.rule">
             <field name="name">Access Employee own Leave Accruals</field>
@@ -62,5 +61,4 @@
             <field name="perm_read" eval="True"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

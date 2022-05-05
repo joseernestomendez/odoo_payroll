@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrPayslip(models.Model):
@@ -37,7 +37,6 @@ class HrPayslip(models.Model):
         "Accruded Leaves in Hours",
     )
 
-    @api.multi
     def compute_sheet(self):
         res = super(HrPayslip, self).compute_sheet()
 
@@ -48,24 +47,20 @@ class HrPayslip(models.Model):
 
         return res
 
-    @api.multi
     def process_sheet(self):
         res = super(HrPayslip, self).process_sheet()
         self.mapped("employee_id.leave_accrual_ids").update_totals()
         return res
 
-    @api.multi
     def cancel_sheet(self):
         res = super(HrPayslip, self).cancel_sheet()
         self.mapped("employee_id.leave_accrual_ids").update_totals()
         return res
 
-    @api.multi
     def remove_accrual_lines(self):
         self.mapped("accrual_line_hours_ids").unlink()
         self.mapped("accrual_line_cash_ids").unlink()
 
-    @api.one
     def compute_leave_accrual_lines(self):
         """
         Update an employee's leave accruals with the amounts computed in the

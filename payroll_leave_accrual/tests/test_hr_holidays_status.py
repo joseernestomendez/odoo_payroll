@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.tests import common
+from odoo.tests import common
 from datetime import datetime
 
 
@@ -121,7 +121,7 @@ class TestHrHolidaysStatus(common.TransactionCase):
         """
         Validate the leave request as the manager
         """
-        self.request.sudo(self.user_1.id).holidays_validate()
+        self.request.with_user(self.user_1.id).holidays_validate()
 
         accrual = self.employee.get_leave_accrual(self.leave_type.id)
         self.assertEqual(accrual.total_hours, 22.5)
@@ -149,18 +149,20 @@ class TestHrHolidaysStatus(common.TransactionCase):
         )
 
         self.assertRaises(
-            Exception, accrual.sudo(self.user_3.id).check_access_rule, "read"
+            Exception,
+            accrual.with_user(self.user_3.id).check_access_rule,
+            "read",
         )
 
         self.assertRaises(
             Exception,
-            accrual.sudo(self.user_2.id).check_access_rights,
+            accrual.with_user(self.user_2.id).check_access_rights,
             "write",
         )
 
-        accrual.sudo(self.user_1.id).check_access_rule("read")
+        accrual.with_user(self.user_1.id).check_access_rule("read")
         self.assertTrue(
-            accrual.sudo(self.user_1.id).check_access_rights("read")
+            accrual.with_user(self.user_1.id).check_access_rights("read")
         )
 
         # The manager can not access the leave accruals of the employee 2
@@ -168,7 +170,9 @@ class TestHrHolidaysStatus(common.TransactionCase):
         accrual_2 = self.employee_2.get_leave_accrual(self.leave_type.id)
 
         self.assertRaises(
-            Exception, accrual_2.sudo(self.user_1.id).check_access_rule, "read"
+            Exception,
+            accrual_2.with_user(self.user_1.id).check_access_rule,
+            "read",
         )
 
         self.user_1.write(
@@ -180,7 +184,9 @@ class TestHrHolidaysStatus(common.TransactionCase):
         )
 
         for operation in ["read", "write", "create", "unlink"]:
-            accrual_2.sudo(self.user_1.id).check_access_rule(operation)
+            accrual_2.with_user(self.user_1.id).check_access_rule(operation)
             self.assertTrue(
-                accrual_2.sudo(self.user_1.id).check_access_rights(operation)
+                accrual_2.with_user(self.user_1.id).check_access_rights(
+                    operation
+                )
             )

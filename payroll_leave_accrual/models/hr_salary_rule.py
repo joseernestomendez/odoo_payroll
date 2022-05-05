@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class HrSalaryRule(models.Model):
@@ -36,7 +36,6 @@ class HrSalaryRule(models.Model):
         "Leave Accrual",
     )
 
-    @api.multi
     def get_leave_accrual(self):
         """
         If a salary rule is used to read or update a leave accrual,
@@ -56,7 +55,6 @@ class HrSalaryRule(models.Model):
 
         return self.leave_type_id
 
-    @api.multi
     def sum_leave_accruals(self, payslip, in_cash=False):
         """
         Sum over the lines of an employee's leave accruals available for
@@ -70,7 +68,6 @@ class HrSalaryRule(models.Model):
 
         return accrual.sum_leaves_available(payslip.date_to, in_cash=in_cash)
 
-    @api.multi
     def allow_override_limit(self):
         """
         Return True if the leave type related to the salary rule allows
@@ -83,7 +80,6 @@ class HrSalaryRule(models.Model):
         self.ensure_one()
         return self.leave_type_id.limit
 
-    @api.multi
     def sum_payslip_input(self, payslip):
         """
         Sum over the other input lines of the payslip for a given
@@ -100,7 +96,6 @@ class HrSalaryRule(models.Model):
             if l.category_id in categories
         )
 
-    @api.multi
     def reduce_payslip_input_amount(self, payslip, reduction):
         """
         When unused leaves requested are lower then those available,

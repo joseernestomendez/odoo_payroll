@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 class TestLeaveAccrual(common.TransactionCase):

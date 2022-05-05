@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models, _
+import odoo.addons.decimal_precision as dp
 
 
 class HrLeaveAccrual(models.Model):
@@ -61,14 +61,12 @@ class HrLeaveAccrual(models.Model):
         digits_compute=dp.get_precision("Payroll Hours"),
     )
 
-    @api.one
     def name_get(self):
         return (
             self.id,
             "%s - %s" % (self.leave_type_id.name, self.employee_id.name),
         )
 
-    @api.multi
     def update_totals(self):
         """
         Compute the total of the leave accrual.
@@ -81,7 +79,6 @@ class HrLeaveAccrual(models.Model):
         self.update_total_cash()
         self.update_total_hours()
 
-    @api.one
     def update_total_cash(self):
         if self.env.context.get("disable_leave_accrual_update"):
             return
@@ -100,7 +97,6 @@ class HrLeaveAccrual(models.Model):
 
         self.refresh()
 
-    @api.one
     def update_total_hours(self):
         if self.env.context.get("disable_leave_accrual_update"):
             return
@@ -119,7 +115,6 @@ class HrLeaveAccrual(models.Model):
 
         self.refresh()
 
-    @api.multi
     def sum_leaves_available(self, date, in_cash=False):
         self.ensure_one()
         return self.total_cash if in_cash else self.total_hours

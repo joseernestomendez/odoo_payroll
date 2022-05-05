@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrEmployee(models.Model):
@@ -31,7 +31,6 @@ class HrEmployee(models.Model):
         "Leave Accruals",
     )
 
-    @api.multi
     def get_leave_accrual(self, leave_type_id):
         """
         Get the leave accrual of an employee, given a leave type
