@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-from openerp.osv import osv
-from openerp.report import report_sxw
+from odoo.osv import osv
+from odoo.report import report_sxw
 
 
 class PayslipReport(report_sxw.rml_parse):

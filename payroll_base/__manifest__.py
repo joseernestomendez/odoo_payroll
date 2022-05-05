@@ -22,7 +22,7 @@
 
 {
     "name": "Advanced Payroll",
-    "version": "1.0.0",
+    "version": "13.0.1.0.0",
     "category": "Human Resources",
     "author": "OpenERP SA,Savoir-faire Linux",
     "website": "https://www.savoirfairelinux.com",
@@ -31,7 +31,7 @@
         "hr_contract",
         "hr_holidays",
         "decimal_precision",
-        "report",
+        "base",
     ],
     "data": [
         "security/ir_rule.xml",

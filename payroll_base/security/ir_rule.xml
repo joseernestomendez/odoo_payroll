@@ -30,6 +30,4 @@
         <field name="groups" eval="[(4,ref('payroll_base.group_hr_payroll_user'))]"/>
     </record>
 
-</data>
-
-</openerp>
+</odoo>

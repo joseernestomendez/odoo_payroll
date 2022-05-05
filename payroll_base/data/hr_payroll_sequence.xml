@@ -16,5 +16,4 @@
             <field name="prefix">PAY</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

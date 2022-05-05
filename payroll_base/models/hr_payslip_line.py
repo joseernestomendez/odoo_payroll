@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models, _
+import odoo.addons.decimal_precision as dp
 
 
 class HrPayslipLine(models.Model):
@@ -116,7 +116,6 @@ class HrPayslipLine(models.Model):
         "the employees.",
     )
 
-    @api.one
     @api.depends("amount")
     def _compute_total(self):
         total = self.amount

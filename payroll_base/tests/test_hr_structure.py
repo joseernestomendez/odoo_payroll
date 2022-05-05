@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 class TestHrStructureBase(common.TransactionCase):

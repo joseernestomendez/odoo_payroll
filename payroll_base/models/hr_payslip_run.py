@@ -23,7 +23,7 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrPayslipRun(models.Model):
@@ -97,20 +97,16 @@ class HrPayslipRun(models.Model):
         default=lambda self: self.env.user.company_id,
     )
 
-    @api.multi
     def draft_payslip_run(self):
         return self.write({"state": "draft"})
 
-    @api.multi
     def close_payslip_run(self):
         return self.write({"state": "close"})
 
-    @api.one
     def button_confirm_slips(self):
         for slip in self.slip_ids:
             slip.process_sheet()
 
-    @api.multi
     @api.returns("hr.employee")
     def get_employees(self):
         self.ensure_one()
@@ -124,7 +120,6 @@ class HrPayslipRun(models.Model):
     def onchange_company_id(self):
         return
 
-    @api.multi
     def get_payslip_employees_wizard(self):
         self.ensure_one()
 

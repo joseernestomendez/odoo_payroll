@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from openerp import fields, models, api, _
+from odoo import fields, models, api, _
 
 
 class HrContract(models.Model):
@@ -57,7 +57,6 @@ class HrContract(models.Model):
             ("semi-monthly", _("Semi-monthly")),
         ]
 
-    @api.multi
     def get_all_structures(self):
         """
         :return: record set of hr.payroll.structure
@@ -65,7 +64,6 @@ class HrContract(models.Model):
         structures = self.mapped("struct_id")
         return structures.get_parent_structures()
 
-    @api.one
     @api.depends("schedule_pay")
     def _get_pays_per_year(self):
         """

@@ -23,9 +23,9 @@
 import sys
 import traceback
 
-from openerp import fields, models, api, _
-from openerp.exceptions import ValidationError
-from openerp.tools.safe_eval import safe_eval
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
+from odoo.tools.safe_eval import safe_eval
 
 
 class HrSalaryRule(models.Model):
@@ -115,7 +115,6 @@ class HrSalaryRule(models.Model):
         "the employees.",
     )
 
-    @api.multi
     def compute_rule(self, localdict):
         """
         :param localdict: dictionary containing the environement in which to
@@ -138,7 +137,6 @@ class HrSalaryRule(models.Model):
                 % (self.name, self.code, err)
             )
 
-    @api.multi
     def satisfy_condition(self, localdict):
         """
         :return: True if the given rule match the condition.

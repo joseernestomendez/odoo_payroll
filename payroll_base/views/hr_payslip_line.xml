@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="view_hr_payslip_line_tree" model="ir.ui.view">
             <field name="name">hr.payslip.line.tree</field>
@@ -60,7 +59,6 @@
         <record id="action_view_hr_payslip_line_form" model="ir.actions.act_window">
             <field name="name">Payslip Lines</field>
             <field name="res_model">hr.payslip.line</field>
-            <field name="view_type">form</field>
             <field name="view_id" ref="view_hr_payslip_line_tree"/>
             <field name="search_view_id" ref="view_hr_payslip_line_filter"/>
         </record>
@@ -72,5 +70,4 @@
             groups="payroll_base.group_hr_payroll_user"
         />
 
-    </data>
-</openerp>
+</odoo>

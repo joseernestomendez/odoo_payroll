@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models, _
+import odoo.addons.decimal_precision as dp
 
 
 class HrPayslipWorkedDays(models.Model):
@@ -62,7 +62,6 @@ class HrPayslipWorkedDays(models.Model):
         digits_compute=dp.get_precision("Payroll"),
     )
 
-    @api.one
     @api.depends("hourly_rate", "number_of_hours", "rate")
     def _compute_total(self):
         self.total = (

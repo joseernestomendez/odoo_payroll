@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- Root Menus -->
 
         <menuitem
@@ -36,5 +35,4 @@
             groups="payroll_base.group_hr_payroll_manager"
             sequence="40"
         />
-    </data>
-</openerp>
+</odoo>

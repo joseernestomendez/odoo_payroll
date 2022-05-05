@@ -20,8 +20,8 @@
 #
 ##############################################################################
 
-from openerp import fields, models, api, _
-from openerp.osv import osv
+from odoo import fields, models, api, _
+from odoo.osv import osv
 
 
 class HrPayrollPeriod(models.Model):
@@ -80,7 +80,6 @@ class HrPayrollPeriod(models.Model):
         default = dict(default or {}, code=code)
         return super(HrPayrollPeriod, self).copy(res_id, default)
 
-    @api.multi
     def get_all_rules(self):
         """
         :return: record set of hr.salary.rule
@@ -88,7 +87,6 @@ class HrPayrollPeriod(models.Model):
         structures = self.get_parent_structures()
         return structures.mapped("rule_ids")
 
-    @api.multi
     def get_parent_structures(self):
         """
         :return: record set of hr.payroll.structure
@@ -106,7 +104,6 @@ class HrPayrollPeriod(models.Model):
 
         return res
 
-    @api.multi
     def get_children_recursively(self):
         res = self
         children = res.mapped("children_ids")

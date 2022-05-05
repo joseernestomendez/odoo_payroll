@@ -24,8 +24,8 @@ import time
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
-from openerp import api, fields, models, tools, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, tools, _
+from odoo.exceptions import ValidationError
 
 to_string = fields.Date.to_string
 from_string = fields.Date.from_string
@@ -198,11 +198,9 @@ class HrPayslip(models.Model):
             self.contract_id.schedule_pay, False
         )
 
-    @api.one
     def _payslip_count(self):
         self.payslip_line_count = len(self.details_by_salary_rule_category)
 
-    @api.one
     @api.constrains("date_from", "date_to")
     def _check_dates(self):
         if self.date_from > self.date_to:
@@ -210,20 +208,16 @@ class HrPayslip(models.Model):
                 _("Payslip 'Date From' must be before 'Date To'.")
             )
 
-    @api.multi
     def cancel_sheet(self):
         return self.write({"state": "cancel"})
 
-    @api.multi
     def process_sheet(self):
         return self.write({"paid": True, "state": "done"})
 
-    @api.multi
     def hr_verify_sheet(self):
         self.compute_sheet()
         return self.write({"state": "verify"})
 
-    @api.multi
     def refund_sheet(self):
         for payslip in self:
             id_copy = payslip.copy(
@@ -245,11 +239,9 @@ class HrPayslip(models.Model):
             "context": {},
         }
 
-    @api.multi
     def check_done(self):
         return True
 
-    @api.multi
     def unlink(self):
         for payslip in self:
             if payslip.state not in ["draft", "cancel"]:
@@ -301,7 +293,6 @@ class HrPayslip(models.Model):
 
         return contract_obj.search(clause_final)
 
-    @api.multi
     def compute_sheet(self):
         sequence_obj = self.env["ir.sequence"]
 
@@ -318,7 +309,6 @@ class HrPayslip(models.Model):
                 }
             )
 
-    @api.multi
     def get_payslip_lines(self):
         self.ensure_one()
 
@@ -439,7 +429,6 @@ class HrPayslip(models.Model):
         self.date_from = payslip_run.date_start
         self.date_to = payslip_run.date_end
 
-    @api.multi
     def get_pays_since_beginning(self, pays_per_year):
         """
         Get the number of pay periods since the beginning of the year.

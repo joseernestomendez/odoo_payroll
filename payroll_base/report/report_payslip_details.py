@@ -20,9 +20,9 @@
 #
 ##############################################################################
 
-from openerp.api import Environment
-from openerp.osv import osv
-from openerp.report import report_sxw
+from odoo.api import Environment
+from odoo.osv import osv
+from odoo.report import report_sxw
 
 
 class PayslipDetailsReport(report_sxw.rml_parse):

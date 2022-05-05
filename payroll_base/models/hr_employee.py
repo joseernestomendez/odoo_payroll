@@ -20,14 +20,13 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrEmployee(models.Model):
 
     _inherit = "hr.employee"
 
-    @api.one
     def _payslip_count(self):
         self.payslip_count = len(self.slip_ids)
 

@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
-    <data>
+<odoo>
         <report 
             id="action_report_payslip" 
             model="hr.payslip" 
@@ -17,5 +16,4 @@
             name="payroll_base.report_payslip_details" 
             file="report_payslip_details.xml"
         />
-    </data>
-</openerp>
+</odoo>
