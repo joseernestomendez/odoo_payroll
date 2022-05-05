@@ -18,13 +18,12 @@
 #
 ##############################################################################
 
-from openerp import api, models
+from odoo import api, models
 
 
 class HrSalaryRule(models.Model):
     _inherit = "hr.salary.rule"
 
-    @api.multi
     def _filter_benefits(self, payslip, **kwargs):
         """
         Remove all benefits that are exempted from a deduction.
