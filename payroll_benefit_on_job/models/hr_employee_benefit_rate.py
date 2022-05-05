@@ -18,19 +18,17 @@
 #
 ##############################################################################
 
-from openerp import api, models, _
+from odoo import api, models, _
 
 
 class HrEmployeeBenefitRate(models.Model):
     _inherit = "hr.employee.benefit.rate"
 
-    @api.multi
     def get_all_amount_types(self):
         res = super(HrEmployeeBenefitRate, self).get_all_amount_types()
         res.append(("per_hour", _("Per Worked Hour")))
         return res
 
-    @api.multi
     def compute_amounts_per_hour(self, worked_days):
         """
         Compute the amounts of benefit that are based on worked hours.

@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrEmployeeBenefit(models.Model):
@@ -27,7 +27,6 @@ class HrEmployeeBenefit(models.Model):
 
     job_id = fields.Many2one("hr.job", "Job", ondelete="cascade", index=True)
 
-    @api.multi
     def compute_amounts(self, payslip):
         other_benefits = self.filtered(lambda b: b.amount_type != "per_hour")
 

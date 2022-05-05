@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.addons.payroll_employee_benefit.tests.test_employee_benefit import (
+from odoo.addons.payroll_employee_benefit.tests.test_employee_benefit import (
     TestEmployeeBenefitBase,
 )
 

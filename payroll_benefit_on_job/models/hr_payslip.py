@@ -18,13 +18,12 @@
 #
 ##############################################################################
 
-from openerp import api, models
+from odoo import api, models
 
 
 class HrPayslip(models.Model):
     _inherit = "hr.payslip"
 
-    @api.multi
     def _search_benefits(self):
 
         benefits = super(HrPayslip, self)._search_benefits()
