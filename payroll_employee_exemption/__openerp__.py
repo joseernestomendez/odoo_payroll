@@ -19,20 +19,20 @@
 ##############################################################################
 
 {
-    'name': 'Employee Exemption',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_base',
+    "name": "Employee Exemption",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_base",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/hr_employee_view.xml',
-        'views/hr_income_tax_exemption_view.xml',
-        'views/hr_salary_rule_view.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/hr_employee_view.xml",
+        "views/hr_income_tax_exemption_view.xml",
+        "views/hr_salary_rule_view.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

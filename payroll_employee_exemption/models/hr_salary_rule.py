@@ -24,11 +24,11 @@ from openerp import api, models, fields
 
 class HrSalaryRule(models.Model):
 
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     exemption_id = fields.Many2one(
-        'hr.income.tax.exemption',
-        'Exemption',
+        "hr.income.tax.exemption",
+        "Exemption",
     )
 
     @api.multi
@@ -42,9 +42,9 @@ class HrSalaryRule(models.Model):
 
     @api.multi
     def check_exemption(self, localdict):
-        """ Check whether the employee is exempted for the given rule
-        """
+        """Check whether the employee is exempted for the given rule"""
         self.ensure_one()
 
-        return localdict['employee'].exempted_from(
-            self.exemption_id, localdict['payslip'].date_to)
+        return localdict["employee"].exempted_from(
+            self.exemption_id, localdict["payslip"].date_to
+        )

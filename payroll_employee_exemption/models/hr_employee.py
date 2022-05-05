@@ -23,13 +23,13 @@ from openerp import api, models, fields
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = "hr.employee"
 
     exemption_ids = fields.One2many(
-        'hr.employee.exemption',
-        'employee_id',
-        'Income Tax Exemptions',
-        groups='payroll_base.group_hr_payroll_manager',
+        "hr.employee.exemption",
+        "employee_id",
+        "Income Tax Exemptions",
+        groups="payroll_base.group_hr_payroll_manager",
     )
 
     @api.multi
@@ -44,9 +44,9 @@ class HrEmployee(models.Model):
 
         for e in self.exemption_ids:
             if (
-                e.exemption_id == exemption and
-                e.date_from <= date and
-                (not e.date_to or date <= e.date_to)
+                e.exemption_id == exemption
+                and e.date_from <= date
+                and (not e.date_to or date <= e.date_to)
             ):
                 return True
 

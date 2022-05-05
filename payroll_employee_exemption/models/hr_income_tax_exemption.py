@@ -25,16 +25,13 @@ from openerp import fields, models, _
 class HrIncomeTaxExemption(models.Model):
     """Income Tax Exemption"""
 
-    _name = 'hr.income.tax.exemption'
+    _name = "hr.income.tax.exemption"
     _description = _(__doc__)
 
-    name = fields.Char(
-        'Name',
-        required=True
-    )
+    name = fields.Char("Name", required=True)
     salary_rule_ids = fields.One2many(
-        'hr.salary.rule',
-        'exemption_id',
-        'Salary Rules',
+        "hr.salary.rule",
+        "exemption_id",
+        "Salary Rules",
         readonly=True,
     )

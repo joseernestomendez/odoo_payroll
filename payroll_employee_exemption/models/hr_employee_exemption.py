@@ -25,19 +25,19 @@ from openerp import fields, models, _
 class HrEmployeeExemption(models.Model):
     """Employee Income Tax Exemption"""
 
-    _name = 'hr.employee.exemption'
+    _name = "hr.employee.exemption"
     _description = _(__doc__)
 
     employee_id = fields.Many2one(
-        'hr.employee',
-        'Employee',
+        "hr.employee",
+        "Employee",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     exemption_id = fields.Many2one(
-        'hr.income.tax.exemption',
-        'Exemption',
+        "hr.income.tax.exemption",
+        "Exemption",
         required=True,
     )
-    date_from = fields.Date('Date From', required=True)
-    date_to = fields.Date('Date To')
+    date_from = fields.Date("Date From", required=True)
+    date_to = fields.Date("Date To")
