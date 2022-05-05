@@ -23,11 +23,11 @@ from openerp.exceptions import ValidationError
 
 
 class HrReleve1Summary(models.Model):
-    _inherit = 'hr.releve_1.summary'
+    _inherit = "hr.releve_1.summary"
 
     move_id = fields.Many2one(
-        'account.move',
-        'Accounting Entry',
+        "account.move",
+        "Accounting Entry",
         readonly=True,
     )
 
@@ -44,39 +44,43 @@ class HrReleve1Summary(models.Model):
 
     @api.multi
     def _cancel_account_move(self):
-        self.mapped('move_id').button_cancel()
+        self.mapped("move_id").button_cancel()
 
     @api.multi
     def _create_account_move(self):
 
-        revenu_quebec = self.env.ref(
-            'payroll_quebec.partner_revenu_quebec')
+        revenu_quebec = self.env.ref("payroll_quebec.partner_revenu_quebec")
 
         for summary in self:
             company = summary.company_id
             if not company.payroll_journal_id:
                 raise ValidationError(
-                    _("The payroll journal is not set for company %s.") %
-                    company.name)
+                    _("The payroll journal is not set for company %s.")
+                    % company.name
+                )
 
-            rule_hsf = self.env.ref('payroll_quebec.rule_qc_hsf_er_c')
+            rule_hsf = self.env.ref("payroll_quebec.rule_qc_hsf_er_c")
 
             hsf_debit = rule_hsf.account_debit
             hsf_credit = rule_hsf.account_credit
 
             if not hsf_debit or not hsf_credit:
                 raise ValidationError(
-                    _("You have not correctly set the "
-                      "accounts for salary rule %s.") % rule_hsf.name)
+                    _(
+                        "You have not correctly set the "
+                        "accounts for salary rule %s."
+                    )
+                    % rule_hsf.name
+                )
 
             cnt_debit = company.qc_cnt_debit_account
             cnt_credit = company.qc_cnt_credit_account
 
             if not cnt_debit or not cnt_credit:
                 raise ValidationError(
-                    _("You have not correctly set the CNT "
-                      "accounts for %s.")
-                    % company.name)
+                    _("You have not correctly set the CNT " "accounts for %s.")
+                    % company.name
+                )
 
             hsf_entry_name = _("HSF Contribution")
             cnt_entry_name = _("CNT Contribution")
@@ -85,32 +89,48 @@ class HrReleve1Summary(models.Model):
             cnt_payable = summary.cnt_amount_payable
 
             move_lines = [
-                (0, 0, {
-                    'name': hsf_entry_name,
-                    'account_id': hsf_debit.id,
-                    'debit': hsf_payable if hsf_payable > 0 else 0,
-                    'credit': -hsf_payable if hsf_payable < 0 else 0,
-                }),
-                (0, 0, {
-                    'name': hsf_entry_name,
-                    'account_id': hsf_credit.id,
-                    'partner_id': revenu_quebec.id,
-                    'debit': -hsf_payable if hsf_payable < 0 else 0,
-                    'credit': hsf_payable if hsf_payable > 0 else 0,
-                }),
-                (0, 0, {
-                    'name': cnt_entry_name,
-                    'account_id': cnt_debit.id,
-                    'debit': cnt_payable if cnt_payable > 0 else 0,
-                    'credit': -cnt_payable if cnt_payable < 0 else 0,
-                }),
-                (0, 0, {
-                    'name': cnt_entry_name,
-                    'account_id': cnt_credit.id,
-                    'partner_id': revenu_quebec.id,
-                    'debit': -cnt_payable if cnt_payable < 0 else 0,
-                    'credit': cnt_payable if cnt_payable > 0 else 0,
-                }),
+                (
+                    0,
+                    0,
+                    {
+                        "name": hsf_entry_name,
+                        "account_id": hsf_debit.id,
+                        "debit": hsf_payable if hsf_payable > 0 else 0,
+                        "credit": -hsf_payable if hsf_payable < 0 else 0,
+                    },
+                ),
+                (
+                    0,
+                    0,
+                    {
+                        "name": hsf_entry_name,
+                        "account_id": hsf_credit.id,
+                        "partner_id": revenu_quebec.id,
+                        "debit": -hsf_payable if hsf_payable < 0 else 0,
+                        "credit": hsf_payable if hsf_payable > 0 else 0,
+                    },
+                ),
+                (
+                    0,
+                    0,
+                    {
+                        "name": cnt_entry_name,
+                        "account_id": cnt_debit.id,
+                        "debit": cnt_payable if cnt_payable > 0 else 0,
+                        "credit": -cnt_payable if cnt_payable < 0 else 0,
+                    },
+                ),
+                (
+                    0,
+                    0,
+                    {
+                        "name": cnt_entry_name,
+                        "account_id": cnt_credit.id,
+                        "partner_id": revenu_quebec.id,
+                        "debit": -cnt_payable if cnt_payable < 0 else 0,
+                        "credit": cnt_payable if cnt_payable > 0 else 0,
+                    },
+                ),
             ]
 
             wsdrf_debit = company.qc_wsdrf_debit_account
@@ -120,49 +140,78 @@ class HrReleve1Summary(models.Model):
             if summary.wsdrf_salaries:
 
                 if (
-                    not wsdrf_debit or not wsdrf_credit or
-                    not wsdrf_reported_account
+                    not wsdrf_debit
+                    or not wsdrf_credit
+                    or not wsdrf_reported_account
                 ):
                     raise ValidationError(
-                        _("You have not correctly set the WSDRF "
-                          "accounts for %s.")
-                        % company.name)
+                        _(
+                            "You have not correctly set the WSDRF "
+                            "accounts for %s."
+                        )
+                        % company.name
+                    )
 
                 wsdrf_entry_name = _("WSDRF Contribution")
 
                 wsdrf_reported = (
-                    summary.wsdrf_reported - summary.wsdrf_previous_reported)
+                    summary.wsdrf_reported - summary.wsdrf_previous_reported
+                )
                 wsdrf_payable = summary.wsdrf_contribution
                 wsdrf_expense = summary.wsdrf_contribution - wsdrf_reported
 
                 move_lines += [
-                    (0, 0, {
-                        'name': wsdrf_entry_name,
-                        'account_id': wsdrf_debit.id,
-                        'debit': wsdrf_expense if wsdrf_expense > 0 else 0,
-                        'credit': -wsdrf_expense if wsdrf_expense < 0 else 0,
-                    }),
-                    (0, 0, {
-                        'name': wsdrf_entry_name,
-                        'account_id': wsdrf_credit.id,
-                        'partner_id': revenu_quebec.id,
-                        'debit': -wsdrf_payable if wsdrf_payable < 0 else 0,
-                        'credit': wsdrf_payable if wsdrf_payable > 0 else 0,
-                    }),
-                    (0, 0, {
-                        'name': wsdrf_entry_name,
-                        'account_id': wsdrf_reported_account.id,
-                        'debit': wsdrf_reported if wsdrf_reported > 0 else 0,
-                        'credit': -wsdrf_reported if wsdrf_reported < 0 else 0,
-                    }),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": wsdrf_entry_name,
+                            "account_id": wsdrf_debit.id,
+                            "debit": wsdrf_expense if wsdrf_expense > 0 else 0,
+                            "credit": -wsdrf_expense
+                            if wsdrf_expense < 0
+                            else 0,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": wsdrf_entry_name,
+                            "account_id": wsdrf_credit.id,
+                            "partner_id": revenu_quebec.id,
+                            "debit": -wsdrf_payable
+                            if wsdrf_payable < 0
+                            else 0,
+                            "credit": wsdrf_payable
+                            if wsdrf_payable > 0
+                            else 0,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": wsdrf_entry_name,
+                            "account_id": wsdrf_reported_account.id,
+                            "debit": wsdrf_reported
+                            if wsdrf_reported > 0
+                            else 0,
+                            "credit": -wsdrf_reported
+                            if wsdrf_reported < 0
+                            else 0,
+                        },
+                    ),
                 ]
 
-            move = self.env['account.move'].create({
-                'company_id': company.id,
-                'journal_id': company.payroll_journal_id.id,
-                'ref': _("Summary 1 - Year %s") % summary.year,
-                'date': summary.date,
-                'line_ids': move_lines,
-            })
+            move = self.env["account.move"].create(
+                {
+                    "company_id": company.id,
+                    "journal_id": company.payroll_journal_id.id,
+                    "ref": _("Summary 1 - Year %s") % summary.year,
+                    "date": summary.date,
+                    "line_ids": move_lines,
+                }
+            )
 
-            summary.write({'move_id': move.id})
+            summary.write({"move_id": move.id})

@@ -22,36 +22,36 @@ from openerp import fields, models
 
 
 class res_company(models.Model):
-    _inherit = 'res.company'
+    _inherit = "res.company"
 
     qc_cnt_debit_account = fields.Many2one(
-        'account.account',
-        'CNT - Debit Account',
-        help="Expense account for the CNT contribution."
+        "account.account",
+        "CNT - Debit Account",
+        help="Expense account for the CNT contribution.",
     )
 
     qc_cnt_credit_account = fields.Many2one(
-        'account.account',
-        'CNT - Credit Account',
-        help="Account payable for the CNT contribution."
+        "account.account",
+        "CNT - Credit Account",
+        help="Account payable for the CNT contribution.",
     )
 
     qc_wsdrf_debit_account = fields.Many2one(
-        'account.account',
-        'WSDRF - Debit Account',
-        help="Expense account for the WSDRF contribution."
+        "account.account",
+        "WSDRF - Debit Account",
+        help="Expense account for the WSDRF contribution.",
     )
 
     qc_wsdrf_credit_account = fields.Many2one(
-        'account.account',
-        'WSDRF - Credit Account',
-        help="Account payable for the WSDRF contribution."
+        "account.account",
+        "WSDRF - Credit Account",
+        help="Account payable for the WSDRF contribution.",
     )
 
     qc_wsdrf_reported_account = fields.Many2one(
-        'account.account',
-        'WSDRF - Reported Expenses Account',
+        "account.account",
+        "WSDRF - Reported Expenses Account",
         help="Account for the expenses eligible to the WSDRF "
         "reported from one year to another. "
-        "Must be an asset account."
+        "Must be an asset account.",
     )
