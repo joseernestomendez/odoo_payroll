@@ -23,13 +23,13 @@ from openerp import fields, models
 
 class HrEmployee(models.Model):
 
-    _inherit = 'hr.employee'
+    _inherit = "hr.employee"
 
     deduction_ids = fields.One2many(
-        'hr.employee.deduction',
-        'employee_id',
-        'Income Tax Deductions',
+        "hr.employee.deduction",
+        "employee_id",
+        "Income Tax Deductions",
         groups="payroll_base.group_hr_payroll_manager",
         help="Income Tax deductions for the computation of the "
-        "employee's payslips"
+        "employee's payslips",
     )

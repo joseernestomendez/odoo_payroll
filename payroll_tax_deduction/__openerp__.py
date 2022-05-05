@@ -19,25 +19,25 @@
 ##############################################################################
 
 {
-    'name': 'Canada - Income Tax Deductions',
-    'version': '1.0',
-    'license': 'AGPL-3',
-    'category': 'Generic Modules/Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_period',
+    "name": "Canada - Income Tax Deductions",
+    "version": "1.0",
+    "license": "AGPL-3",
+    "category": "Generic Modules/Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_period",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/menu.xml',
-        'views/hr_deduction_category.xml',
-        'views/hr_deduction_jurisdiction.xml',
-        'views/hr_employee.xml',
-        'views/hr_payslip.xml',
-        'views/hr_salary_rule.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/menu.xml",
+        "views/hr_deduction_category.xml",
+        "views/hr_deduction_jurisdiction.xml",
+        "views/hr_employee.xml",
+        "views/hr_payslip.xml",
+        "views/hr_salary_rule.xml",
     ],
-    'test': [],
-    'demo': [],
-    'installable': True,
+    "test": [],
+    "demo": [],
+    "installable": True,
 }

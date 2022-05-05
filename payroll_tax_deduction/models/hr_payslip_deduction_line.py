@@ -24,31 +24,29 @@ from openerp import fields, models, _
 class HrPayslipDeductionLine(models.Model):
     """Pay Slip Deduction Line"""
 
-    _name = 'hr.payslip.deduction.line'
+    _name = "hr.payslip.deduction.line"
     _decription = _(__doc__)
 
     payslip_id = fields.Many2one(
-        'hr.payslip',
-        'Payslip',
+        "hr.payslip",
+        "Payslip",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     category_id = fields.Many2one(
-        'hr.deduction.category',
-        'Deduction',
+        "hr.deduction.category",
+        "Deduction",
         required=True,
     )
-    amount = fields.Float(
-        'Amount'
-    )
+    amount = fields.Float("Amount")
     source = fields.Selection(
         [
-            ('employee', 'From Employee Profile'),
-            ('manual', 'Added Manually'),
+            ("employee", "From Employee Profile"),
+            ("manual", "Added Manually"),
         ],
         readonly=True,
         required=True,
-        string='Type',
-        type='char',
-        default='manual',
+        string="Type",
+        type="char",
+        default="manual",
     )

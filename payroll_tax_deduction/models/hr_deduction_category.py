@@ -24,43 +24,43 @@ from openerp import fields, models, _
 class HrDeductionCategory(models.Model):
     """Income Tax Deduction Category"""
 
-    _name = 'hr.deduction.category'
+    _name = "hr.deduction.category"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Category Name',
+        "Category Name",
         required=True,
     )
     description = fields.Text(
-        'Description',
+        "Description",
         required=True,
         help="Brief explanation of which benefits the category contains.",
     )
     default_amount = fields.Float(
-        'Default Amount',
+        "Default Amount",
         required=True,
         default=0,
     )
     amount_type = fields.Selection(
         [
-            ('each_pay', 'Each Pay'),
-            ('annual', 'Annual'),
+            ("each_pay", "Each Pay"),
+            ("annual", "Annual"),
         ],
         required=True,
         string="Amount Type",
-        default='annual',
+        default="annual",
     )
     jurisdiction_id = fields.Many2one(
-        'hr.deduction.jurisdiction',
-        'Jurisdiction',
+        "hr.deduction.jurisdiction",
+        "Jurisdiction",
         required=True,
     )
     salary_rule_ids = fields.Many2many(
-        'hr.salary.rule',
-        string='Salary Rules',
-        help='Salary Rules in which the deduction will be added',
+        "hr.salary.rule",
+        string="Salary Rules",
+        help="Salary Rules in which the deduction will be added",
     )
     active = fields.Boolean(
-        'active',
+        "active",
         default=True,
     )

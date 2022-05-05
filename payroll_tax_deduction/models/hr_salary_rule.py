@@ -23,11 +23,11 @@ from openerp import api, fields, models
 
 class HrSalaryRule(models.Model):
 
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     deduction_ids = fields.Many2many(
-        'hr.deduction.category',
-        string='Income Tax Deductions',
+        "hr.deduction.category",
+        string="Income Tax Deductions",
     )
 
     @api.multi
@@ -39,6 +39,7 @@ class HrSalaryRule(models.Model):
         categories = self.deduction_ids
 
         deductions = payslip.deduction_line_ids.filtered(
-            lambda d: d.category_id in categories)
+            lambda d: d.category_id in categories
+        )
 
         return sum(d.amount for d in deductions)

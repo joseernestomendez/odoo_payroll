@@ -24,24 +24,24 @@ from openerp import api, fields, models, _
 class HrEmployeeDeduction(models.Model):
     """Income Tax Deduction"""
 
-    _name = 'hr.employee.deduction'
+    _name = "hr.employee.deduction"
     _description = _(__doc__)
 
     employee_id = fields.Many2one(
-        'hr.employee',
-        'Employee',
+        "hr.employee",
+        "Employee",
         required=True,
         readonly=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     category_id = fields.Many2one(
-        'hr.deduction.category',
-        'Deduction',
+        "hr.deduction.category",
+        "Deduction",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     amount = fields.Float(
-        'Amount',
+        "Amount",
         required=True,
         help="It is used in computation of the payslip. "
         "May be an annual or periodic amount depending on the category. "
@@ -49,26 +49,24 @@ class HrEmployeeDeduction(models.Model):
         default=0,
     )
     date_start = fields.Date(
-        'Start Date',
+        "Start Date",
         required=True,
     )
-    date_end = fields.Date(
-        'End Date'
-    )
+    date_end = fields.Date("End Date")
     amount_type = fields.Selection(
         [
-            ('each_pay', 'Each Pay'),
-            ('annual', 'Annual'),
+            ("each_pay", "Each Pay"),
+            ("annual", "Annual"),
         ],
-        related='category_id.amount_type',
-        type='char',
+        related="category_id.amount_type",
+        type="char",
         readonly=True,
         string="Amount Type",
     )
     jurisdiction_id = fields.Many2one(
-        'hr.deduction.jurisdiction',
-        'Jurisdiction',
-        related='category_id.jurisdiction_id',
+        "hr.deduction.jurisdiction",
+        "Jurisdiction",
+        related="category_id.jurisdiction_id",
         readonly=True,
     )
 
@@ -77,9 +75,9 @@ class HrEmployeeDeduction(models.Model):
         if not category_id:
             return {}
 
-        category = self.env['hr.deduction.category'].browse(category_id)
+        category = self.env["hr.deduction.category"].browse(category_id)
         return {
-            'amount': amount or category.default_amount,
-            'amount_type': category.amount_type,
-            'jurisdiction_id': category.jurisdiction_id.id,
+            "amount": amount or category.default_amount,
+            "amount_type": category.amount_type,
+            "jurisdiction_id": category.jurisdiction_id.id,
         }

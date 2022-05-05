@@ -24,16 +24,12 @@ from openerp import fields, models, _
 class HrDeductionJurisdiction(models.Model):
     """Income Tax Deduction Jurisdiction"""
 
-    _name = 'hr.deduction.jurisdiction'
+    _name = "hr.deduction.jurisdiction"
     _description = _(__doc__)
 
-    name = fields.Char(
-        'Name',
-        required=True,
-        translate=True
-    )
+    name = fields.Char("Name", required=True, translate=True)
     deduction_ids = fields.One2many(
-        'hr.deduction.category',
-        'jurisdiction_id',
-        'Deduction Categories',
+        "hr.deduction.category",
+        "jurisdiction_id",
+        "Deduction Categories",
     )

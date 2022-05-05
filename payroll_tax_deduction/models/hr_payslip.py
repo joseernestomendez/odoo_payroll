@@ -23,14 +23,14 @@ from openerp import api, fields, models
 
 class HrPayslip(models.Model):
 
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     deduction_line_ids = fields.One2many(
-        'hr.payslip.deduction.line',
-        'payslip_id',
-        'Income Tax Deductions',
+        "hr.payslip.deduction.line",
+        "payslip_id",
+        "Income Tax Deductions",
         readonly=True,
-        states={'draft': [('readonly', False)]},
+        states={"draft": [("readonly", False)]},
         copy=True,
     )
 
@@ -45,20 +45,32 @@ class HrPayslip(models.Model):
         Compute the deductions on the payslip.
         """
         self.deduction_line_ids.filtered(
-            lambda d: d.source == 'employee').unlink()
+            lambda d: d.source == "employee"
+        ).unlink()
 
         pays_per_year = self.pays_per_year
 
         date_reference = self.date_payment
 
         deductions = self.employee_id.deduction_ids.filtered(
-            lambda d: d.date_start <= date_reference <= d.date_end)
+            lambda d: d.date_start <= date_reference <= d.date_end
+        )
 
-        self.write({
-            'deduction_line_ids': [(0, 0, {
-                'category_id': d.category_id.id,
-                'source': 'employee',
-                'amount': d.amount / pays_per_year
-                if d.amount_type == 'annual' else d.amount,
-            }) for d in deductions]
-        })
+        self.write(
+            {
+                "deduction_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "category_id": d.category_id.id,
+                            "source": "employee",
+                            "amount": d.amount / pays_per_year
+                            if d.amount_type == "annual"
+                            else d.amount,
+                        },
+                    )
+                    for d in deductions
+                ]
+            }
+        )
