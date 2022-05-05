@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
-from openerp.exceptions import ValidationError
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class HrPayslip(models.Model):
@@ -32,7 +32,6 @@ class HrPayslip(models.Model):
         states={"draft": [("readonly", False)]},
     )
 
-    @api.one
     @api.constrains("hr_period_id", "company_id")
     def _check_period_company(self):
         if self.hr_period_id:

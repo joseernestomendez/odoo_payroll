@@ -21,9 +21,9 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from openerp import models, fields, api, _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-from openerp.exceptions import Warning as UserError
+from odoo import models, fields, api, _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.exceptions import Warning as UserError
 
 strftime = datetime.strptime
 
@@ -171,7 +171,6 @@ class HrFiscalYear(models.Model):
     )
 
     @api.onchange("schedule_pay", "date_start")
-    @api.multi
     def onchange_schedule(self):
         if self.schedule_pay and self.date_start:
             year = datetime.strptime(
@@ -192,7 +191,6 @@ class HrFiscalYear(models.Model):
                 "schedule": schedule_name,
             }
 
-    @api.multi
     def create_periods(self):
         """
         Create every periods a payroll fiscal year
@@ -239,7 +237,6 @@ class HrFiscalYear(models.Model):
                     period_start += delta
                     i += 1
 
-    @api.multi
     def _create_single_period(self, date_start, date_stop, number):
         """Create a single payroll period
         :param date_start: the first day of the actual period
@@ -272,7 +269,6 @@ class HrFiscalYear(models.Model):
             }
         )
 
-    @api.multi
     def _get_day_of_payment(self, date_stop):
         """
         Get the date of payment for a period to create
@@ -291,7 +287,6 @@ class HrFiscalYear(models.Model):
             date_payment += relativedelta(days=int(fy.payment_day))
         return date_payment
 
-    @api.multi
     def button_confirm(self):
         for fy in self:
             if not fy.period_ids:
@@ -306,14 +301,12 @@ class HrFiscalYear(models.Model):
             first_period = fy.period_ids.sorted(key=lambda p: p.number)[0]
             first_period.button_open()
 
-    @api.multi
     def button_set_to_draft(self):
         # Set all periods to draft
         periods = self.mapped("period_ids")
         periods.button_set_to_draft()
         self.state = "draft"
 
-    @api.multi
     def search_period(self, number):
         return next(
             (p for p in self.period_ids if p.number == number),

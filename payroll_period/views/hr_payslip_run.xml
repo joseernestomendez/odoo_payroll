@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="hr_payslip_run_form" model="ir.ui.view">
             <field name="name">hr.payslip.run.period.form</field>
@@ -72,5 +71,4 @@
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -17,8 +17,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp import models, fields, api, _
-from openerp.exceptions import Warning as UserError
+from odoo import models, fields, api, _
+from odoo.exceptions import Warning as UserError
 
 from .hr_fiscal_year import get_schedules
 
@@ -112,7 +112,6 @@ class HrPeriod(models.Model):
 
         return periods[0] if len(periods) else False
 
-    @api.multi
     def button_set_to_draft(self):
         for period in self:
             if period.payslip_ids:
@@ -125,11 +124,9 @@ class HrPeriod(models.Model):
 
         self.write({"state": "draft"})
 
-    @api.multi
     def button_open(self):
         self.write({"state": "open"})
 
-    @api.multi
     def button_close(self):
         self.write({"state": "done"})
         for period in self:
@@ -139,7 +136,6 @@ class HrPeriod(models.Model):
             if all(p.state == "done" for p in fy.period_ids):
                 fy.write({"state": "done"})
 
-    @api.multi
     def button_re_open(self):
         self.write({"state": "open"})
 

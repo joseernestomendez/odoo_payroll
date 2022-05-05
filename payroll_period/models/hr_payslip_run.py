@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
-from openerp.exceptions import Warning as UserError
+from odoo import models, fields, api
+from odoo.exceptions import Warning as UserError
 
 from .hr_fiscal_year import get_schedules
 
@@ -34,7 +34,6 @@ class HrPayslipRun(models.Model):
         get_schedules, "Scheduled Pay", states={"close": [("readonly", True)]}
     )
 
-    @api.multi
     @api.constrains("hr_period_id", "company_id")
     def _check_period_company(self):
         for run in self:
@@ -47,7 +46,6 @@ class HrPayslipRun(models.Model):
                     )
         return True
 
-    @api.multi
     @api.constrains("hr_period_id", "schedule_pay")
     def _check_period_schedule(self):
         for run in self:
@@ -76,7 +74,6 @@ class HrPayslipRun(models.Model):
         return fys[0].schedule_pay if len(fys) else "monthly"
 
     @api.onchange("company_id", "schedule_pay")
-    @api.one
     def onchange_company_id(self):
         super(HrPayslipRun, self).onchange_company_id()
 
@@ -99,7 +96,6 @@ class HrPayslipRun(models.Model):
             self.date_payment = self.hr_period_id.date_payment
             self.schedule_pay = self.hr_period_id.schedule_pay
 
-    @api.multi
     @api.returns("hr.employee")
     def get_employees(self):
         res = super(HrPayslipRun, self).get_employees()
@@ -107,13 +103,11 @@ class HrPayslipRun(models.Model):
             lambda e: e.contract_id.schedule_pay == self.schedule_pay
         )
 
-    @api.multi
     def get_payslip_employees_wizard(self):
         res = super(HrPayslipRun, self).get_payslip_employees_wizard()
         res["context"]["default_schedule_pay"] = self.schedule_pay
         return res
 
-    @api.multi
     def close_payslip_run(self):
         for run in self:
             if next((p for p in run.slip_ids if p.state == "draft"), False):
@@ -125,13 +119,11 @@ class HrPayslipRun(models.Model):
         self.update_periods()
         return super(HrPayslipRun, self).close_payslip_run()
 
-    @api.multi
     def draft_payslip_run(self):
         for run in self:
             run.hr_period_id.button_re_open()
         return super(HrPayslipRun, self).draft_payslip_run()
 
-    @api.multi
     def update_periods(self):
         for run in self:
             period = run.hr_period_id
