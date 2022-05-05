@@ -24,13 +24,7 @@ from odoo import api, fields, models
 class HrSalaryRule(models.Model):
     _inherit = "hr.salary.rule"
 
-    employee_benefit_ids = fields.Many2many(
-        "hr.employee.benefit.category",
-        "salary_rule_employee_benefit_rel",
-        "salary_rule_id",
-        "benefit_id",
-        "Salary Rules",
-    )
+    employee_benefit_ids = fields.Many2many(comodel_name="hr.employee.benefit.category", string="Salary Rules",)
 
     sum_all_benefits = fields.Boolean(
         "Include All Employee Benefits",

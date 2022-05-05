@@ -26,7 +26,8 @@
     "author": "Savoir-faire Linux",
     "website": "https://www.savoirfairelinux.com",
     "depends": [
-        "payroll_base",
+        "hr_payroll_community",
+        "hr_payroll_account_community",
     ],
     "data": [
         "security/ir.model.access.csv",
