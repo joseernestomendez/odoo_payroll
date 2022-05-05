@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="hr_salary_rule_variable_form" model="ir.ui.view">
             <field name="name">hr.salary.rule.variable.form</field>
@@ -46,12 +45,10 @@
         <record id="action_hr_salary_rule_variable_list" model="ir.actions.act_window">
             <field name="name">Salary Rule Variables</field>
             <field name="res_model">hr.salary.rule.variable</field>
-            <field name="view_type">form</field>
             <field name="view_id" ref="hr_salary_rule_variable_list"/>
             <field name="search_view_id" ref="view_hr_salary_rule_variable_filter"/>
         </record>
 
         <menuitem id="menu_action_hr_salary_rule_variable_list" action="action_hr_salary_rule_variable_list" parent="payroll_base.menu_payroll_structure_configure" sequence="17"/>
 
-    </data>
-</openerp>
+</odoo>

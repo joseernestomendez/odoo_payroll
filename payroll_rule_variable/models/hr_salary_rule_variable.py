@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, _
+from odoo import models, fields, _
 
 
 class HrSalaryRuleVariable(models.Model):
