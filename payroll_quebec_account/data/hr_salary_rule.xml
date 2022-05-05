@@ -44,5 +44,4 @@
             <field name="account_credit" model="account.account" search="[('code', 'like', '21424')]"/>    
         </record>
 
-    </data>
-</openerp>
+</odoo>

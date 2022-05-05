@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class HrReleve1Summary(models.Model):
@@ -31,22 +31,18 @@ class HrReleve1Summary(models.Model):
         readonly=True,
     )
 
-    @api.multi
     def button_confirm(self):
         super(HrReleve1Summary, self).button_confirm()
         self._cancel_account_move()
         self._create_account_move()
 
-    @api.multi
     def button_cancel(self):
         super(HrReleve1Summary, self).button_cancel()
         self._cancel_account_move()
 
-    @api.multi
     def _cancel_account_move(self):
         self.mapped("move_id").button_cancel()
 
-    @api.multi
     def _create_account_move(self):
 
         revenu_quebec = self.env.ref("payroll_quebec.partner_revenu_quebec")

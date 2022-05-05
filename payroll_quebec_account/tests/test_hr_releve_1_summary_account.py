@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.addons.payroll_quebec.tests.test_hr_releve_1_summary import (
+from odoo.addons.payroll_quebec.tests.test_hr_releve_1_summary import (
     TestHrReleve1SummaryBase,
 )
 
