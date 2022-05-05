@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, exceptions, _
+from odoo import models, fields, api, exceptions, _
 
 
 class hr_contract(models.Model):
@@ -37,7 +37,6 @@ class hr_contract(models.Model):
         default="monthly",
     )
 
-    @api.multi
     def get_job_hourly_rate(
         self, date_from, date_to, job_id=False, main_job=False
     ):

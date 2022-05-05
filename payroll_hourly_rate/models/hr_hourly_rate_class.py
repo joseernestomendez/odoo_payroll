@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, exceptions, _
+from odoo import models, fields, api, exceptions, _
 from itertools import permutations
 
 

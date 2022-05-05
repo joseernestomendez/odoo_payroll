@@ -18,13 +18,12 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 class hr_contract_job(models.Model):
     _inherit = "hr.contract.job"
 
-    @api.multi
     def _get_current_hourly_rate(self):
         today = fields.Date.today()
         for contract_job in self:
