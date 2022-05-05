@@ -18,25 +18,25 @@
 #
 ##############################################################################
 {
-    'name': 'Payroll Period',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'summary': "Add payroll periods",
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_base',
+    "name": "Payroll Period",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "summary": "Add payroll periods",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_base",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/menu.xml',
-        'views/hr_period.xml',
-        'views/hr_fiscalyear.xml',
-        'views/hr_payslip.xml',
-        'views/hr_payslip_line.xml',
-        'views/hr_payslip_run.xml',
-        'wizard/hr_payslip_employee.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/menu.xml",
+        "views/hr_period.xml",
+        "views/hr_fiscalyear.xml",
+        "views/hr_payslip.xml",
+        "views/hr_payslip_line.xml",
+        "views/hr_payslip_run.xml",
+        "wizard/hr_payslip_employee.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

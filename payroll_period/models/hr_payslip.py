@@ -23,17 +23,17 @@ from openerp.exceptions import ValidationError
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     hr_period_id = fields.Many2one(
-        'hr.period',
-        string='Period',
+        "hr.period",
+        string="Period",
         readonly=True,
-        states={'draft': [('readonly', False)]}
+        states={"draft": [("readonly", False)]},
     )
 
     @api.one
-    @api.constrains('hr_period_id', 'company_id')
+    @api.constrains("hr_period_id", "company_id")
     def _check_period_company(self):
         if self.hr_period_id:
             if self.hr_period_id.company_id != self.company_id:
@@ -44,16 +44,17 @@ class HrPayslip(models.Model):
                 )
         return True
 
-    @api.onchange('company_id', 'contract_id')
+    @api.onchange("company_id", "contract_id")
     def onchange_company_id(self):
         if self.company_id and self.contract_id:
 
-            period = self.env['hr.period'].get_next_period(
-                self.company_id.id, self.contract_id.schedule_pay)
+            period = self.env["hr.period"].get_next_period(
+                self.company_id.id, self.contract_id.schedule_pay
+            )
 
             self.hr_period_id = period.id if period else False
 
-    @api.onchange('hr_period_id')
+    @api.onchange("hr_period_id")
     def onchange_hr_period_id(self):
         if self.hr_period_id:
             period = self.hr_period_id
@@ -61,7 +62,7 @@ class HrPayslip(models.Model):
             self.date_to = period.date_stop
             self.date_payment = period.date_payment
 
-    @api.onchange('payslip_run_id')
+    @api.onchange("payslip_run_id")
     def onchange_payslip_run_id(self):
         super(HrPayslip, self).onchange_payslip_run_id()
 
@@ -71,5 +72,7 @@ class HrPayslip(models.Model):
             period = payslip_run.hr_period_id
             self.hr_period_id = period.id
             if period:
-                self.name = _('Salary Slip of %s for %s') % (
-                    self.employee_id.name, period.name)
+                self.name = _("Salary Slip of %s for %s") % (
+                    self.employee_id.name,
+                    period.name,
+                )
