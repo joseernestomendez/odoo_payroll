@@ -29,7 +29,7 @@ strftime = datetime.strftime
 
 class HrPayslip(models.Model):
 
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     @api.multi
     def compute_sheet(self):
@@ -43,7 +43,7 @@ class HrPayslip(models.Model):
         employee record. This prevents errors from being raised
         from salary rules.
         """
-        self.mapped('employee_id').check_personal_info()
+        self.mapped("employee_id").check_personal_info()
 
     @api.multi
     def get_4_weeks_of_gross(self, leave_date):
@@ -58,10 +58,11 @@ class HrPayslip(models.Model):
 
         # Get the number of days passed in the current week
         leave_day = from_string(leave_date)
-        leave_weekday_num = int(strftime(leave_day, '%w'))
+        leave_weekday_num = int(strftime(leave_day, "%w"))
 
         week_start_day_num = int(
-            self.contract_id.employee_id.company_id.week_start)
+            self.contract_id.employee_id.company_id.week_start
+        )
 
         if week_start_day_num > leave_weekday_num:
             week_start_day_num -= 7
@@ -69,15 +70,12 @@ class HrPayslip(models.Model):
         weekdays_passed = leave_weekday_num - week_start_day_num
 
         # Get the last day of the week that precedes the leave day
-        period_end = (
-            leave_day - timedelta(days=(weekdays_passed + 1))
-        )
+        period_end = leave_day - timedelta(days=(weekdays_passed + 1))
 
         # The periode start is 4 weeks before the period end
         period_start = period_end - timedelta(days=27)
 
-        query = (
-            """SELECT sum(
+        query = """SELECT sum(
                 case when p.credit_note then -wd.total else wd.total end)
             FROM hr_payslip_worked_days wd, hr_payslip p
             WHERE p.employee_id = %(employee_id)s
@@ -88,17 +86,19 @@ class HrPayslip(models.Model):
             AND (p.state = 'done' or p.id = %(payslip_id)s)
             AND wd.activity_type = 'job'
             """
-        )
 
         cr = self.env.cr
 
-        cr.execute(query, {
-            'period_start': period_start,
-            'period_end': period_end,
-            'company_id': self.company_id.id,
-            'employee_id': self.employee_id.id,
-            'payslip_id': self.id,
-        })
+        cr.execute(
+            query,
+            {
+                "period_start": period_start,
+                "period_end": period_end,
+                "company_id": self.company_id.id,
+                "employee_id": self.employee_id.id,
+                "payslip_id": self.id,
+            },
+        )
 
         res = cr.fetchone()[0]
 

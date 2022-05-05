@@ -24,25 +24,19 @@ from openerp import api, fields, models, _
 class HrCRAT4SummaryBox(models.Model):
     """T4 Summary Box"""
 
-    _name = 'hr.cra.t4.summary.box'
+    _name = "hr.cra.t4.summary.box"
     _description = _(__doc__)
 
-    name = fields.Char(
-        'Name',
-        required=True
-    )
+    name = fields.Char("Name", required=True)
     active = fields.Boolean(
-        'Active',
+        "Active",
         default=True,
     )
-    xml_tag = fields.Char(
-        'XML Tag',
-        required=True
-    )
+    xml_tag = fields.Char("XML Tag", required=True)
     child_ids = fields.Many2many(
-        'hr.cra.t4.box',
-        'hr_t4_summary_total_box_rel',
-        string='Related T4 Boxes',
+        "hr.cra.t4.box",
+        "hr_t4_summary_total_box_rel",
+        string="Related T4 Boxes",
     )
 
     @api.multi
@@ -58,9 +52,11 @@ class HrCRAT4SummaryBox(models.Model):
 
         child_boxes = self.child_ids
 
-        child_amounts = self.env['hr.cra.t4.amount'].search([
-            ('slip_id', 'in', slip_ids),
-            ('box_id', 'in', child_boxes.ids),
-        ])
+        child_amounts = self.env["hr.cra.t4.amount"].search(
+            [
+                ("slip_id", "in", slip_ids),
+                ("box_id", "in", child_boxes.ids),
+            ]
+        )
 
         return sum(a.amount for a in child_amounts)

@@ -24,26 +24,27 @@ from openerp import fields, models, _
 class HrFiscalSlipBoxDeductionLine(models.Model):
     """Fiscal Slip Box Deduction Line"""
 
-    _name = 'hr.fiscal_slip.box.deduction.line'
+    _name = "hr.fiscal_slip.box.deduction.line"
     _decription = _(__doc__)
 
     box_id = fields.Many2one(
-        'hr.fiscal_slip.box',
-        'Box',
+        "hr.fiscal_slip.box",
+        "Box",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     category_id = fields.Many2one(
-        'hr.deduction.category',
-        'Deduction',
+        "hr.deduction.category",
+        "Deduction",
         required=True,
     )
     date_from = fields.Date(
-        'Date From', required=True,
+        "Date From",
+        required=True,
         default=lambda self: fields.Date.today(),
     )
     date_to = fields.Date(
-        'Date To',
+        "Date To",
     )
 
-    _order = 'date_to desc,date_from desc'
+    _order = "date_to desc,date_from desc"

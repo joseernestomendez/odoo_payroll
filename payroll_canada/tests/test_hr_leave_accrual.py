@@ -25,19 +25,21 @@ class TestHrLeaveAccrual(common.TransactionCase):
     """
     Test the leave accruals of an employee in Canada
     """
+
     def ref(self, ext_id):
-        if '.' in ext_id:
-            module, ext_id = ext_id.split('.')
+        if "." in ext_id:
+            module, ext_id = ext_id.split(".")
         else:
-            module = 'payroll_canada'
+            module = "payroll_canada"
 
         return self.data_model.get_object_reference(
-            self.cr, self.uid, module, ext_id)[1]
+            self.cr, self.uid, module, ext_id
+        )[1]
 
     def setUp(self):
         super(TestHrLeaveAccrual, self).setUp()
-        self.data_model = self.registry('ir.model.data')
-        self.employee_model = self.registry('hr.employee')
+        self.data_model = self.registry("ir.model.data")
+        self.employee_model = self.registry("hr.employee")
         self.contract_model = self.registry("hr.contract")
         self.user_model = self.registry("res.users")
         self.accrual_model = self.registry("hr.leave.accrual")
@@ -46,73 +48,91 @@ class TestHrLeaveAccrual(common.TransactionCase):
         cr, uid, context = self.cr, self.uid, self.context
 
         self.employee_id = self.employee_model.create(
-            cr, uid, {'name': 'Employee 1'}, context=context)
+            cr, uid, {"name": "Employee 1"}, context=context
+        )
 
         # Searching the employee accrual creates the accrual if
         # if does not exist
         self.employee_model.get_leave_accrual(
-            cr, uid, self.employee_id,
-            leave_type_id=self.ref(
-                'payroll_activity.holiday_status_vacation'),
-            context=context)
+            cr,
+            uid,
+            self.employee_id,
+            leave_type_id=self.ref("payroll_activity.holiday_status_vacation"),
+            context=context,
+        )
 
-        self.entitlement_id = self.entitlement_model.create(cr, uid, {
-            'name': 'Custom Vacation Entitlement',
-            'month_start': '5',
-            'day_start': 15,
-            'leave_id': self.ref(
-                'payroll_activity.holiday_status_vacation'),
-        })
+        self.entitlement_id = self.entitlement_model.create(
+            cr,
+            uid,
+            {
+                "name": "Custom Vacation Entitlement",
+                "month_start": "5",
+                "day_start": 15,
+                "leave_id": self.ref(
+                    "payroll_activity.holiday_status_vacation"
+                ),
+            },
+        )
 
         self.contract_id = self.contract_model.create(
-            cr, uid, {
-                'employee_id': self.employee_id,
-                'name': 'Contract 1',
-                'wage': 52000,
-                'holidays_entitlement_ids': [(4, self.entitlement_id)],
-            }, context=context)
+            cr,
+            uid,
+            {
+                "employee_id": self.employee_id,
+                "name": "Contract 1",
+                "wage": 52000,
+                "holidays_entitlement_ids": [(4, self.entitlement_id)],
+            },
+            context=context,
+        )
 
         self.accrual_id = self.accrual_model.search(
-            self.cr, self.uid, [('employee_id', '=', self.employee_id)],
-            context=self.context)[0]
+            self.cr,
+            self.uid,
+            [("employee_id", "=", self.employee_id)],
+            context=self.context,
+        )[0]
 
         self.accrual = self.accrual_model.browse(
-            cr, uid, self.accrual_id, context=context)
+            cr, uid, self.accrual_id, context=context
+        )
 
         # Create lines to insert into leave accruals
         accrual_lines = [
             # Lines ignored
-            ('2015-05-15', 200),
-            ('2015-05-15', -700),
-
-            ('2014-05-31', 30),
-            ('2014-05-31', -75),
-
-            ('2014-05-15', 70),
-            ('2014-05-15', -110),
-
-            ('2014-05-14', -15),
-            ('2014-05-14', 270),
-            ('2012-01-01', -35),
-            ('2012-01-01', 290),
+            ("2015-05-15", 200),
+            ("2015-05-15", -700),
+            ("2014-05-31", 30),
+            ("2014-05-31", -75),
+            ("2014-05-15", 70),
+            ("2014-05-15", -110),
+            ("2014-05-14", -15),
+            ("2014-05-14", 270),
+            ("2012-01-01", -35),
+            ("2012-01-01", 290),
         ]
 
         line_ids = [
-            (0, 0, {
-                'source': 'manual',
-                'date': accrual_line[0],
-                'name': 'Test',
-                'amount': accrual_line[1]
-            }) for accrual_line in accrual_lines
+            (
+                0,
+                0,
+                {
+                    "source": "manual",
+                    "date": accrual_line[0],
+                    "name": "Test",
+                    "amount": accrual_line[1],
+                },
+            )
+            for accrual_line in accrual_lines
         ]
-        self.accrual.write({'line_cash_ids': line_ids})
+        self.accrual.write({"line_cash_ids": line_ids})
 
     def test_sum_leaves_available(self):
         """
         Test that employee method sum_leaves_available returns a dict
         containing the right amount for current_added_ytd
         """
-        res = self.accrual.sum_leaves_available('2014-05-31', in_cash=True)
+        res = self.accrual.sum_leaves_available("2014-05-31", in_cash=True)
 
         # Current year taken: -75 - 110 = -185
         # Previous ytd: -15 + 270 - 35 + 290 = 510
@@ -123,7 +143,7 @@ class TestHrLeaveAccrual(common.TransactionCase):
         Test that employee method sum_leaves_available returns a dict
         containing the right amount for current_added_ytd
         """
-        res = self.accrual.sum_leaves_available('2014-05-14', in_cash=True)
+        res = self.accrual.sum_leaves_available("2014-05-14", in_cash=True)
 
         # Current year taken: -15
         # Previous ytd: -35 + 290
@@ -134,7 +154,7 @@ class TestHrLeaveAccrual(common.TransactionCase):
         Test that employee method sum_leaves_available returns a dict
         containing the right amount for current_added_ytd
         """
-        res = self.accrual.sum_leaves_available('2014-05-15', in_cash=True)
+        res = self.accrual.sum_leaves_available("2014-05-15", in_cash=True)
 
         # Current year taken: -75 - 110 = -185
         # Previous ytd: -15 - 35 + 270 + 290 = 510

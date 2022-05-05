@@ -24,15 +24,15 @@ from openerp import api, fields, models, _
 class HrCRAT4Box(models.Model):
     """CRA T4 Box"""
 
-    _name = 'hr.cra.t4.box'
-    _inherits = {'hr.fiscal_slip.box': 'fiscal_slip_box_id'}
+    _name = "hr.cra.t4.box"
+    _inherits = {"hr.fiscal_slip.box": "fiscal_slip_box_id"}
     _description = _(__doc__)
 
     fiscal_slip_box_id = fields.Many2one(
-        'hr.fiscal_slip.box',
-        'Fiscal Slip Box',
+        "hr.fiscal_slip.box",
+        "Fiscal Slip Box",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
 
     @api.multi

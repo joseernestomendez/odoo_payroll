@@ -24,59 +24,65 @@ from openerp.exceptions import ValidationError
 
 def get_states(self):
     return [
-        ('cancelled', _('Cancelled')),
-        ('draft', _('Draft')),
-        ('confirmed', _('Confirmed')),
-        ('sent', _('Sent')),
+        ("cancelled", _("Cancelled")),
+        ("draft", _("Draft")),
+        ("confirmed", _("Confirmed")),
+        ("sent", _("Sent")),
     ]
 
 
 class HrFiscalSlip(models.AbstractModel):
     """Fiscal Slip"""
 
-    _name = 'hr.fiscal_slip'
+    _name = "hr.fiscal_slip"
     _description = _(__doc__)
 
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
+        "res.company",
+        "Company",
         required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
+        readonly=True,
+        states={"draft": [("readonly", False)]},
         default=lambda self: self.env.user.company_id.id,
     )
     address_home_id = fields.Many2one(
-        'res.partner',
-        'Home Address',
-        related='employee_id.address_home_id',
-        readonly=True, states={'draft': [('readonly', False)]},
+        "res.partner",
+        "Home Address",
+        related="employee_id.address_home_id",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
     )
     reference = fields.Char(
-        'Reference',
-        readonly=True, states={'draft': [('readonly', False)]},
+        "Reference",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
     )
     year = fields.Char(
-        'Fiscal Year',
+        "Fiscal Year",
         required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
+        readonly=True,
+        states={"draft": [("readonly", False)]},
         default=lambda self: int(fields.Date.today()[0:4]) - 1,
     )
     state = fields.Selection(
         get_states,
-        'Status',
-        type='char',
+        "Status",
+        type="char",
         select=True,
         required=True,
-        default='draft',
+        default="draft",
     )
     employee_id = fields.Many2one(
-        'hr.employee',
-        'Employee',
+        "hr.employee",
+        "Employee",
         required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
+        readonly=True,
+        states={"draft": [("readonly", False)]},
     )
     computed = fields.Boolean(
-        'Computed',
-        readonly=True, states={'draft': [('readonly', False)]},
+        "Computed",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
     )
 
     @api.model
@@ -88,11 +94,13 @@ class HrFiscalSlip(models.AbstractModel):
         If the employee contributed, return the number with highest
         employee contribution, otherwise the highest employer contribution
         """
-        benefit_line_obj = self.env['hr.payslip.benefit.line']
-        benefit_lines = benefit_line_obj.search([
-            ('payslip_id', 'in', payslip_ids),
-            ('category_id.is_rpp_dpsp', '=', True),
-        ])
+        benefit_line_obj = self.env["hr.payslip.benefit.line"]
+        benefit_lines = benefit_line_obj.search(
+            [
+                ("payslip_id", "in", payslip_ids),
+                ("category_id.is_rpp_dpsp", "=", True),
+            ]
+        )
 
         totals = {}
 
@@ -100,30 +108,34 @@ class HrFiscalSlip(models.AbstractModel):
             reference = line.reference
             if reference not in totals:
                 totals[reference] = {
-                    'employer': 0,
-                    'employee': 0,
+                    "employer": 0,
+                    "employee": 0,
                 }
 
-            totals[reference]['employee'] += (
-                -line.employee_amount if line.payslip_id.credit_note
-                else line.employee_amount)
-            totals[reference]['employer'] += (
-                -line.employer_amount if line.payslip_id.credit_note
-                else line.employer_amount)
+            totals[reference]["employee"] += (
+                -line.employee_amount
+                if line.payslip_id.credit_note
+                else line.employee_amount
+            )
+            totals[reference]["employer"] += (
+                -line.employer_amount
+                if line.payslip_id.credit_note
+                else line.employer_amount
+            )
 
-        number = ''
+        number = ""
         max_amount = 0
 
         for reference in totals:
-            if totals[reference]['employee'] > max_amount:
+            if totals[reference]["employee"] > max_amount:
                 number = reference
-                max_amount = totals[reference]['employee']
+                max_amount = totals[reference]["employee"]
 
         if not max_amount:
             for reference in totals:
-                if totals[reference]['employer'] > max_amount:
+                if totals[reference]["employer"] > max_amount:
                     number = reference
-                    max_amount = totals[reference]['employer']
+                    max_amount = totals[reference]["employer"]
 
         return number
 
@@ -136,11 +148,13 @@ class HrFiscalSlip(models.AbstractModel):
                 code = str(code)
 
             amount = next(
-                (a for a in self.amount_ids if a.box_id.code == code), False)
+                (a for a in self.amount_ids if a.box_id.code == code), False
+            )
         else:
             amount = next(
                 (a for a in self.amount_ids if a.box_id.xml_tag == xml_tag),
-                False)
+                False,
+            )
 
         return amount.amount if amount else False
 
@@ -159,18 +173,17 @@ class HrFiscalSlip(models.AbstractModel):
     def get_other_amount_value(self, index):
         self.ensure_one()
         amount = self.get_other_amount(index)
-        return amount.amount if amount else ''
+        return amount.amount if amount else ""
 
     @api.multi
     def get_other_amount_code(self, index):
         self.ensure_one()
         amount = self.get_other_amount(index)
-        return amount.box_id.code if amount else ''
+        return amount.box_id.code if amount else ""
 
     @api.multi
-    @api.constrains('year')
+    @api.constrains("year")
     def _check_year(self):
         for slip in self:
             if not slip.year.isdigit():
-                raise ValidationError(_(
-                    'The year is not set properly'))
+                raise ValidationError(_("The year is not set properly"))

@@ -24,33 +24,33 @@ from openerp import fields, models, _
 class HrFiscalSlipBoxBenefitLine(models.Model):
     """Fiscal Slip Box Benefit Line"""
 
-    _name = 'hr.fiscal_slip.box.benefit.line'
+    _name = "hr.fiscal_slip.box.benefit.line"
     _decription = _(__doc__)
 
     box_id = fields.Many2one(
-        'hr.fiscal_slip.box',
-        'Box',
+        "hr.fiscal_slip.box",
+        "Box",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     category_id = fields.Many2one(
-        'hr.employee.benefit.category',
-        'Benefit',
+        "hr.employee.benefit.category",
+        "Benefit",
         required=True,
     )
     include_employer = fields.Boolean(
-        'Include Employer Contribution',
+        "Include Employer Contribution",
         default=True,
     )
     include_employee = fields.Boolean(
-        'Include Employee Contribution',
+        "Include Employee Contribution",
         default=True,
     )
     date_from = fields.Date(
-        'Date From',
+        "Date From",
         required=True,
         default=lambda self: fields.Date.today(),
     )
     date_to = fields.Date(
-        'Date To',
+        "Date To",
     )

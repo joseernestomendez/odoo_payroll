@@ -24,68 +24,71 @@ from openerp import api, fields, models, _
 class HrFiscalSlipBox(models.Model):
     """Fiscal Slip Box"""
 
-    _name = 'hr.fiscal_slip.box'
+    _name = "hr.fiscal_slip.box"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Name', required=True, translate=True,
+        "Name",
+        required=True,
+        translate=True,
     )
     date_from = fields.Date(
-        'Date From', required=True,
+        "Date From",
+        required=True,
     )
     date_to = fields.Date(
-        'Date To',
+        "Date To",
     )
     code = fields.Char(
-        'Code',
+        "Code",
     )
     xml_tag = fields.Char(
-        'XML Tag',
+        "XML Tag",
     )
     is_other_amount = fields.Boolean(
-        'Is Other Amount',
+        "Is Other Amount",
     )
     salary_rule_ids = fields.Many2many(
-        'hr.salary.rule',
-        'hr_fiscal_slip_box_salary_rule_rel',
-        string='Salary Rules',
+        "hr.salary.rule",
+        "hr_fiscal_slip_box_salary_rule_rel",
+        string="Salary Rules",
         readonly=True,
     )
     benefit_line_ids = fields.One2many(
-        'hr.fiscal_slip.box.benefit.line',
-        'box_id',
-        'Benefit Categories',
+        "hr.fiscal_slip.box.benefit.line",
+        "box_id",
+        "Benefit Categories",
     )
     deduction_line_ids = fields.One2many(
-        'hr.fiscal_slip.box.deduction.line',
-        'box_id',
-        'Deduction Categories',
+        "hr.fiscal_slip.box.deduction.line",
+        "box_id",
+        "Deduction Categories",
     )
     type = fields.Selection(
         [
-            ('salary_rule', 'Salary Rules'),
-            ('benefit', 'Benefit Categories'),
-            ('deduction', 'Deduction Categories'),
+            ("salary_rule", "Salary Rules"),
+            ("benefit", "Benefit Categories"),
+            ("deduction", "Deduction Categories"),
         ],
-        string='Type',
+        string="Type",
         required=True,
     )
     required = fields.Boolean(
-        'Required',
+        "Required",
         help="If box is required, it must have an amount "
         "even if it is null.",
     )
 
     appears_on_summary = fields.Boolean(
-        'Appear On Summary XML',
+        "Appear On Summary XML",
     )
 
-    _order = 'code'
+    _order = "code"
 
     _defaults = {
-        'required': False,
-        'is_other_amount': False,
-        'appears_on_summary': True,
+        "required": False,
+        "is_other_amount": False,
+        "appears_on_summary": True,
     }
 
     @api.multi
@@ -98,71 +101,81 @@ class HrFiscalSlipBox(models.Model):
         """
         self.ensure_one()
 
-        if self.type == 'salary_rule':
-            line_obj = self.env['hr.payslip.line']
+        if self.type == "salary_rule":
+            line_obj = self.env["hr.payslip.line"]
 
             rule_ids = self.salary_rule_ids.ids
 
-            lines = line_obj.search([
-                ('slip_id', 'in', payslip_ids),
-                ('salary_rule_id', 'in', rule_ids),
-            ])
+            lines = line_obj.search(
+                [
+                    ("slip_id", "in", payslip_ids),
+                    ("salary_rule_id", "in", rule_ids),
+                ]
+            )
             return sum(
                 -line.amount if line.slip_id.credit_note else line.amount
-                for line in lines)
+                for line in lines
+            )
 
         total = 0
 
-        if self.type == 'benefit':
-            line_obj = self.env['hr.payslip.benefit.line']
+        if self.type == "benefit":
+            line_obj = self.env["hr.payslip.benefit.line"]
 
             for benefit in self.benefit_line_ids:
 
                 domain = [
-                    ('payslip_id', 'in', payslip_ids),
-                    ('payslip_id.date_payment', '>=', benefit.date_from),
-                    ('category_id', '=', benefit.category_id.id),
+                    ("payslip_id", "in", payslip_ids),
+                    ("payslip_id.date_payment", ">=", benefit.date_from),
+                    ("category_id", "=", benefit.category_id.id),
                 ]
 
                 if benefit.date_to:
-                    domain.append((
-                        'payslip_id.date_payment', '<=', benefit.date_to))
+                    domain.append(
+                        ("payslip_id.date_payment", "<=", benefit.date_to)
+                    )
 
                 lines = line_obj.search(domain)
 
                 if benefit.include_employee:
                     total += sum(
-                        -line.employee_amount if line.payslip_id.credit_note
+                        -line.employee_amount
+                        if line.payslip_id.credit_note
                         else line.employee_amount
                         for line in lines
                     )
 
                 if benefit.include_employer:
                     total += sum(
-                        -line.employer_amount if line.payslip_id.credit_note
+                        -line.employer_amount
+                        if line.payslip_id.credit_note
                         else line.employer_amount
                         for line in lines
                     )
 
         else:
-            line_obj = self.env['hr.payslip.deduction.line']
+            line_obj = self.env["hr.payslip.deduction.line"]
 
             for deduction in self.deduction_line_ids:
 
                 domain = [
-                    ('payslip_id', 'in', payslip_ids),
-                    ('payslip_id.date_payment', '>=', deduction.date_from),
-                    ('category_id', '=', deduction.category_id.id),
+                    ("payslip_id", "in", payslip_ids),
+                    ("payslip_id.date_payment", ">=", deduction.date_from),
+                    ("category_id", "=", deduction.category_id.id),
                 ]
 
                 if deduction.date_to:
-                    domain.append((
-                        'payslip_id.date_payment', '<=', deduction.date_to))
+                    domain.append(
+                        ("payslip_id.date_payment", "<=", deduction.date_to)
+                    )
 
                 lines = line_obj.search(domain)
 
                 total += sum(
-                    -line.amount if line.payslip_id.credit_note
-                    else line.amount for line in lines)
+                    -line.amount
+                    if line.payslip_id.credit_note
+                    else line.amount
+                    for line in lines
+                )
 
         return total

@@ -27,23 +27,23 @@ class report_cra_summary(report_sxw.report_sxw):
     def create(self, cr, uid, ids, data, context=None):
         if not ids or len(ids) > 1:
             raise orm.except_orm(
-                _("Error"),
-                _("You must select one and only one summary"))
+                _("Error"), _("You must select one and only one summary")
+            )
 
         summary = self.getObjects(cr, uid, ids, context)[0]
 
-        if not summary.state == 'sent':
+        if not summary.state == "sent":
             raise orm.except_orm(
                 _("Error"),
-                _("The summary must be confirmed before generating the "
-                    "XML for transmission."))
+                _(
+                    "The summary must be confirmed before generating the "
+                    "XML for transmission."
+                ),
+            )
 
-        return summary.xml, 'txt'
+        return summary.xml, "txt"
 
 
 report_cra_summary(
-    'report.t4_summary_xml',
-    'hr.cra.t4.summary',
-    parser=False,
-    header=False
+    "report.t4_summary_xml", "hr.cra.t4.summary", parser=False, header=False
 )

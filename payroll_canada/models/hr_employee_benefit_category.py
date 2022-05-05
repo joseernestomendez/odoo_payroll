@@ -23,29 +23,27 @@ from openerp.exceptions import ValidationError
 
 
 class HrEmployeeBenefitCategory(models.Model):
-    _inherit = 'hr.employee.benefit.category'
+    _inherit = "hr.employee.benefit.category"
 
     is_rpp_dpsp = fields.Boolean(
-        'Is RPP or DPSP',
+        "Is RPP or DPSP",
         help="Whether the benefit is a Registered Pension Plan "
         "or a Deferred Profit Sharing Plan",
     )
 
     @api.one
-    @api.constrains('is_rpp_dpsp', 'reference')
+    @api.constrains("is_rpp_dpsp", "reference")
     def _check_rpp_dpsp_number(self):
         """
         Check rpp/dpsp registration numbers
         """
         if self.is_rpp_dpsp:
             ref = self.reference
-            if (
-                not ref or
-                len(ref) != 7 or
-                not ref.isnumeric()
-            ):
-                raise ValidationError(_(
-                    "RPP and DPSP benefits must have a valid registration "
-                    "number. In the field Reference, please enter the "
-                    "7 digit number.",
-                ))
+            if not ref or len(ref) != 7 or not ref.isnumeric():
+                raise ValidationError(
+                    _(
+                        "RPP and DPSP benefits must have a valid registration "
+                        "number. In the field Reference, please enter the "
+                        "7 digit number.",
+                    )
+                )

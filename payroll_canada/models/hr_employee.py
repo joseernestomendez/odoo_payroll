@@ -23,7 +23,7 @@ from openerp.exceptions import ValidationError
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = "hr.employee"
 
     @api.multi
     def check_personal_info(self):
@@ -37,71 +37,84 @@ class HrEmployee(models.Model):
         for employee in self:
             if not employee.firstname:
                 raise ValidationError(
-                    _("The employee %s's first name is not set.") %
-                    employee.name)
+                    _("The employee %s's first name is not set.")
+                    % employee.name
+                )
 
             if not employee.sin:
                 raise ValidationError(
-                    _("The employee %s's social insurance number "
-                        "is not set.") % employee.name)
+                    _(
+                        "The employee %s's social insurance number "
+                        "is not set."
+                    )
+                    % employee.name
+                )
 
             address = employee.address_home_id
 
             if not address:
                 raise ValidationError(
-                    _("The employee %s's home address is not set.") %
-                    employee.name)
+                    _("The employee %s's home address is not set.")
+                    % employee.name
+                )
 
             for field in [
-                ('street', _('Street Line 1')),
-                ('country_id', _('Country')),
-                ('state_id', _('Province')),
-                ('zip', _('Postal Code')),
+                ("street", _("Street Line 1")),
+                ("country_id", _("Country")),
+                ("state_id", _("Province")),
+                ("zip", _("Postal Code")),
             ]:
                 if not address[field[0]]:
                     raise ValidationError(
-                        _("The employee %s's home address is incomplete. "
-                            "The field %s is missing.") % (
-                            employee.name, field[1]))
+                        _(
+                            "The employee %s's home address is incomplete. "
+                            "The field %s is missing."
+                        )
+                        % (employee.name, field[1])
+                    )
 
             address_work = employee.address_id
 
             if not address_work:
                 raise ValidationError(
-                    _("The employee %s's working address is not set.") %
-                    employee.name)
+                    _("The employee %s's working address is not set.")
+                    % employee.name
+                )
 
             # The working province of the employee is required in the T4
             if not address_work.state_id:
                 raise ValidationError(
-                    _("The employee %s's working address "
-                        "has no province defined.") %
-                    employee.name)
+                    _(
+                        "The employee %s's working address "
+                        "has no province defined."
+                    )
+                    % employee.name
+                )
 
             # The working country of the employee is required
             # to compute payslips
             if not address_work.country_id:
                 raise ValidationError(
-                    _("The employee %s's working address "
-                        "has no country defined.") %
-                    employee.name)
+                    _(
+                        "The employee %s's working address "
+                        "has no country defined."
+                    )
+                    % employee.name
+                )
 
     employee_number = fields.Char(
-        'Employee Number',
+        "Employee Number",
     )
-    lastname_initial = fields.Char(
-        'Last Name initial',
-        size=1
-    )
+    lastname_initial = fields.Char("Last Name initial", size=1)
     sin = fields.Float(
-        'Social Insurance Number',
+        "Social Insurance Number",
         digits=(9, 0),
         groups="payroll_base.group_hr_payroll_manager",
     )
 
     @api.onchange("sin")
     def onchange_sin(self):
-        ret = {'value': 0}
+        ret = {"value": 0}
 
         def digits_of(n):
             return [int(d) for d in str(n)]
@@ -124,8 +137,10 @@ class HrEmployee(models.Model):
                 self.sin = self.sin
             else:
                 self.sin = 0
-                ret['warning'] = {
-                    'title': 'Error',
-                    'message': _('The number provided is not a valid SIN number !')
+                ret["warning"] = {
+                    "title": "Error",
+                    "message": _(
+                        "The number provided is not a valid SIN number !"
+                    ),
                 }
         return ret

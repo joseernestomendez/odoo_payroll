@@ -25,40 +25,40 @@ import openerp.addons.decimal_precision as dp
 class HrCRAT4Amount(models.Model):
     """CRA T4 Amount"""
 
-    _name = 'hr.cra.t4.amount'
+    _name = "hr.cra.t4.amount"
     _description = _(__doc__)
 
     slip_id = fields.Many2one(
-        'hr.cra.t4',
-        'T4 Slip',
+        "hr.cra.t4",
+        "T4 Slip",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     box_id = fields.Many2one(
-        'hr.cra.t4.box',
-        'T4 Box',
+        "hr.cra.t4.box",
+        "T4 Box",
         required=True,
-        ondelete='restrict',
+        ondelete="restrict",
     )
     amount = fields.Float(
-        'Amount',
-        digits_compute=dp.get_precision('Payroll'),
+        "Amount",
+        digits_compute=dp.get_precision("Payroll"),
         required=True,
     )
     is_other_amount = fields.Boolean(
-        'Is Other Amount',
-        related='box_id.is_other_amount',
+        "Is Other Amount",
+        related="box_id.is_other_amount",
         readonly=True,
     )
     code = fields.Char(
-        'Code',
-        related='box_id.code',
+        "Code",
+        related="box_id.code",
         readonly=True,
     )
     xml_tag = fields.Char(
-        'XML Tag',
-        related='box_id.xml_tag',
+        "XML Tag",
+        related="box_id.xml_tag",
         readonly=True,
     )
 
-    _order = 'box_id'
+    _order = "box_id"

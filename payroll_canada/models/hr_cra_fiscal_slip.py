@@ -25,54 +25,58 @@ from openerp import api, fields, models, _
 @api.model
 def get_province_codes(self):
     return [
-        ('AB', _('Alberta')),
-        ('BC', _('British Columbia')),
-        ('MB', _('Manitoba')),
-        ('NB', _('New Brunswick')),
-        ('NL', _('Newfoundland and Labrador')),
-        ('NS', _('Nova Scotia')),
-        ('NT', _('Northwest Territories')),
-        ('NU', _('Nunavut')),
-        ('ON', _('Ontario')),
-        ('PE', _('Prince Edward Island')),
-        ('QC', _('Quebec')),
-        ('SK', _('Saskatchewan')),
-        ('YT', _('Yukon Territories')),
-        ('US', _('United States')),
-        ('ZZ', _('Other')),
+        ("AB", _("Alberta")),
+        ("BC", _("British Columbia")),
+        ("MB", _("Manitoba")),
+        ("NB", _("New Brunswick")),
+        ("NL", _("Newfoundland and Labrador")),
+        ("NS", _("Nova Scotia")),
+        ("NT", _("Northwest Territories")),
+        ("NU", _("Nunavut")),
+        ("ON", _("Ontario")),
+        ("PE", _("Prince Edward Island")),
+        ("QC", _("Quebec")),
+        ("SK", _("Saskatchewan")),
+        ("YT", _("Yukon Territories")),
+        ("US", _("United States")),
+        ("ZZ", _("Other")),
     ]
 
 
 @api.model
 def get_type_codes(self):
     return [
-        ('O', _('Original')),
-        ('A', _('Amended')),
-        ('C', _('Cancelled')),
+        ("O", _("Original")),
+        ("A", _("Amended")),
+        ("C", _("Cancelled")),
     ]
 
 
 class HrCraFiscalSlip(models.AbstractModel):
     """CRA Fiscal Slip"""
 
-    _name = 'hr.cra.fiscal_slip'
-    _inherit = 'hr.fiscal_slip'
+    _name = "hr.cra.fiscal_slip"
+    _inherit = "hr.fiscal_slip"
     _description = _(__doc__)
 
     empt_prov_cd = fields.Selection(
         get_province_codes,
-        string='Province of employment',
-        required=True, type="char",
-        readonly=True, states={'draft': [('readonly', False)]},
+        string="Province of employment",
+        required=True,
+        type="char",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
     )
     type = fields.Selection(
-        get_type_codes, 'Type',
+        get_type_codes,
+        "Type",
         required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
-        default='O',
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        default="O",
     )
     cra_payroll_number = fields.Char(
-        'Payroll Account Number',
-        related='company_id.cra_payroll_number',
+        "Payroll Account Number",
+        related="company_id.cra_payroll_number",
         readonly=True,
     )

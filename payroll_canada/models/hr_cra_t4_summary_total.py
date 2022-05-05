@@ -25,21 +25,22 @@ import openerp.addons.decimal_precision as dp
 class HrCRAT4SummaryTotal(models.Model):
     """CRA T4 Summary Amoun"""
 
-    _name = 'hr.cra.t4.summary.total'
+    _name = "hr.cra.t4.summary.total"
     _description = _(__doc__)
 
     summary_id = fields.Many2one(
-        'hr.cra.t4.summary',
-        'Summary',
-        required=True, ondelete='cascade',
+        "hr.cra.t4.summary",
+        "Summary",
+        required=True,
+        ondelete="cascade",
     )
     box_id = fields.Many2one(
-        'hr.cra.t4.summary.box',
-        'Contribution / Source Deduction',
+        "hr.cra.t4.summary.box",
+        "Contribution / Source Deduction",
         required=True,
     )
     amount = fields.Float(
-        'Amount',
-        digits_compute=dp.get_precision('Payroll'),
+        "Amount",
+        digits_compute=dp.get_precision("Payroll"),
         required=True,
     )

@@ -25,30 +25,30 @@ def display_address_no_blank_line(partner, name):
     """
     Return a string containing the address with no blank lines
     """
-    address = name and '%s\n' % name or ''
+    address = name and "%s\n" % name or ""
 
     if partner.street:
-        address += '%s\n' % partner.street
+        address += "%s\n" % partner.street
 
     if partner.street2:
-        address += '%s\n' % partner.street2
+        address += "%s\n" % partner.street2
 
     if partner.city:
-        address += '%s' % partner.city
+        address += "%s" % partner.city
         if partner.state_id or partner.zip:
-            address += ', '
+            address += ", "
 
     if partner.state_id:
-        address += '%s ' % partner.state_id.code
+        address += "%s " % partner.state_id.code
 
     if partner.zip:
-        address += '%s' % partner.zip
+        address += "%s" % partner.zip
 
     if partner.city or partner.state_id or partner.zip:
-        address += '\n'
+        address += "\n"
 
     if partner.country_id:
-        address += '%s' % partner.country_id.name
+        address += "%s" % partner.country_id.name
 
     return address
 
@@ -59,10 +59,10 @@ def get_amount_decimals(amount):
     example: 1057.42 > 42
     """
     if amount is False:
-        return ''
+        return ""
     if amount < 0.01:
-        return '.00'
-    return '.' + str(int(amount * 100))[-2:]
+        return ".00"
+    return "." + str(int(amount * 100))[-2:]
 
 
 def get_amount_units(amount):
@@ -70,7 +70,7 @@ def get_amount_units(amount):
     Return the units of the given amount
     example: 1057.92 > 1057
     """
-    return str(int(amount)) if amount is not False else ''
+    return str(int(amount)) if amount is not False else ""
 
 
 class report_t4_employee_copy(report_sxw.rml_parse):
@@ -78,19 +78,23 @@ class report_t4_employee_copy(report_sxw.rml_parse):
     This report is a T4 slip for the employee.
     It is not a copy to be sent to the CRA.
     """
+
     def __init__(self, cr, uid, name, context):
         super(report_t4_employee_copy, self).__init__(cr, uid, name, context)
 
-        self.localcontext.update({
-            'display_address_no_blank_line': display_address_no_blank_line,
-            'get_amount_decimals': get_amount_decimals,
-            'get_amount_units': get_amount_units,
-        })
+        self.localcontext.update(
+            {
+                "display_address_no_blank_line": display_address_no_blank_line,
+                "get_amount_decimals": get_amount_decimals,
+                "get_amount_units": get_amount_units,
+            }
+        )
+
 
 report_sxw.report_sxw(
-    'report.t4_employee_copy',
-    'hr.cra.t4',
-    'payroll_canada/report/report_t4_employee_copy.rml',
+    "report.t4_employee_copy",
+    "hr.cra.t4",
+    "payroll_canada/report/report_t4_employee_copy.rml",
     parser=report_t4_employee_copy,
-    header=False
+    header=False,
 )

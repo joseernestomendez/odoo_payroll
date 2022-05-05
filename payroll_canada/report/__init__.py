@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from . import(
+from . import (
     report_t4_employee_copy,
     report_summary,
 )
