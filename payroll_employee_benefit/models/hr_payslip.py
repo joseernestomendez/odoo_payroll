@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, models, fields
+from odoo import api, models, fields
 
 
 class HrPayslip(models.Model):
@@ -33,7 +33,6 @@ class HrPayslip(models.Model):
         copy=True,
     )
 
-    @api.multi
     def _search_benefits(self):
         """
         Search employee benefits to be added on the payslip
@@ -44,11 +43,9 @@ class HrPayslip(models.Model):
         self.ensure_one()
         return self.contract_id.benefit_line_ids
 
-    @api.multi
     def button_compute_benefits(self):
         self.compute_benefits()
 
-    @api.one
     def compute_benefits(self):
         """
         Compute the employee benefits on the payslip.

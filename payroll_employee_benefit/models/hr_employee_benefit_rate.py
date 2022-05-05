@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 from itertools import permutations
 from datetime import datetime
 
@@ -70,7 +70,6 @@ class HrEmployeeBenefitRate(models.Model):
         readonly=True,
     )
 
-    @api.one
     @api.constrains("line_ids")
     def _check_overlapping_rates(self):
         """
@@ -100,7 +99,6 @@ class HrEmployeeBenefitRate(models.Model):
         self.employee_amount = self.get_amount(today)
         self.employer_amount = self.get_amount(today, employer=True)
 
-    @api.multi
     def get_amount(self, date, employer=False):
         self.ensure_one()
         for line in self.line_ids:
@@ -145,7 +143,6 @@ class HrEmployeeBenefitRate(models.Model):
 
         return duration_ratio
 
-    @api.multi
     def compute_amounts(self, payslip):
         """
         Compute benefit lines

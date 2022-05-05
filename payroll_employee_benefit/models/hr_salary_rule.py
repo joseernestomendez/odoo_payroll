@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class HrSalaryRule(models.Model):
@@ -39,7 +39,6 @@ class HrSalaryRule(models.Model):
         "benefits.",
     )
 
-    @api.multi
     def sum_benefits(self, payslip, **kwargs):
         """
         Method used to sum the employee benefits computed on the payslip
@@ -71,7 +70,6 @@ class HrSalaryRule(models.Model):
 
         return res
 
-    @api.multi
     @api.returns("hr.payslip.benefit.line")
     def _filter_benefits(self, payslip, codes=False, **kwargs):
         """Filter the benefit records on the payslip

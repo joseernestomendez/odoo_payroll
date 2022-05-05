@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 from .hr_employee_benefit_rate import get_amount_types
 
@@ -75,7 +75,6 @@ class HrEmployeeBenefit(models.Model):
         string="Code",
     )
 
-    @api.one
     @api.constrains("category_id", "rate_id")
     def _check_category_id(self):
         """
@@ -90,7 +89,6 @@ class HrEmployeeBenefit(models.Model):
                 )
             )
 
-    @api.one
     def compute_amounts(self, payslip):
         if self.date_start <= payslip.date_from and not (
             self.date_end and payslip.date_to > self.date_end
