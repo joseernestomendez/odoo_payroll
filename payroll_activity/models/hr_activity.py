@@ -24,53 +24,53 @@ from openerp import api, fields, models, _
 class HrActivity(models.Model):
     """Employee Activity"""
 
-    _name = 'hr.activity'
+    _name = "hr.activity"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Activity Name',
-        compute='_compute_name',
+        "Activity Name",
+        compute="_compute_name",
         store=True,
         readonly=True,
     )
     activity_type = fields.Selection(
         [
-            ('leave', 'Leave'),
-            ('job', 'Job'),
+            ("leave", "Leave"),
+            ("job", "Job"),
         ],
-        'Activity Type',
+        "Activity Type",
         required=True,
     )
     job_id = fields.Many2one(
-        'hr.job',
-        'Job',
-        ondelete='cascade',
+        "hr.job",
+        "Job",
+        ondelete="cascade",
     )
     leave_id = fields.Many2one(
-        'hr.holidays.status',
-        'Leave Type',
-        ondelete='cascade',
+        "hr.holidays.status",
+        "Leave Type",
+        ondelete="cascade",
     )
     unpaid_activity_id = fields.Many2one(
-        'hr.activity',
-        'Related Unpaid Activity',
+        "hr.activity",
+        "Related Unpaid Activity",
     )
 
-    _order = 'activity_type,name'
+    _order = "activity_type,name"
 
     @api.one
-    @api.depends('activity_type', 'job_id', 'leave_id')
+    @api.depends("activity_type", "job_id", "leave_id")
     def _compute_name(self):
-        if self.activity_type == 'job' and self.job_id:
+        if self.activity_type == "job" and self.job_id:
             self.name = self.job_id.name_get()[0][1]
 
-        elif self.activity_type == 'leave' and self.leave_id:
+        elif self.activity_type == "leave" and self.leave_id:
             self.name = self.leave_id.name_get()[0][1]
 
-    @api.onchange('activity_type')
+    @api.onchange("activity_type")
     def onchange_activity_type(self):
-        if self.activity_type == 'job':
+        if self.activity_type == "job":
             self.leave_id = None
 
-        elif self.activity_type == 'leave':
+        elif self.activity_type == "leave":
             self.job_id = None

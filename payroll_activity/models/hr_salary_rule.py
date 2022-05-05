@@ -22,12 +22,12 @@ from openerp import fields, models, api
 
 
 class HrSalaryRule(models.Model):
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     leave_activity_ids = fields.Many2many(
-        'hr.activity',
-        'hr_activity_salary_rule_rel',
-        string='Related Leave Activities',
+        "hr.activity",
+        "hr_activity_salary_rule_rel",
+        string="Related Leave Activities",
     )
 
     @api.multi
@@ -54,7 +54,8 @@ class HrSalaryRule(models.Model):
         activities = self._get_leave_activities()
 
         worked_days = [
-            wd for wd in payslip.leave_days_line_ids
+            wd
+            for wd in payslip.leave_days_line_ids
             if wd.activity_id in activities
         ]
 
@@ -67,22 +68,25 @@ class HrSalaryRule(models.Model):
 
             current_reduction = (
                 reduction / (wd.hourly_rate * wd.rate / 100)
-                if in_cash else reduction
+                if in_cash
+                else reduction
             )
 
             # Get the maximum of reduction of the current worked day
             current_reduction = min(
-                wd.number_of_hours_allowed, current_reduction)
+                wd.number_of_hours_allowed, current_reduction
+            )
             current_reduction = max(current_reduction, 0)
 
             # Apply the reduction to the worked days line
             number_of_hours = wd.number_of_hours_allowed - current_reduction
-            wd.write({'number_of_hours_allowed': number_of_hours})
+            wd.write({"number_of_hours_allowed": number_of_hours})
 
             # substract the amount reduced before next iteration
             reduction -= (
                 current_reduction * wd.hourly_rate * wd.rate / 100
-                if in_cash else current_reduction
+                if in_cash
+                else current_reduction
             )
 
     @api.multi
@@ -99,7 +103,8 @@ class HrSalaryRule(models.Model):
         activities = self._get_leave_activities()
 
         worked_days = [
-            wd for wd in payslip.leave_days_line_ids
+            wd
+            for wd in payslip.leave_days_line_ids
             if wd.activity_id in activities
         ]
 
@@ -122,7 +127,8 @@ class HrSalaryRule(models.Model):
         activities = self._get_leave_activities()
 
         worked_days = [
-            wd for wd in payslip.leave_days_line_ids
+            wd
+            for wd in payslip.leave_days_line_ids
             if wd.activity_id in activities
         ]
 

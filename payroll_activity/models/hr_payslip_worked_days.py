@@ -24,59 +24,59 @@ import openerp.addons.decimal_precision as dp
 
 class HrPayslipWorkedDays(models.Model):
 
-    _inherit = 'hr.payslip.worked_days'
+    _inherit = "hr.payslip.worked_days"
 
     activity_id = fields.Many2one(
-        'hr.activity',
-        'Activity',
-    #    required=True,
+        "hr.activity",
+        "Activity",
+        #    required=True,
     )
 
     activity_type = fields.Selection(
         [
-            ('leave', 'Leave'),
-            ('job', 'Job'),
+            ("leave", "Leave"),
+            ("job", "Job"),
         ],
-        'Activity Type',
-        related='activity_id.activity_type',
+        "Activity Type",
+        related="activity_id.activity_type",
         store=True,
     )
 
     number_of_hours_allowed = fields.Float(
-        'Hours Allowed',
+        "Hours Allowed",
     )
 
     amount_requested = fields.Float(
-        'Amount Requested',
-        compute='_compute_amount_requested',
+        "Amount Requested",
+        compute="_compute_amount_requested",
         store=True,
-        digits_compute=dp.get_precision('Payroll'),
+        digits_compute=dp.get_precision("Payroll"),
     )
 
-    _order = 'date,activity_id'
+    _order = "date,activity_id"
 
     @api.model
     def create(self, vals):
-        if 'number_of_hours_allowed' not in vals:
-            vals['number_of_hours_allowed'] = vals.get('number_of_hours')
+        if "number_of_hours_allowed" not in vals:
+            vals["number_of_hours_allowed"] = vals.get("number_of_hours")
         return super(HrPayslipWorkedDays, self).create(vals)
 
     @api.one
     @api.depends(
-        'hourly_rate', 'number_of_hours', 'rate', 'number_of_hours_allowed')
+        "hourly_rate", "number_of_hours", "rate", "number_of_hours_allowed"
+    )
     def _compute_total(self):
-        if self.activity_type != 'leave':
+        if self.activity_type != "leave":
             super(HrPayslipWorkedDays, self)._compute_total()
 
         else:
             self.total = (
-                self.hourly_rate *
-                self.number_of_hours_allowed *
-                self.rate
+                self.hourly_rate * self.number_of_hours_allowed * self.rate
             ) / 100
 
     @api.one
-    @api.depends('hourly_rate', 'number_of_hours', 'rate')
+    @api.depends("hourly_rate", "number_of_hours", "rate")
     def _compute_amount_requested(self):
         self.amount_requested = (
-            self.hourly_rate * self.number_of_hours * self.rate) / 100
+            self.hourly_rate * self.number_of_hours * self.rate
+        ) / 100

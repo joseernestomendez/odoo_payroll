@@ -23,15 +23,15 @@ from openerp import fields, models
 
 class HrHolidaysStatus(models.Model):
 
-    _inherit = 'hr.holidays.status'
+    _inherit = "hr.holidays.status"
 
     paid_leave = fields.Boolean(
-        'Is Paid Leave',
+        "Is Paid Leave",
         help="Whether this leave is paid or not",
     )
     activity_ids = fields.One2many(
-        'hr.activity',
-        'leave_id',
-        'Activity',
-        default=[(0, 0, {'activity_type': 'leave'})],
+        "hr.activity",
+        "leave_id",
+        "Activity",
+        default=[(0, 0, {"activity_type": "leave"})],
     )

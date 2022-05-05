@@ -23,11 +23,11 @@ from openerp import fields, models
 
 class HrJob(models.Model):
 
-    _inherit = 'hr.job'
+    _inherit = "hr.job"
 
     activity_ids = fields.One2many(
-        'hr.activity',
-        'job_id',
-        'Activity',
-        default=[(0, 0, {'activity_type': 'job'})],
+        "hr.activity",
+        "job_id",
+        "Activity",
+        default=[(0, 0, {"activity_type": "job"})],
     )

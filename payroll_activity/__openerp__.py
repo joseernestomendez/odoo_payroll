@@ -19,26 +19,26 @@
 ##############################################################################
 
 {
-    'name': 'Payroll Activity',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com/',
-    'depends': [
-        'payroll_base',
-        'payroll_hourly_rate',
+    "name": "Payroll Activity",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com/",
+    "depends": [
+        "payroll_base",
+        "payroll_hourly_rate",
     ],
-    'data': [
-        'data/hr_holiday_status.xml',
-        'data/hr_activity.xml',
-        'views/hr_holiday_status.xml',
-        'views/hr_payslip.xml',
-        'views/hr_activity.xml',
-        'views/hr_salary_rule.xml',
-        'security/ir.model.access.csv',
+    "data": [
+        "data/hr_holiday_status.xml",
+        "data/hr_activity.xml",
+        "views/hr_holiday_status.xml",
+        "views/hr_payslip.xml",
+        "views/hr_activity.xml",
+        "views/hr_salary_rule.xml",
+        "security/ir.model.access.csv",
     ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

@@ -22,7 +22,7 @@ from openerp import api, fields, models
 
 
 class HrContract(models.Model):
-    _inherit = 'hr.contract'
+    _inherit = "hr.contract"
 
     @api.multi
     def _get_hourly_rate_from_wage(self):
@@ -36,15 +36,15 @@ class HrContract(models.Model):
             )
 
     weeks_of_vacation = fields.Float(
-        'Number of weeks of vacation',
+        "Number of weeks of vacation",
         default=2,
     )
     worked_hours_per_pay_period = fields.Float(
-        'Worked Hours per Pay Period',
+        "Worked Hours per Pay Period",
         default=40,
     )
     hourly_rate_from_wage = fields.Float(
         "Estimated Hourly Rate",
-        compute='_get_hourly_rate_from_wage',
+        compute="_get_hourly_rate_from_wage",
         readonly=True,
     )
