@@ -19,14 +19,13 @@
 #
 ##############################################################################
 
-from openerp import api, models
+from odoo import api, models
 
 
 class AccountAnalyticLine(models.Model):
 
     _inherit = "account.analytic.line"
 
-    @api.multi
     def worked_days_mapping(self):
         self.ensure_one()
         res = super(AccountAnalyticLine, self).worked_days_mapping()

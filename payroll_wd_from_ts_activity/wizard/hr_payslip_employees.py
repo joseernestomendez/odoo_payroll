@@ -18,14 +18,13 @@
 #
 ##############################################################################
 
-from openerp import api, models
+from odoo import api, models
 
 
 class HrPayslipEmployees(models.TransientModel):
 
     _inherit = "hr.payslip.employees"
 
-    @api.multi
     def import_timesheets(self):
         wage_slips = self.payslip_ids.filtered(
             lambda p: p.contract_id.salary_computation_method == "yearly"
