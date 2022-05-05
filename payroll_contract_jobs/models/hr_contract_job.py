@@ -24,23 +24,17 @@ from openerp import fields, models, _
 class HrContractJob(models.Model):
     """Contract Job"""
 
-    _name = 'hr.contract.job'
+    _name = "hr.contract.job"
     _description = _(__doc__)
 
-    name = fields.Char(
-        string='Job',
-        related='job_id.name'
-    )
+    name = fields.Char(string="Job", related="job_id.name")
     job_id = fields.Many2one(
-        'hr.job',
-        string='Job',
-        required=True,
-        ondelete='cascade'
+        "hr.job", string="Job", required=True, ondelete="cascade"
     )
     contract_id = fields.Many2one(
-        'hr.contract',
-        string='Contract',
+        "hr.contract",
+        string="Contract",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
-    is_main_job = fields.Boolean(string='Main Job Position')
+    is_main_job = fields.Boolean(string="Main Job Position")

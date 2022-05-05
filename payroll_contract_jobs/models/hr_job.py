@@ -22,10 +22,8 @@ from openerp import models, fields
 
 
 class HrJob(models.Model):
-    _inherit = 'hr.job'
+    _inherit = "hr.job"
 
     contract_job_ids = fields.One2many(
-        'hr.contract.job',
-        'job_id',
-        string='Contract Jobs'
+        "hr.contract.job", "job_id", string="Contract Jobs"
     )
