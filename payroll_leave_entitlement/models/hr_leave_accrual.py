@@ -28,7 +28,7 @@ from_string = fields.Date.from_string
 
 
 class HrLeaveAccrual(models.Model):
-    _inherit = 'hr.leave.accrual'
+    _inherit = "hr.leave.accrual"
 
     @api.multi
     def sum_leaves_available(self, date, in_cash=False):
@@ -52,7 +52,8 @@ class HrLeaveAccrual(models.Model):
 
         if not leave_type.uses_entitlement:
             return super(HrLeaveAccrual, self).sum_leaves_available(
-                date, in_cash)
+                date, in_cash
+            )
 
         date_slip = from_string(date)
 
@@ -61,13 +62,14 @@ class HrLeaveAccrual(models.Model):
         entitlement = contract.get_entitlement(leave_type)
 
         if not entitlement:
-            raise ValidationError("The %s entitlement for employee %s is not defined."
-             % (leave_type.name,self.employee_id.name))
+            raise ValidationError(
+                "The %s entitlement for employee %s is not defined."
+                % (leave_type.name, self.employee_id.name)
+            )
 
         entitlement_date = datetime.date(
-            date_slip.year,
-            int(entitlement.month_start),
-            entitlement.day_start)
+            date_slip.year, int(entitlement.month_start), entitlement.day_start
+        )
 
         if entitlement_date > date_slip:
             entitlement_date -= relativedelta(years=1)
@@ -83,19 +85,27 @@ class HrLeaveAccrual(models.Model):
             FROM hr_leave_accrual a, hr_leave_accrual_line_hours l
             """
 
-        main_query = select_clause + """
+        main_query = (
+            select_clause
+            + """
             WHERE a.id = %(accrual_id)s
             AND l.accrual_id = a.id
             AND ((l.state = 'done') OR (l.source != 'payslip'))
             """
+        )
 
         # Leaves added and withdrawed before the entitlement date
-        query_1 = main_query + """
+        query_1 = (
+            main_query
+            + """
             AND l.date < %(entitlement_date)s
             """
+        )
 
         # Leaves withdrawed in the current entitlement year
-        query_2 = main_query + """
+        query_2 = (
+            main_query
+            + """
             AND l.date >= %(entitlement_date)s
             AND l.date < %(current_year_end)s
             AND (
@@ -103,11 +113,12 @@ class HrLeaveAccrual(models.Model):
                 (not l.is_refund AND l.amount < 0)
             )
             """
+        )
 
         query_vals = {
-            'entitlement_date': entitlement_date,
-            'accrual_id': self.id,
-            'current_year_end': current_year_end,
+            "entitlement_date": entitlement_date,
+            "accrual_id": self.id,
+            "current_year_end": current_year_end,
         }
 
         cr = self.env.cr

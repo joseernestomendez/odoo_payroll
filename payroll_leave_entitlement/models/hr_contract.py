@@ -26,16 +26,16 @@ from openerp.exceptions import ValidationError
 
 class HrContract(models.Model):
 
-    _inherit = 'hr.contract'
+    _inherit = "hr.contract"
 
     holidays_entitlement_ids = fields.Many2many(
-        'hr.holidays.entitlement',
-        'hr_contract_holidays_entitlement_rel',
-        string='Leave Entitlement Periods',
+        "hr.holidays.entitlement",
+        "hr_contract_holidays_entitlement_rel",
+        string="Leave Entitlement Periods",
     )
 
     @api.one
-    @api.constrains('holidays_entitlement_ids')
+    @api.constrains("holidays_entitlement_ids")
     def _check_leave_entitlement(self):
         """
         Check that the employee has maximum one leave entitlement
@@ -45,10 +45,11 @@ class HrContract(models.Model):
             if e1.leave_id == e2.leave_id:
                 return ValidationError(
                     "A contract can not have more than one holidays "
-                    "entitlement per leave type.")
+                    "entitlement per leave type."
+                )
 
     @api.multi
-    @api.returns('hr.holidays.entitlement')
+    @api.returns("hr.holidays.entitlement")
     def get_entitlement(self, leave_type):
         """
         :param leave_type: hr.holidays.status record set
@@ -56,11 +57,13 @@ class HrContract(models.Model):
         self.ensure_one()
 
         entitlement = self.holidays_entitlement_ids.filtered(
-            lambda e: e.leave_id == leave_type)
+            lambda e: e.leave_id == leave_type
+        )
 
         if not entitlement:
             company = self.employee_id.company_id
             entitlement = company.holidays_entitlement_ids.filtered(
-                lambda e: e.leave_id == leave_type)
+                lambda e: e.leave_id == leave_type
+            )
 
         return entitlement[0] if entitlement else False

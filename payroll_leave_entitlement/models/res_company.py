@@ -22,29 +22,30 @@ from itertools import permutations
 from openerp import api, fields, models
 from openerp.exceptions import ValidationError
 
+
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = "res.company"
     week_start = fields.Selection(
         [
-            ('0', 'Sunday'),
-            ('1', 'Monday'),
-            ('2', 'Tuesday'),
-            ('3', 'Wednesday'),
-            ('4', 'Thursday'),
-            ('5', 'Friday'),
-            ('6', 'Saturday'),
+            ("0", "Sunday"),
+            ("1", "Monday"),
+            ("2", "Tuesday"),
+            ("3", "Wednesday"),
+            ("4", "Thursday"),
+            ("5", "Friday"),
+            ("6", "Saturday"),
         ],
         string="Week start",
-        type="char", default='0'
+        type="char",
+        default="0",
     )
     holidays_entitlement_ids = fields.Many2many(
-        'hr.holidays.entitlement',
-        'res_company_holidays_entitlement_rel',
-        string='Leave Entitlement Periods',
+        "hr.holidays.entitlement",
+        "res_company_holidays_entitlement_rel",
+        string="Leave Entitlement Periods",
     )
 
-
-    @api.constrains('holidays_entitlement_ids')
+    @api.constrains("holidays_entitlement_ids")
     def _check_leave_entitlement(self):
         """
         Check that the employee has maximum one leave entitlement
@@ -53,5 +54,8 @@ class ResCompany(models.Model):
         for contract in self:
             for e1, e2 in permutations(contract.holidays_entitlement_ids, 2):
                 if e1.leave_id == e2.leave_id:
-                    raise ValidationError(_('A company can not have more than one holidays entitlement per leave type.'))
-
+                    raise ValidationError(
+                        _(
+                            "A company can not have more than one holidays entitlement per leave type."
+                        )
+                    )

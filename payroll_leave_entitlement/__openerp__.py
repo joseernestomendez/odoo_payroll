@@ -19,18 +19,18 @@
 ##############################################################################
 
 {
-    'name': 'Leave Entitlement',
-    'version': '8.0.0.1.0',
-    'license': 'AGPL-3',
-    'author': "Savoir-faire Linux",
-    'website': 'https://savoirfairelinux.com',
-    'depends': [
-        'payroll_leave_accrual',
+    "name": "Leave Entitlement",
+    "version": "8.0.0.1.0",
+    "license": "AGPL-3",
+    "author": "Savoir-faire Linux",
+    "website": "https://savoirfairelinux.com",
+    "depends": [
+        "payroll_leave_accrual",
     ],
-    'data': [
-        'views/hr_holidays_entitlement.xml',
-        'views/res_company.xml',
-        'security/ir.model.access.csv',
+    "data": [
+        "views/hr_holidays_entitlement.xml",
+        "views/res_company.xml",
+        "security/ir.model.access.csv",
     ],
-    'installable': True,
+    "installable": True,
 }

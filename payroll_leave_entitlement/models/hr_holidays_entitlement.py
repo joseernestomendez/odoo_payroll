@@ -24,40 +24,40 @@ from openerp import fields, models, _
 class HrHolidaysEntitlement(models.Model):
     """Holidays Entitlement"""
 
-    _name = 'hr.holidays.entitlement'
+    _name = "hr.holidays.entitlement"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Name',
+        "Name",
         required=True,
     )
     month_start = fields.Selection(
         [
-            ('1', 'January'),
-            ('2', 'February'),
-            ('3', 'March'),
-            ('4', 'April'),
-            ('5', 'May'),
-            ('6', 'June'),
-            ('7', 'July'),
-            ('8', 'August'),
-            ('9', 'September'),
-            ('10', 'October'),
-            ('11', 'November'),
-            ('12', 'December'),
+            ("1", "January"),
+            ("2", "February"),
+            ("3", "March"),
+            ("4", "April"),
+            ("5", "May"),
+            ("6", "June"),
+            ("7", "July"),
+            ("8", "August"),
+            ("9", "September"),
+            ("10", "October"),
+            ("11", "November"),
+            ("12", "December"),
         ],
         required=True,
-        type='char',
-        string='Month Start',
-        default='1',
+        type="char",
+        string="Month Start",
+        default="1",
     )
     day_start = fields.Integer(
-        'Day Start',
+        "Day Start",
         required=True,
         default=1,
     )
     leave_id = fields.Many2one(
-        'hr.holidays.status',
-        'Leave Type',
+        "hr.holidays.status",
+        "Leave Type",
         required=True,
     )

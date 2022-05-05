@@ -23,8 +23,8 @@ from openerp import fields, models
 
 class HrHolidaysStatus(models.Model):
 
-    _inherit = 'hr.holidays.status'
+    _inherit = "hr.holidays.status"
 
     uses_entitlement = fields.Boolean(
-        'Uses Entitlement',
+        "Uses Entitlement",
     )
