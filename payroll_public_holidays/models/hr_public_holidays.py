@@ -21,9 +21,9 @@
 #
 ##############################################################################
 
-from openerp import models, fields, api, _
+from odoo import models, fields, api, _
 from datetime import datetime
-from openerp.exceptions import ValidationError
+from odoo.exceptions import ValidationError
 
 
 class HrPublicHolidays(models.Model):
@@ -46,7 +46,6 @@ class HrPublicHolidays(models.Model):
         required=True,
     )
 
-    @api.one
     @api.constrains("year")
     def _check_year(self):
         try:

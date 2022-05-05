@@ -18,15 +18,14 @@
 #
 ##############################################################################
 
-from openerp import api, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, models, _
+from odoo.exceptions import ValidationError
 
 
 class HrPayslip(models.Model):
 
     _inherit = "hr.payslip"
 
-    @api.multi
     @api.returns("hr.holidays.public.line")
     def get_public_holidays(self):
         """
