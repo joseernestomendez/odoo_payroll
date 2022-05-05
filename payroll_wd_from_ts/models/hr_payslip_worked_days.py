@@ -24,14 +24,14 @@ from openerp import fields, models
 
 class HrPayslipWorkedDays(models.Model):
 
-    _inherit = 'hr.payslip.worked_days'
+    _inherit = "hr.payslip.worked_days"
 
     timesheet_ids = fields.One2many(
-        'account.analytic.line',
-        'worked_days_id',
-        'Origin Timesheets',
+        "account.analytic.line",
+        "worked_days_id",
+        "Origin Timesheets",
     )
 
     imported_from_timesheets = fields.Boolean(
-        'Imported From Timesheets',
+        "Imported From Timesheets",
     )

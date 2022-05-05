@@ -25,7 +25,7 @@ from openerp.exceptions import ValidationError
 
 class HrPayslip(models.Model):
 
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     @api.one
     def import_worked_days(self, raise_exception=True):
@@ -39,37 +39,43 @@ class HrPayslip(models.Model):
         # The reason to delete these records is that the user may make
         # corrections to his timesheets and then reimport these.
         old_worked_days = self.worked_days_line_ids.filtered(
-            lambda wd: wd.imported_from_timesheets)
+            lambda wd: wd.imported_from_timesheets
+        )
 
         old_worked_days.unlink()
 
         date_from = self.date_from
         date_to = self.date_to
 
-        sheets = self.env['hr_timesheet_sheet.sheet'].search([
-            ('employee_id', '=', employee.id),
-            ('state', '=', 'done'),
-            '|',
-            '|',
-            '&',
-            ('date_from', '>=', date_from),
-            ('date_from', '<=', date_to),
-            '&',
-            ('date_to', '>=', date_from),
-            ('date_to', '<=', date_to),
-            '&',
-            ('date_from', '>=', date_from),
-            ('date_to', '<=', date_to),
-        ])
+        sheets = self.env["hr_timesheet_sheet.sheet"].search(
+            [
+                ("employee_id", "=", employee.id),
+                ("state", "=", "done"),
+                "|",
+                "|",
+                "&",
+                ("date_from", ">=", date_from),
+                ("date_from", "<=", date_to),
+                "&",
+                ("date_to", ">=", date_from),
+                ("date_to", "<=", date_to),
+                "&",
+                ("date_from", ">=", date_from),
+                ("date_to", "<=", date_to),
+            ]
+        )
 
         if not sheets and raise_exception:
-            raise ValidationError(_(
-                "There is no approved Timesheets for "
-                "the entire Payslip period for employee %s." %
-                employee.name
-            ))
+            raise ValidationError(
+                _(
+                    "There is no approved Timesheets for "
+                    "the entire Payslip period for employee %s."
+                    % employee.name
+                )
+            )
 
-        timesheets = sheets.mapped('timesheet_ids').filtered(
-            lambda t: date_from <= t.date <= date_to)
+        timesheets = sheets.mapped("timesheet_ids").filtered(
+            lambda t: date_from <= t.date <= date_to
+        )
 
         timesheets.export_to_worked_days(self.id)

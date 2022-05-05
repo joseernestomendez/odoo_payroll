@@ -23,10 +23,10 @@ from openerp import api, fields, models
 
 class HrPayslipEmployees(models.TransientModel):
 
-    _inherit = 'hr.payslip.employees'
+    _inherit = "hr.payslip.employees"
 
     import_from_timesheet = fields.Boolean(
-        'Import Worked Days From Timesheet',
+        "Import Worked Days From Timesheet",
         default=True,
     )
 

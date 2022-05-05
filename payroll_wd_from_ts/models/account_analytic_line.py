@@ -27,11 +27,11 @@ from openerp.exceptions import ValidationError
 
 class AccountAnalyticLine(models.Model):
 
-    _inherit = 'account.analytic.line'
+    _inherit = "account.analytic.line"
 
     worked_days_id = fields.Many2one(
-        'hr.payslip.worked_days',
-        'Payslip Worked Days',
+        "hr.payslip.worked_days",
+        "Payslip Worked Days",
     )
 
     @api.multi
@@ -47,10 +47,13 @@ class AccountAnalyticLine(models.Model):
         #     raise ValidationError(_(
         #         'Only timesheets can be exported to worked days'))
 
-        if self.sudo().mapped('worked_days_id'):
-            raise ValidationError(_(
-                'You are attempting to export a timesheet that was already '
-                'exported to a payslip'))
+        if self.sudo().mapped("worked_days_id"):
+            raise ValidationError(
+                _(
+                    "You are attempting to export a timesheet that was already "
+                    "exported to a payslip"
+                )
+            )
 
         # Map every single timesheet
         mapped_timesheets = []
@@ -58,8 +61,7 @@ class AccountAnalyticLine(models.Model):
         for ts in self:
             worked_days_vals = list(ts.worked_days_mapping().iteritems())
             worked_days_vals.sort()
-            mapped_timesheets.append((
-                ts.id, ts.unit_amount, worked_days_vals))
+            mapped_timesheets.append((ts.id, ts.unit_amount, worked_days_vals))
 
         # Group timesheets together
         # If 2 or more timesheets are mapped the same way
@@ -69,12 +71,14 @@ class AccountAnalyticLine(models.Model):
             timesheet_list = list(group)
             timesheet_ids = tuple(t[0] for t in timesheet_list)
             worked_days_vals = dict(key)
-            worked_days_vals['payslip_id'] = payslip_id
-            worked_days_vals['imported_from_timesheets'] = True
-            worked_days_vals['number_of_hours'] = sum(
-                t[1] for t in timesheet_list)
-            new_worked_days = self.env['hr.payslip.worked_days'].create(
-                worked_days_vals)
+            worked_days_vals["payslip_id"] = payslip_id
+            worked_days_vals["imported_from_timesheets"] = True
+            worked_days_vals["number_of_hours"] = sum(
+                t[1] for t in timesheet_list
+            )
+            new_worked_days = self.env["hr.payslip.worked_days"].create(
+                worked_days_vals
+            )
 
             # Bind the timesheet to the worked days
             # Bypass the orm because the timesheet can not
@@ -83,7 +87,12 @@ class AccountAnalyticLine(models.Model):
             cr.execute(
                 """UPDATE account_analytic_line
                 SET worked_days_id = %s WHERE id in %s
-                """, (new_worked_days.id, timesheet_ids, ))
+                """,
+                (
+                    new_worked_days.id,
+                    timesheet_ids,
+                ),
+            )
 
     @api.multi
     def worked_days_mapping(self):
@@ -93,6 +102,6 @@ class AccountAnalyticLine(models.Model):
         """
         self.ensure_one()
         return {
-            'name': _('Imported From Timesheet'),
-            'date': self.date,
+            "name": _("Imported From Timesheet"),
+            "date": self.date,
         }

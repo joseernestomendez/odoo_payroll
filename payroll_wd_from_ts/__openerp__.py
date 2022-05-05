@@ -19,19 +19,19 @@
 ##############################################################################
 
 {
-    'name': 'Worked Days From Timesheet',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_base',
-        'hr_timesheet_sheet',
+    "name": "Worked Days From Timesheet",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_base",
+        "hr_timesheet_sheet",
     ],
-    'data': [
-        'views/hr_payslip.xml',
-        'wizard/hr_payslip_employees.xml',
+    "data": [
+        "views/hr_payslip.xml",
+        "wizard/hr_payslip_employees.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

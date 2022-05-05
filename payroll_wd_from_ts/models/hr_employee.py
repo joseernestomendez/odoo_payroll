@@ -27,7 +27,7 @@ class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
     timesheet_sheet_ids = fields.One2many(
-        'hr_timesheet_sheet.sheet',
-        'employee_id',
-        'Timesheets',
+        "hr_timesheet_sheet.sheet",
+        "employee_id",
+        "Timesheets",
     )
