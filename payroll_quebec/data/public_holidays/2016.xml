@@ -37,5 +37,4 @@
             <field name="state_ids" eval="[(6, 0, [ref('l10n_ca_toponyms.QC')])]"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

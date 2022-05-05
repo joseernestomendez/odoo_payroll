@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- Rule for the calculation of the federal QPP, QPIP and EI tax credit -->
         <record id="rule_qc_fit_k2q" model="hr.salary.rule">
             <field name="name">FIT YTD amount contributed QPP, QPIP and EI</field>
@@ -56,5 +55,4 @@ variables = rule.variable(payslip.date_payment)
 result = FIT_T3 * (1 - variables['abatement'])  
             </field>
         </record>
-    </data>
-</openerp>
+</odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="rule_qc_csst_ee_s" model="hr.salary.rule">
             <field name="name">CSST - Employee - Eligible Salaries</field>
@@ -33,5 +32,4 @@ rate = payslip.get_qc_rate('csst')
 result = rate * CSST_EE_S
             </field>
         </record>
-    </data>
-</openerp>
+</odoo>

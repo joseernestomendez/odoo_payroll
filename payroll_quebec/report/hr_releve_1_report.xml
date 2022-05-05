@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
-    <data>
+<odoo>
 
         <report
             auto="False"
@@ -20,5 +19,4 @@
             string="Relevé 1 - Copy 2 (Employee)"
         />
 
-    </data>
-</openerp>
+</odoo>

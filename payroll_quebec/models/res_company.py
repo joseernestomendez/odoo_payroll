@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 from itertools import permutations
 
 
@@ -87,7 +87,6 @@ class ResCompany(models.Model):
 
         return True
 
-    @api.multi
     def get_next_rq_sequential_number(self, slip_model, year):
         """
         Create a sequential number as required by Revenu Québec.
@@ -152,7 +151,6 @@ class ResCompany(models.Model):
 
         return number * 10 + int(num_c)
 
-    @api.multi
     def get_qc_rate(self, date, contribution_type):
         self.ensure_one()
 

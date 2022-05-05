@@ -20,10 +20,10 @@
 
 from datetime import datetime
 
-from openerp import api, fields, models, _
-from openerp.exceptions import ValidationError
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+import odoo.addons.decimal_precision as dp
 
 
 FLOAT_PARAM = {
@@ -49,7 +49,6 @@ class HrReleve1Summary(models.Model):
 
     _inherit = "hr.qc.summary"
 
-    @api.multi
     def get_payslips(self):
         self.ensure_one()
 
@@ -389,7 +388,6 @@ class HrReleve1Summary(models.Model):
         "Total Payable", compute="_compute_total_balance", **FUNCTION_PARAM
     )
 
-    @api.multi
     @api.constrains("releve_1_ids")
     def _check_employees(self):
         """
@@ -408,7 +406,6 @@ class HrReleve1Summary(models.Model):
 
         return True
 
-    @api.multi
     @api.constrains(
         "wsdrf_salaries",
         "wsdrf_previous_reported",
@@ -430,7 +427,6 @@ class HrReleve1Summary(models.Model):
 
         return True
 
-    @api.multi
     def generate_slips(self):
         self.ensure_one()
 
@@ -460,7 +456,6 @@ class HrReleve1Summary(models.Model):
 
         self.compute_totals()
 
-    @api.multi
     def _get_total(self, ref):
         """
         Get the summary total record given the reference of the summary box
@@ -470,7 +465,6 @@ class HrReleve1Summary(models.Model):
         box = self.env.ref("payroll_quebec.%s" % ref)
         return sum((a.amount for a in self.total_ids if a.box_id == box), 0.0)
 
-    @api.multi
     def compute_totals(self):
         self.ensure_one()
 
@@ -536,20 +530,17 @@ class HrReleve1Summary(models.Model):
             }
         )
 
-    @api.multi
     def button_cancel(self):
         for summary in self:
             for slip in summary.releve_1_ids:
                 slip.write({"state": "cancelled"})
         self.write({"state": "cancelled"})
 
-    @api.multi
     def button_confirm_slips(self):
         for summary in self:
             slips = summary.releve_1_ids.filtered(lambda s: s.state == "draft")
             slips.write({"state": "confirmed"})
 
-    @api.multi
     def button_confirm(self):
         for summary in self:
             for slip in summary.releve_1_ids:

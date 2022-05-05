@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <!-- Standard Vacations Entitlement -->
         <record id="quebec_standard_vac_entitlement" model="hr.holidays.entitlement">
@@ -10,5 +9,4 @@
             <field name="leave_id" ref="payroll_activity.holiday_status_vacation"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

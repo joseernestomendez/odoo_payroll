@@ -25,10 +25,10 @@ import unicodedata
 from datetime import datetime
 from elaphe.datamatrix import DataMatrix
 
-from openerp import api, fields, models, _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-import openerp.addons.decimal_precision as dp
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models, _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+import odoo.addons.decimal_precision as dp
+from odoo.exceptions import ValidationError
 
 from .hr_qc_summary import get_type_codes
 
@@ -40,15 +40,12 @@ class HrReleve1(models.Model):
     _inherit = "hr.fiscal_slip"
     _description = _(__doc__)
 
-    @api.multi
     def set_to_draft(self):
         self.write({"state": "draft"})
 
-    @api.multi
     def button_confirm(self):
         self.write({"state": "confirmed"})
 
-    @api.multi
     def compute_amounts(self):
         self.write({"amount_ids": [(5, 0)]})
         # Most times, a Releve 1 has either 0 or 1 child
@@ -176,7 +173,6 @@ class HrReleve1(models.Model):
         self.make_dtmx_barcode()
         self.write({"computed": True})
 
-    @api.multi
     def make_sequential_number(self):
         for slip in self:
             # If the slip as no number, assign one
@@ -230,7 +226,6 @@ class HrReleve1(models.Model):
 
         return res
 
-    @api.multi
     def _dtmx_address(self, address):
         self.ensure_one()
 
@@ -265,7 +260,6 @@ class HrReleve1(models.Model):
 
         return res
 
-    @api.multi
     def make_dtmx_barcode(self):
         """
         Create the DataMatrix Codebar
@@ -556,7 +550,6 @@ class HrReleve1(models.Model):
 
     dtmx_barcode_image = fields.Binary("DataMatrix Bar Code", readonly=True)
 
-    @api.multi
     @api.constrains("amount_ids")
     def _check_other_info(self):
         for slip in self:
@@ -567,7 +560,6 @@ class HrReleve1(models.Model):
 
         return True
 
-    @api.multi
     @api.constrains("amount_ids")
     def _check_unique_amount_type(self):
         for slip in self:
@@ -581,7 +573,6 @@ class HrReleve1(models.Model):
 
         return True
 
-    @api.multi
     def name_get(self):
         return [
             (
@@ -592,7 +583,6 @@ class HrReleve1(models.Model):
             for slip in self
         ]
 
-    @api.multi
     def get_other_amount_code(self, index):
         """
         Override the method get_other_amount_code from hr.fiscal_slip

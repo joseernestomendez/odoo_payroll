@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.addons.payroll_canada.tests.test_hr_cra_t4 import (
+from odoo.addons.payroll_canada.tests.test_hr_cra_t4 import (
     TestPayrollStructureBase,
 )
 

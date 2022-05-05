@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- Quebec Pension Plan - 130 to 140 -->
         <record id="rule_qc_qpp_ee_maxie" model="hr.salary.rule">
             <field name="name">QPP - Employee - Maximum Insurable Earnings</field>
@@ -62,5 +61,4 @@ result = QPP_EE_C
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

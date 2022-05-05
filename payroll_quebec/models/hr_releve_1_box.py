@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrReleve1Box(models.Model):
@@ -36,7 +36,6 @@ class HrReleve1Box(models.Model):
     )
     is_box_o_amount = fields.Boolean("Is Box O Revenue")
 
-    @api.multi
     def compute_amount(self, payslip_ids):
         self.ensure_one()
         return self.fiscal_slip_box_id.compute_amount(payslip_ids)

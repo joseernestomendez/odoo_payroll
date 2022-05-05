@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
     
     <!-- Deduction Category-->
     	<record id="qitf" model="hr.deduction.category">
@@ -63,5 +62,4 @@
             <field name="amount_type">each_pay</field>
         </record>
         
-    </data>
-</openerp>
+</odoo>

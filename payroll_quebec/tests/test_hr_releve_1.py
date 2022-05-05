@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
-from openerp.addons.payroll_canada.tests.test_hr_cra_t4 import TestHrCraT4Base
+from odoo.osv import orm
+from odoo.addons.payroll_canada.tests.test_hr_cra_t4 import TestHrCraT4Base
 
 
 class TestHrReleve1Base(TestHrCraT4Base):

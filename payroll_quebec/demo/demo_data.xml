@@ -47,5 +47,4 @@
             <field name="amount">1000</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

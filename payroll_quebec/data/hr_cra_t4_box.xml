@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="payroll_canada.t4_box_qpp_cntrb_amt" model="hr.cra.t4.box">
             <field name="salary_rule_ids" eval="[(4, ref('rule_qc_qpp_ee_c'))]"/>
@@ -30,5 +29,4 @@
             <field name="salary_rule_ids" eval="[(4, ref('rule_qc_ei_er_c'))]"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

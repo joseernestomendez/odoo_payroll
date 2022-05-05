@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- Quebec Commission des Normes du Travail -->
         <record id="rule_qc_cnt_ee_s" model="hr.salary.rule">
             <field name="name">CNT - Employee - Eligible Salaries</field>
@@ -25,5 +24,4 @@ result = max(result, 0)
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

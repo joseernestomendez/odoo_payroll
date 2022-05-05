@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrReleve1SummaryBox(models.Model):
@@ -39,7 +39,6 @@ class HrReleve1SummaryBox(models.Model):
         "Summary Box.",
     )
 
-    @api.multi
     def compute_amount(self, slip_ids):
         """
         Return the amount of a Releve 1 Summary box from the given

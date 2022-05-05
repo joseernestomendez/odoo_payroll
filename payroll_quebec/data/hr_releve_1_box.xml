@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record id="releve_1_box_a_revenu_emploi" model="hr.releve_1.box">
             <field name="name">A - RevenuEmploi</field>
@@ -255,5 +254,4 @@
             <field name="salary_rule_ids" eval="[(6, 0, [ref('rule_qc_wsdrf_ee_s')])]"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>

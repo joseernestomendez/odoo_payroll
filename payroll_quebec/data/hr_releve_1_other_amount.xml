@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <!-- This is not a complete list of other amounts -->
         <!-- But only the most frequent ones -->      
@@ -133,5 +132,4 @@
             <field name="is_other_amount" eval="True"/>
             <field name="is_box_o_amount" eval="True"/>
         </record>
-    </data>
-</openerp>
+</odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <record id="rule_qc_qit_g" model="hr.salary.rule">
             <field name="name">QIT - Gross remuneration subject to income tax for the pay period</field>
             <field name="sequence" eval="200"/>
@@ -353,5 +352,4 @@ if OTHER_WAGE:
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

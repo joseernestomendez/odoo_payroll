@@ -18,13 +18,12 @@
 #
 ##############################################################################
 
-from openerp import api, models
+from odoo import api, models
 
 
 class HrPayslip(models.Model):
     _inherit = "hr.payslip"
 
-    @api.multi
     def get_qc_rate(self, ttype):
         self.ensure_one()
         return self.company_id.get_qc_rate(self.date_payment, ttype)

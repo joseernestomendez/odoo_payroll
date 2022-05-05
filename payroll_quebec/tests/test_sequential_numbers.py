@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp.tests import common
-from openerp.osv import orm
+from odoo.tests import common
+from odoo.osv import orm
 
 
 class TestSequentialNumbers(common.TransactionCase):

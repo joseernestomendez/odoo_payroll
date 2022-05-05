@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <record id="view_releve_1_form" model="ir.ui.view">
             <field name="name">hr.releve_1.form</field>
             <field name="model">hr.releve_1</field>
@@ -89,12 +88,10 @@
         <record id="action_view_hr_releve_1_tree" model="ir.actions.act_window">
             <field name="name">Relevés 1</field>
             <field name="res_model">hr.releve_1</field>
-            <field name="view_type">form</field>
             <field name="view_id" ref="view_hr_releve_1_tree"/>
             <field name="search_view_id" ref="view_hr_releve_1_filter"/>
         </record>
 
         <menuitem action="action_view_hr_releve_1_tree" id="releve_1_menu_item" parent="payroll_canada.menu_fiscal_slips" groups="base.group_user" sequence="50"/>
-    </data>
-</openerp>
+</odoo>
 

@@ -18,8 +18,8 @@
 #
 ##############################################################################
 
-from openerp.report import report_sxw
-from openerp.addons.payroll_canada.report.report_t4_employee_copy import (
+from odoo.report import report_sxw
+from odoo.addons.payroll_canada.report.report_t4_employee_copy import (
     display_address_no_blank_line,
     get_amount_decimals,
     get_amount_units,

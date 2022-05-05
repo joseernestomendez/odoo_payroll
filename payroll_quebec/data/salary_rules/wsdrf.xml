@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <!-- This rule is only used to compute the employer's WSDRF contribution in the Releve 1 Summary -->
         <record id="rule_qc_wsdrf_ee_s" model="hr.salary.rule">
@@ -19,5 +18,4 @@ result = benefits + GROSSP + OTHER_WAGE
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

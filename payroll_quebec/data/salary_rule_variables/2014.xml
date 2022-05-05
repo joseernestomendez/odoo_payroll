@@ -210,5 +210,4 @@
             <field name="python_code">{'max_annual': 69000}</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <!-- Quebec Parental Insurance Plan - 120 -->
         <record id="rule_qc_ppip_ee_maxie" model="hr.salary.rule">
             <field name="name">QPIP - Employee's insurable earnings</field>
@@ -71,5 +70,4 @@ result = max(result, 0)
             </field>
         </record>
 
-    </data>
-</openerp>
+</odoo>
