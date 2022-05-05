@@ -19,23 +19,23 @@
 ##############################################################################
 
 {
-    'name': 'HR Contract Hourly Rate',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Generic Modules/Human Resources',
-    'author': 'Savoir-faire Linux, '
-              'Fekete Mihai (Forest and Biomass Services Romania), '
-              'Odoo Community Association (OCA)',
-    'website': 'https://www.savoirfairelinux.com/',
-    'depends': [
-        'payroll_contract_jobs',
+    "name": "HR Contract Hourly Rate",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Generic Modules/Human Resources",
+    "author": "Savoir-faire Linux, "
+    "Fekete Mihai (Forest and Biomass Services Romania), "
+    "Odoo Community Association (OCA)",
+    "website": "https://www.savoirfairelinux.com/",
+    "depends": [
+        "payroll_contract_jobs",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/hr_contract.xml',
-        'views/hr_hourly_rate_class.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/hr_contract.xml",
+        "views/hr_hourly_rate_class.xml",
     ],
-    'test': [],
-    'demo': [],
-    'installable': True,
+    "test": [],
+    "demo": [],
+    "installable": True,
 }

@@ -22,14 +22,17 @@ from openerp import models, fields
 
 
 class hr_hourly_rate(models.Model):
-    _name = 'hr.hourly.rate'
-    _description = 'Hourly rate'
+    _name = "hr.hourly.rate"
+    _description = "Hourly rate"
 
-    rate = fields.Float(string='Rate', required=True)
-    date_start = fields.Date(string='Start Date', required=True,
-                             default=fields.Date.today())
-    date_end = fields.Date(string='End Date')
-    class_id = fields.Many2one('hr.hourly.rate.class',
-                               string='Salary Class',
-                               ondelete='cascade',
-                               required=True)
+    rate = fields.Float(string="Rate", required=True)
+    date_start = fields.Date(
+        string="Start Date", required=True, default=fields.Date.today()
+    )
+    date_end = fields.Date(string="End Date")
+    class_id = fields.Many2one(
+        "hr.hourly.rate.class",
+        string="Salary Class",
+        ondelete="cascade",
+        required=True,
+    )
