@@ -25,37 +25,37 @@ import openerp.addons.decimal_precision as dp
 class HrPayslipBenefitLine(models.Model):
     """Pay Slip Employee Benefit Line"""
 
-    _name = 'hr.payslip.benefit.line'
+    _name = "hr.payslip.benefit.line"
     _description = _(__doc__)
 
     payslip_id = fields.Many2one(
-        'hr.payslip',
-        'Payslip',
+        "hr.payslip",
+        "Payslip",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     category_id = fields.Many2one(
-        'hr.employee.benefit.category',
-        'Benefit',
+        "hr.employee.benefit.category",
+        "Benefit",
         required=True,
     )
     employer_amount = fields.Float(
-        'Employer Contribution',
-        digits_compute=dp.get_precision('Payroll'),
+        "Employer Contribution",
+        digits_compute=dp.get_precision("Payroll"),
     )
     employee_amount = fields.Float(
-        'Employee Contribution',
-        digits_compute=dp.get_precision('Payroll'),
+        "Employee Contribution",
+        digits_compute=dp.get_precision("Payroll"),
     )
     source = fields.Selection(
         [
-            ('contract', 'From Contract'),
-            ('manual', 'Added Manually'),
+            ("contract", "From Contract"),
+            ("manual", "Added Manually"),
         ],
         readonly=True,
         required=True,
-        string='Type',
-        type='char',
-        default='manual',
+        string="Type",
+        type="char",
+        default="manual",
     )
-    reference = fields.Char('Reference')
+    reference = fields.Char("Reference")

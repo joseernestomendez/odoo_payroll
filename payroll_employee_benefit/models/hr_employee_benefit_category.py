@@ -24,32 +24,35 @@ from openerp import fields, models, _
 class HrEmployeeBenefitCategory(models.Model):
     """Employee Benefit Category"""
 
-    _name = 'hr.employee.benefit.category'
+    _name = "hr.employee.benefit.category"
     _description = _(__doc__)
 
-    name = fields.Char('Benefit Name', required=True)
+    name = fields.Char("Benefit Name", required=True)
     code = fields.Char(
-        'Code',
+        "Code",
         help="The code that can be used in the salary rules to identify "
         "the benefit",
     )
     description = fields.Text(
-        'Description',
-        help="Brief explanation of which benefits the category contains."
+        "Description",
+        help="Brief explanation of which benefits the category contains.",
     )
     salary_rule_ids = fields.Many2many(
-        'hr.salary.rule', 'salary_rule_employee_benefit_rel',
-        'benefit_id', 'salary_rule_id', 'Salary Rules',
+        "hr.salary.rule",
+        "salary_rule_employee_benefit_rel",
+        "benefit_id",
+        "salary_rule_id",
+        "Salary Rules",
     )
     rate_ids = fields.One2many(
-        'hr.employee.benefit.rate',
-        'category_id',
+        "hr.employee.benefit.rate",
+        "category_id",
         string="Benefit Rates",
     )
     reference = fields.Char(
-        'Reference',
+        "Reference",
         help="Field used to enter an external identifier for a "
         "benefit category. Example, pension plans may have a "
-        "registration number."
+        "registration number.",
     )
-    active = fields.Boolean('active', default=True)
+    active = fields.Boolean("active", default=True)

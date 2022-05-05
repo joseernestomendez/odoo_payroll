@@ -22,16 +22,18 @@ from openerp import api, fields, models
 
 
 class HrSalaryRule(models.Model):
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     employee_benefit_ids = fields.Many2many(
-        'hr.employee.benefit.category',
-        'salary_rule_employee_benefit_rel',
-        'salary_rule_id', 'benefit_id', 'Salary Rules',
+        "hr.employee.benefit.category",
+        "salary_rule_employee_benefit_rel",
+        "salary_rule_id",
+        "benefit_id",
+        "Salary Rules",
     )
 
     sum_all_benefits = fields.Boolean(
-        'Include All Employee Benefits',
+        "Include All Employee Benefits",
         default=True,
         help="If checked, the salary rule will sum over all employee "
         "benefits.",
@@ -60,7 +62,7 @@ class HrSalaryRule(models.Model):
 
         benefits = self._filter_benefits(payslip, **kwargs)
 
-        employer = kwargs.get('employer', False)
+        employer = kwargs.get("employer", False)
 
         if employer:
             res = sum(ben.employer_amount for ben in benefits)
@@ -70,9 +72,9 @@ class HrSalaryRule(models.Model):
         return res
 
     @api.multi
-    @api.returns('hr.payslip.benefit.line')
+    @api.returns("hr.payslip.benefit.line")
     def _filter_benefits(self, payslip, codes=False, **kwargs):
-        """ Filter the benefit records on the payslip
+        """Filter the benefit records on the payslip
         :rtype: record set of hr.payslip.benefit.line
         """
         self.ensure_one()
@@ -83,11 +85,11 @@ class HrSalaryRule(models.Model):
             if isinstance(codes, str):
                 codes = [codes]
 
-            return benefits.filtered(
-                lambda b: b.category_id.code in codes)
+            return benefits.filtered(lambda b: b.category_id.code in codes)
 
         if not self.sum_all_benefits:
             return benefits.filtered(
-                lambda b: b.category_id in self.employee_benefit_ids)
+                lambda b: b.category_id in self.employee_benefit_ids
+            )
 
         return benefits

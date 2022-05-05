@@ -22,13 +22,14 @@ from openerp import api, models, fields
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     benefit_line_ids = fields.One2many(
-        'hr.payslip.benefit.line',
-        'payslip_id',
-        'Employee Benefits',
-        readonly=True, states={'draft': [('readonly', False)]},
+        "hr.payslip.benefit.line",
+        "payslip_id",
+        "Employee Benefits",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
         copy=True,
     )
 
@@ -65,7 +66,7 @@ class HrPayslip(models.Model):
         functionnality.
         """
         for benefit_line in self.benefit_line_ids:
-            if benefit_line.source == 'contract':
+            if benefit_line.source == "contract":
                 benefit_line.unlink()
 
         benefits = self._search_benefits()

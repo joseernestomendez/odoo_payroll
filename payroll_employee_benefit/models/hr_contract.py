@@ -22,10 +22,10 @@ from openerp import fields, models
 
 
 class HrContract(models.Model):
-    _inherit = 'hr.contract'
+    _inherit = "hr.contract"
 
     benefit_line_ids = fields.One2many(
-        'hr.employee.benefit',
-        'contract_id',
-        'Employee Benefits',
+        "hr.employee.benefit",
+        "contract_id",
+        "Employee Benefits",
     )

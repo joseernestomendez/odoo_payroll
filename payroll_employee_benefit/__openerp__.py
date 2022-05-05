@@ -19,25 +19,25 @@
 ##############################################################################
 
 {
-    'name': 'Employee Benefit',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Generic Modules/Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_base',
+    "name": "Employee Benefit",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Generic Modules/Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_base",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/menu.xml',
-        'views/hr_contract.xml',
-        'views/hr_employee_benefit_category.xml',
-        'views/hr_employee_benefit_rate.xml',
-        'views/hr_salary_rule.xml',
-        'views/hr_payslip.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/menu.xml",
+        "views/hr_contract.xml",
+        "views/hr_employee_benefit_category.xml",
+        "views/hr_employee_benefit_rate.xml",
+        "views/hr_salary_rule.xml",
+        "views/hr_payslip.xml",
     ],
-    'test': [],
-    'demo': [],
-    'installable': True,
+    "test": [],
+    "demo": [],
+    "installable": True,
 }
