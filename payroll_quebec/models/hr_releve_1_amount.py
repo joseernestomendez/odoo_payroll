@@ -25,27 +25,32 @@ import openerp.addons.decimal_precision as dp
 class HrReleve1Amount(models.Model):
     """Releve 1 Amount"""
 
-    _name = 'hr.releve_1.amount'
+    _name = "hr.releve_1.amount"
     _description = _(__doc__)
 
     slip_id = fields.Many2one(
-        'hr.releve_1', 'Releve 1', required=True, ondelete='cascade',
+        "hr.releve_1",
+        "Releve 1",
+        required=True,
+        ondelete="cascade",
     )
     box_id = fields.Many2one(
-        'hr.releve_1.box', 'Fiscal Slip Box', required=True,
+        "hr.releve_1.box",
+        "Fiscal Slip Box",
+        required=True,
     )
     amount = fields.Float(
-        'Amount',
-        digits_compute=dp.get_precision('Payroll'),
+        "Amount",
+        digits_compute=dp.get_precision("Payroll"),
         required=True,
     )
     is_other_amount = fields.Boolean(
-        'Is Other Amount',
-        related='box_id.is_other_amount',
+        "Is Other Amount",
+        related="box_id.is_other_amount",
         store=True,
     )
     is_box_o_amount = fields.Boolean(
-        'Is Box O Revenue',
-        related='box_id.is_box_o_amount',
+        "Is Box O Revenue",
+        related="box_id.is_box_o_amount",
         store=True,
     )

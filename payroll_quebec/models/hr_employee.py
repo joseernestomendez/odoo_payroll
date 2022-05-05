@@ -22,10 +22,10 @@ from openerp import fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = "hr.employee"
 
     qc_additional_source_deduction = fields.Integer(
-        'Quebec - Additional source deduction',
+        "Quebec - Additional source deduction",
         help="Additional source deduction of income tax requested by the "
-        "individual per pay period. Put a positive amount."
+        "individual per pay period. Put a positive amount.",
     )

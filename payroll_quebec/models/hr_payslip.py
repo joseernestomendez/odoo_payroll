@@ -22,7 +22,7 @@ from openerp import api, models
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     @api.multi
     def get_qc_rate(self, ttype):

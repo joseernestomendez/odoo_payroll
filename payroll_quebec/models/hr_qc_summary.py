@@ -24,49 +24,57 @@ from openerp import api, fields, models, _
 @api.model
 def get_type_codes(self):
     return [
-        ('R', _('Original')),
-        ('A', _('Amended')),
-        ('D', _('Cancelled')),
+        ("R", _("Original")),
+        ("A", _("Amended")),
+        ("D", _("Cancelled")),
     ]
 
 
 class HrQcSummary(models.AbstractModel):
     """Revenu Quebec Fiscal Slip Summary"""
 
-    _name = 'hr.qc.summary'
+    _name = "hr.qc.summary"
     _description = _(__doc__)
 
     state = fields.Selection(
         [
-            ('cancelled', 'Cancelled'),
-            ('draft', 'Draft'),
-            ('sent', 'Sent'),
+            ("cancelled", "Cancelled"),
+            ("draft", "Draft"),
+            ("sent", "Sent"),
         ],
-        'Status',
+        "Status",
         select=True,
         readonly=True,
-        default='draft',
+        default="draft",
     )
     year = fields.Char(
-        'Fiscal Year', required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
+        "Fiscal Year",
+        required=True,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
         default=lambda *a: int(fields.Date.today()[0:4]) - 1,
     )
     slip_type = fields.Selection(
         get_type_codes,
-        'Type', required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
-        default='R',
+        "Type",
+        required=True,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        default="R",
     )
     company_id = fields.Many2one(
-        'res.company', 'Company', required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
+        "res.company",
+        "Company",
+        required=True,
+        readonly=True,
+        states={"draft": [("readonly", False)]},
         default=lambda self: self.env.user.company_id.id,
     )
     date = fields.Date(
-        'Date',
-        help='The date of submission to Revenu Quebec.',
+        "Date",
+        help="The date of submission to Revenu Quebec.",
         required=True,
-        readonly=True, states={'draft': [('readonly', False)]},
+        readonly=True,
+        states={"draft": [("readonly", False)]},
         default=fields.Date.today,
     )

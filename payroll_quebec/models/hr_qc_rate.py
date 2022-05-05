@@ -24,34 +24,34 @@ from openerp import fields, models, _
 class HrQcRate(models.Model):
     """Quebec Contribution Rate"""
 
-    _name = 'hr.qc.rate'
+    _name = "hr.qc.rate"
     _description = _(__doc__)
 
     date_from = fields.Date(
-        'Date From',
+        "Date From",
         required=True,
     )
     date_to = fields.Date(
-        'Date To',
+        "Date To",
         required=True,
     )
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
+        "res.company",
+        "Company",
         required=True,
     )
     rate = fields.Float(
-        'Rate',
+        "Rate",
         digits=(2, 2),
         required=True,
-        help="Enter 2.5 for a rate of 2.5 %."
+        help="Enter 2.5 for a rate of 2.5 %.",
     )
     contribution_type = fields.Selection(
         [
-            ('csst', 'CSST'),
-            ('hsf', 'Health Services Fund'),
+            ("csst", "CSST"),
+            ("hsf", "Health Services Fund"),
         ],
         required=True,
-        type='char',
-        string='Type',
+        type="char",
+        string="Type",
     )

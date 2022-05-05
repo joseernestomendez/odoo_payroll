@@ -24,15 +24,17 @@ from openerp import api, fields, models, _
 class HrReleve1Box(models.Model):
     """Releve 1 Box"""
 
-    _name = 'hr.releve_1.box'
-    _inherits = {'hr.fiscal_slip.box': 'fiscal_slip_box_id'}
+    _name = "hr.releve_1.box"
+    _inherits = {"hr.fiscal_slip.box": "fiscal_slip_box_id"}
     _description = _(__doc__)
 
     fiscal_slip_box_id = fields.Many2one(
-        'hr.fiscal_slip.box', 'Fiscal Slip Box',
-        required=True, ondelete='cascade',
+        "hr.fiscal_slip.box",
+        "Fiscal Slip Box",
+        required=True,
+        ondelete="cascade",
     )
-    is_box_o_amount = fields.Boolean('Is Box O Revenue')
+    is_box_o_amount = fields.Boolean("Is Box O Revenue")
 
     @api.multi
     def compute_amount(self, payslip_ids):

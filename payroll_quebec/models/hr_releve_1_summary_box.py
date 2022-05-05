@@ -24,22 +24,19 @@ from openerp import api, fields, models, _
 class HrReleve1SummaryBox(models.Model):
     """Releve 1 Summary Box"""
 
-    _name = 'hr.releve_1.summary.box'
+    _name = "hr.releve_1.summary.box"
     _description = _(__doc__)
 
-    name = fields.Char(
-        'Name',
-        required=True
-    )
+    name = fields.Char("Name", required=True)
     active = fields.Boolean(
-        'Active',
+        "Active",
         default=True,
     )
     child_ids = fields.Many2many(
-        'hr.releve_1.box',
-        'hr_releve_1_summary_total_box_rel',
-        string='Related Releve 1 Boxes that will be summed in the'
-        'Summary Box.',
+        "hr.releve_1.box",
+        "hr_releve_1_summary_total_box_rel",
+        string="Related Releve 1 Boxes that will be summed in the"
+        "Summary Box.",
     )
 
     @api.multi
@@ -53,9 +50,11 @@ class HrReleve1SummaryBox(models.Model):
         """
         self.ensure_one()
 
-        amounts = self.env['hr.releve_1.amount'].search([
-            ('slip_id', 'in', slip_ids),
-            ('box_id', 'in', self.child_ids.ids),
-        ])
+        amounts = self.env["hr.releve_1.amount"].search(
+            [
+                ("slip_id", "in", slip_ids),
+                ("box_id", "in", self.child_ids.ids),
+            ]
+        )
 
         return sum(a.amount for a in amounts)
