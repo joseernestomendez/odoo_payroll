@@ -18,7 +18,7 @@
 #
 ##############################################################################
 
-from openerp.tests import common
+from odoo.tests import common
 
 
 class test_activity_on_timesheet(common.TransactionCase):

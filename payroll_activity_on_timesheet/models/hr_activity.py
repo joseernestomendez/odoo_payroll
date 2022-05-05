@@ -20,9 +20,9 @@
 
 from datetime import datetime
 
-from openerp import fields, models
-from openerp.exceptions import ValidationError
-from openerp.tools.translate import _
+from odoo import fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
 
 
 to_string = fields.Date.to_string

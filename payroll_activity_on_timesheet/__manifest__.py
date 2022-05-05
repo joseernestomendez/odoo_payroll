@@ -20,7 +20,7 @@
 
 {
     "name": "Activity on Timesheet",
-    "version": "1.0.0",
+    "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "category": "Generic Modules/Human Resources",
     "author": "Savoir-faire Linux,Odoo Community Association (OCA)",

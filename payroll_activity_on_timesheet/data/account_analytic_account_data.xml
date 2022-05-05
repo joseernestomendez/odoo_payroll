@@ -8,5 +8,4 @@
             <field name="account_type">normal</field>
             <field name="authorized_activity_ids" eval="[(6, 0, [])]"/>
         </record>
-    </data>
-</openerp>
+</odoo>
