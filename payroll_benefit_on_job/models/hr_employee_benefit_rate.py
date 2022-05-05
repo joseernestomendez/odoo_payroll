@@ -22,12 +22,12 @@ from openerp import api, models, _
 
 
 class HrEmployeeBenefitRate(models.Model):
-    _inherit = 'hr.employee.benefit.rate'
+    _inherit = "hr.employee.benefit.rate"
 
     @api.multi
     def get_all_amount_types(self):
         res = super(HrEmployeeBenefitRate, self).get_all_amount_types()
-        res.append(('per_hour', _('Per Worked Hour')))
+        res.append(("per_hour", _("Per Worked Hour")))
         return res
 
     @api.multi
@@ -40,19 +40,20 @@ class HrEmployeeBenefitRate(models.Model):
         for rate in self:
 
             rate_lines = rate.line_ids.filtered(
-                lambda l:
-                (not l.date_end or worked_days.date <= l.date_end) and
-                l.date_start <= worked_days.date
+                lambda l: (not l.date_end or worked_days.date <= l.date_end)
+                and l.date_start <= worked_days.date
             )
 
             for line in rate_lines:
 
-                self.env['hr.payslip.benefit.line'].create({
-                    'payslip_id': worked_days.payslip_id.id,
-                    'employer_amount': line.employer_amount *
-                    worked_days.number_of_hours,
-                    'employee_amount': line.employee_amount *
-                    worked_days.number_of_hours,
-                    'category_id': line.category_id.id,
-                    'source': 'contract',
-                })
+                self.env["hr.payslip.benefit.line"].create(
+                    {
+                        "payslip_id": worked_days.payslip_id.id,
+                        "employer_amount": line.employer_amount
+                        * worked_days.number_of_hours,
+                        "employee_amount": line.employee_amount
+                        * worked_days.number_of_hours,
+                        "category_id": line.category_id.id,
+                        "source": "contract",
+                    }
+                )

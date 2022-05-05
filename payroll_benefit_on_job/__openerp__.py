@@ -19,19 +19,19 @@
 ##############################################################################
 
 {
-    'name': 'Employee Benefit On Job',
-    'version': '1.0.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_contract_jobs',
-        'payroll_employee_benefit',
-        'payroll_activity',
+    "name": "Employee Benefit On Job",
+    "version": "1.0.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_contract_jobs",
+        "payroll_employee_benefit",
+        "payroll_activity",
     ],
-    'data': [
-        'views/hr_job.xml',
+    "data": [
+        "views/hr_job.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

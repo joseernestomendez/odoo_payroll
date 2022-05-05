@@ -22,11 +22,12 @@ from openerp import api, models
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = "hr.payslip"
 
     @api.multi
     def _search_benefits(self):
 
         benefits = super(HrPayslip, self)._search_benefits()
         return benefits + self.contract_id.contract_job_ids.mapped(
-            'job_id.benefit_line_ids')
+            "job_id.benefit_line_ids"
+        )

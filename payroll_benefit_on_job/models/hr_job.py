@@ -23,10 +23,8 @@ from openerp import fields, models
 
 class HrJob(models.Model):
 
-    _inherit = 'hr.job'
+    _inherit = "hr.job"
 
     benefit_line_ids = fields.One2many(
-        'hr.employee.benefit',
-        'job_id',
-        'Employee Benefits'
+        "hr.employee.benefit", "job_id", "Employee Benefits"
     )

@@ -23,19 +23,13 @@ from openerp import api, fields, models
 
 class HrEmployeeBenefit(models.Model):
 
-    _inherit = 'hr.employee.benefit'
+    _inherit = "hr.employee.benefit"
 
-    job_id = fields.Many2one(
-        'hr.job',
-        'Job',
-        ondelete='cascade',
-        index=True
-    )
+    job_id = fields.Many2one("hr.job", "Job", ondelete="cascade", index=True)
 
     @api.multi
     def compute_amounts(self, payslip):
-        other_benefits = self.filtered(
-            lambda b: b.amount_type != 'per_hour')
+        other_benefits = self.filtered(lambda b: b.amount_type != "per_hour")
 
         benefits_per_hour = self - other_benefits
 
@@ -47,7 +41,8 @@ class HrEmployeeBenefit(models.Model):
             # Case where the benefit is related to a single job
             if benefit.job_id:
                 worked_days = payslip.worked_days_line_ids.filtered(
-                    lambda wd: wd.activity_id.job_id == benefit.job_id)
+                    lambda wd: wd.activity_id.job_id == benefit.job_id
+                )
 
             # Case where the benefit is related to a contract
             # In that case, the benefit applies for all jobs
@@ -55,7 +50,7 @@ class HrEmployeeBenefit(models.Model):
                 worked_days = payslip.worked_days_line_ids
 
             else:
-                worked_days = self.env['hr.payslip.worked_days']
+                worked_days = self.env["hr.payslip.worked_days"]
 
             for wd in worked_days:
                 benefit.rate_id.compute_amounts_per_hour(wd)
