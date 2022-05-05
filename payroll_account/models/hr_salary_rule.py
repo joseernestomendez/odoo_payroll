@@ -25,17 +25,17 @@ from openerp import fields, models
 
 
 class HrSalaryRule(models.Model):
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     analytic_account_id = fields.Many2one(
-        'account.analytic.account',
-        'Analytic Account',
+        "account.analytic.account",
+        "Analytic Account",
     )
     account_debit = fields.Many2one(
-        'account.account',
-        'Debit Account',
+        "account.account",
+        "Debit Account",
     )
     account_credit = fields.Many2one(
-        'account.account',
-        'Credit Account',
+        "account.account",
+        "Credit Account",
     )

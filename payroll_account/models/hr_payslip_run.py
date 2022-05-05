@@ -26,18 +26,18 @@ from openerp import api, fields, models
 
 class HrPayslipRun(models.Model):
 
-    _inherit = 'hr.payslip.run'
+    _inherit = "hr.payslip.run"
 
     journal_id = fields.Many2one(
-        'account.journal',
-        'Salary Journal',
-        states={'draft': [('readonly', False)]},
+        "account.journal",
+        "Salary Journal",
+        states={"draft": [("readonly", False)]},
         readonly=True,
         required=True,
         default=lambda self: self.env.user.company_id.payroll_journal_id,
     )
 
-    @api.onchange('company_id')
+    @api.onchange("company_id")
     def onchange_company_id(self):
         super(HrPayslipRun, self).onchange_company_id()
         self.journal_id = self.company_id.payroll_journal_id.id

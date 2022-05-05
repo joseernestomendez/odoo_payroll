@@ -25,21 +25,21 @@ from openerp.exceptions import ValidationError
 
 class HrPayslipEmployee(models.TransientModel):
 
-    _inherit = 'hr.payslip.employees'
+    _inherit = "hr.payslip.employees"
 
     @api.multi
     def compute_sheet(self):
         self.ensure_one()
 
-        active_id = self.env.context.get('active_id')
-        payslip_run = self.env['hr.payslip.run'].browse(active_id)
+        active_id = self.env.context.get("active_id")
+        payslip_run = self.env["hr.payslip.run"].browse(active_id)
         if not payslip_run.journal_id:
-            raise ValidationError(_(
-                'The journal is not set on the payslip run.'
-            ))
+            raise ValidationError(
+                _("The journal is not set on the payslip run.")
+            )
 
         ctx = dict(self.env.context)
-        ctx['journal_id'] = payslip_run.journal_id.id
+        ctx["journal_id"] = payslip_run.journal_id.id
         self = self.with_context(ctx)
 
         return super(HrPayslipEmployee, self).compute_sheet()

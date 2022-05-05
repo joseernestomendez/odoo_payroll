@@ -21,24 +21,24 @@
 #
 ##############################################################################
 {
-    'name': 'Payroll Accounting',
-    'version': '1.0.0',
-    'category': 'Human Resources',
-    'author': 'OpenERP SA,Savoir-faire Linux',
-    'website': 'https://www.odoo.com/page/employees',
-    'depends': [
-        'payroll_base',
-        'account',
-        'hr_expense',
+    "name": "Payroll Accounting",
+    "version": "1.0.0",
+    "category": "Human Resources",
+    "author": "OpenERP SA,Savoir-faire Linux",
+    "website": "https://www.odoo.com/page/employees",
+    "depends": [
+        "payroll_base",
+        "account",
+        "hr_expense",
     ],
-    'data': [
-        'views/hr_payslip.xml',
-        'views/hr_payslip_run.xml',
-        'views/hr_salary_rule.xml',
-        'views/res_company.xml',
+    "data": [
+        "views/hr_payslip.xml",
+        "views/hr_payslip_run.xml",
+        "views/hr_salary_rule.xml",
+        "views/res_company.xml",
     ],
-    'demo': [],
-    'test': [],
-    'installable': True,
-    'auto_install': False,
+    "demo": [],
+    "test": [],
+    "installable": True,
+    "auto_install": False,
 }

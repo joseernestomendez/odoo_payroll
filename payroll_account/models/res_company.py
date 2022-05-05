@@ -25,10 +25,10 @@ from openerp import fields, models
 
 class ResCompany(models.Model):
 
-    _inherit = 'res.company'
+    _inherit = "res.company"
 
     payroll_journal_id = fields.Many2one(
-        'account.journal',
-        'Payroll Journal',
+        "account.journal",
+        "Payroll Journal",
         help="The default journal used for the payroll of the company.",
     )
