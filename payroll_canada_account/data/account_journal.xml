@@ -8,5 +8,4 @@
             <field name="type">general</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>

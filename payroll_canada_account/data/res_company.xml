@@ -6,5 +6,4 @@
             <field name="payroll_journal_id" ref="payroll_journal"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>
