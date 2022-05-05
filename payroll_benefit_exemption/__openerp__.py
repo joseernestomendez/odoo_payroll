@@ -19,18 +19,18 @@
 ##############################################################################
 
 {
-    'name': 'Employee Benefit Exemption',
-    'version': '1.0',
-    'license': 'AGPL-3',
-    'category': 'Human Resources',
-    'author': "Savoir-faire Linux",
-    'website': 'https://www.savoirfairelinux.com',
-    'depends': [
-        'payroll_employee_benefit',
-        'payroll_employee_exemption',
+    "name": "Employee Benefit Exemption",
+    "version": "1.0",
+    "license": "AGPL-3",
+    "category": "Human Resources",
+    "author": "Savoir-faire Linux",
+    "website": "https://www.savoirfairelinux.com",
+    "depends": [
+        "payroll_employee_benefit",
+        "payroll_employee_exemption",
     ],
-    'data': [
-        'views/hr_employee_benefit_category.xml',
+    "data": [
+        "views/hr_employee_benefit_category.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

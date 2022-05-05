@@ -22,7 +22,7 @@ from openerp import api, models
 
 
 class HrSalaryRule(models.Model):
-    _inherit = 'hr.salary.rule'
+    _inherit = "hr.salary.rule"
 
     @api.multi
     def _filter_benefits(self, payslip, **kwargs):
@@ -30,12 +30,14 @@ class HrSalaryRule(models.Model):
         Remove all benefits that are exempted from a deduction.
         """
         benefits = super(HrSalaryRule, self)._filter_benefits(
-            payslip, **kwargs)
+            payslip, **kwargs
+        )
 
         exemption = self.exemption_id
         if exemption and not self.employee_benefit_ids:
 
             benefits = benefits.filtered(
-                lambda b: exemption not in b.category_id.exemption_ids)
+                lambda b: exemption not in b.category_id.exemption_ids
+            )
 
         return benefits
