@@ -21,8 +21,8 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from openerp import api, fields, models
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 from_string = fields.Date.from_string
 
@@ -30,7 +30,6 @@ from_string = fields.Date.from_string
 class HrLeaveAccrual(models.Model):
     _inherit = "hr.leave.accrual"
 
-    @api.multi
     def sum_leaves_available(self, date, in_cash=False):
         """
         Sum the leave days that the employee is allowed to take

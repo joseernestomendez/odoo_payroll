@@ -20,7 +20,7 @@
 
 {
     "name": "Leave Entitlement",
-    "version": "8.0.0.1.0",
+    "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "author": "Savoir-faire Linux",
     "website": "https://savoirfairelinux.com",

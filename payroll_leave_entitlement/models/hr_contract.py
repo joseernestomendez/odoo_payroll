@@ -20,8 +20,8 @@
 
 from itertools import permutations
 
-from openerp import api, fields, models
-from openerp.exceptions import ValidationError
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class HrContract(models.Model):
@@ -34,7 +34,6 @@ class HrContract(models.Model):
         string="Leave Entitlement Periods",
     )
 
-    @api.one
     @api.constrains("holidays_entitlement_ids")
     def _check_leave_entitlement(self):
         """
@@ -48,7 +47,6 @@ class HrContract(models.Model):
                     "entitlement per leave type."
                 )
 
-    @api.multi
     @api.returns("hr.holidays.entitlement")
     def get_entitlement(self, leave_type):
         """
