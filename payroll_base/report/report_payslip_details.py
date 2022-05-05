@@ -26,27 +26,28 @@ from openerp.report import report_sxw
 
 
 class PayslipDetailsReport(report_sxw.rml_parse):
-
     def __init__(self, cr, uid, name, context):
         super(PayslipDetailsReport, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'get_details_by_rule_category': self.get_details_by_rule_category,
-        })
+        self.localcontext.update(
+            {
+                "get_details_by_rule_category": self.get_details_by_rule_category,
+            }
+        )
 
         self.env = Environment(cr, uid, context)
 
     def get_details_by_rule_category(self, obj):
-        payslip_line_obj = self.env['hr.payslip.line']
-        rule_cate_obj = self.env['hr.salary.rule.category']
+        payslip_line_obj = self.env["hr.payslip.line"]
+        rule_cate_obj = self.env["hr.salary.rule.category"]
 
         res = []
 
         def get_recursive_parent(categories):
             res = categories
-            parents = categories.mapped('parent_id')
+            parents = categories.mapped("parent_id")
 
-            while(parents):
-                grand_parents = parents.mapped('parent_id')
+            while parents:
+                grand_parents = parents.mapped("parent_id")
                 res += parents
                 parents = grand_parents
 
@@ -62,7 +63,9 @@ class PayslipDetailsReport(report_sxw.rml_parse):
                 WHERE pl.category_id = rc.id AND pl.id in %s
                 GROUP BY rc.parent_id, pl.sequence, pl.id, pl.category_id
                 ORDER BY pl.sequence, rc.parent_id
-                """, (tuple(obj.ids),))
+                """,
+                (tuple(obj.ids),),
+            )
 
             for x in self.cr.fetchall():
                 payslip_line_rows.setdefault(x[1], [])
@@ -79,29 +82,33 @@ class PayslipDetailsReport(report_sxw.rml_parse):
                 parents = get_recursive_parent(rule_category)
 
                 for parent in parents:
-                    res.append({
-                        'rule_category': parent.name,
-                        'name': parent.name,
-                        'code': parent.code,
-                        'level': level,
-                        'total': category_total,
-                    })
+                    res.append(
+                        {
+                            "rule_category": parent.name,
+                            "name": parent.name,
+                            "code": parent.code,
+                            "level": level,
+                            "total": category_total,
+                        }
+                    )
                     level += 1
 
                 for line in payslip_lines:
-                    res.append({
-                        'rule_category': line.name,
-                        'name': line.name,
-                        'code': line.code,
-                        'total': line.amount,
-                        'level': level
-                    })
+                    res.append(
+                        {
+                            "rule_category": line.name,
+                            "name": line.name,
+                            "code": line.code,
+                            "total": line.amount,
+                            "level": level,
+                        }
+                    )
 
         return res
 
 
 class WrappedReportPayslipDetails(osv.AbstractModel):
-    _name = 'report.payroll_base.report_payslip_details'
-    _inherit = 'report.abstract_report'
-    _template = 'payroll_base.report_payslip_details'
+    _name = "report.payroll_base.report_payslip_details"
+    _inherit = "report.abstract_report"
+    _template = "payroll_base.report_payslip_details"
     _wrapped_report_class = PayslipDetailsReport

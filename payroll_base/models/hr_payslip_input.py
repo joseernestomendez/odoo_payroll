@@ -26,26 +26,19 @@ from openerp import fields, models, _
 class HrPayslipInput(models.Model):
     """Payslip Input"""
 
-    _name = 'hr.payslip.input'
+    _name = "hr.payslip.input"
     _description = _(__doc__)
 
-    name = fields.Char(
-        'Description',
-        required=True
-    )
+    name = fields.Char("Description", required=True)
     payslip_id = fields.Many2one(
-        'hr.payslip',
-        'Pay Slip',
-        required=True,
-        ondelete='cascade',
-        index=True
+        "hr.payslip", "Pay Slip", required=True, ondelete="cascade", index=True
     )
     amount = fields.Float(
-        'Amount',
+        "Amount",
         default=0.0,
     )
     category_id = fields.Many2one(
-        'hr.payslip.input.category',
-        'Category',
+        "hr.payslip.input.category",
+        "Category",
         required=True,
     )

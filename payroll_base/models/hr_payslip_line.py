@@ -27,97 +27,97 @@ import openerp.addons.decimal_precision as dp
 class HrPayslipLine(models.Model):
     """Payslip Line"""
 
-    _name = 'hr.payslip.line'
+    _name = "hr.payslip.line"
     _description = _(__doc__)
 
-    _order = 'sequence'
+    _order = "sequence"
 
     name = fields.Char(
-        'Name',
+        "Name",
         required=True,
         translate=True,
     )
     slip_id = fields.Many2one(
-        'hr.payslip',
-        'Pay Slip',
+        "hr.payslip",
+        "Pay Slip",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
         index=True,
     )
     salary_rule_id = fields.Many2one(
-        'hr.salary.rule',
-        'Rule',
+        "hr.salary.rule",
+        "Rule",
         required=True,
     )
     sequence = fields.Integer(
-        'Sequence',
+        "Sequence",
         required=True,
     )
     code = fields.Char(
-        'Code',
+        "Code",
         required=True,
     )
     amount = fields.Float(
-        'Amount',
-        digits_compute=dp.get_precision('Payroll'),
+        "Amount",
+        digits_compute=dp.get_precision("Payroll"),
     )
     amount_hours = fields.Float(
-        'Amount',
-        digits_compute=dp.get_precision('Payroll Hours'),
+        "Amount",
+        digits_compute=dp.get_precision("Payroll Hours"),
     )
     total = fields.Float(
-        'Amount',
-        digits_compute=dp.get_precision('Payroll'),
-        compute='_compute_total',
+        "Amount",
+        digits_compute=dp.get_precision("Payroll"),
+        compute="_compute_total",
         store=True,
-        help='Amount displayed for contribution registers.'
+        help="Amount displayed for contribution registers.",
     )
     amount_type = fields.Selection(
         [
-            ('cash', 'Monetary'),
-            ('number', 'Number'),
+            ("cash", "Monetary"),
+            ("number", "Number"),
         ],
-        type='char',
-        string='Amount Type',
-        help="Used to compute the decimal precision on the amount."
+        type="char",
+        string="Amount Type",
+        help="Used to compute the decimal precision on the amount.",
     )
     category_id = fields.Many2one(
-        'hr.salary.rule.category',
-        'Category',
+        "hr.salary.rule.category",
+        "Category",
         required=True,
     )
     employee_id = fields.Many2one(
-        'hr.employee',
-        'Employee',
-        related='slip_id.employee_id',
+        "hr.employee",
+        "Employee",
+        related="slip_id.employee_id",
         store=True,
     )
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
-        related='slip_id.company_id',
+        "res.company",
+        "Company",
+        related="slip_id.company_id",
         store=True,
     )
     contract_id = fields.Many2one(
-        'hr.contract',
-        'Contract',
-        related='slip_id.contract_id',
+        "hr.contract",
+        "Contract",
+        related="slip_id.contract_id",
         store=True,
     )
     appears_on_payslip = fields.Boolean(
-        'Appears on Payslip',
+        "Appears on Payslip",
         help="Used to display the salary rule on payslip.",
         default=True,
     )
     register_id = fields.Many2one(
-        'hr.contribution.register',
-        'Contribution Register',
+        "hr.contribution.register",
+        "Contribution Register",
         help="Eventual third party involved in the salary payment of "
         "the employees.",
     )
 
     @api.one
-    @api.depends('amount')
+    @api.depends("amount")
     def _compute_total(self):
         total = self.amount
 

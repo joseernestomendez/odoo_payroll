@@ -27,50 +27,50 @@ from openerp.osv import osv
 class HrPayrollPeriod(models.Model):
     """Salary Structure"""
 
-    _name = 'hr.payroll.structure'
+    _name = "hr.payroll.structure"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Name',
+        "Name",
         required=True,
     )
     code = fields.Char(
-        'Reference',
+        "Reference",
         size=64,
     )
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
+        "res.company",
+        "Company",
         required=True,
         copy=False,
         default=lambda self: self.env.user.company_id.id,
     )
     note = fields.Text(
-        'Description',
+        "Description",
     )
     parent_id = fields.Many2one(
-        'hr.payroll.structure',
-        'Parent',
+        "hr.payroll.structure",
+        "Parent",
     )
     children_ids = fields.One2many(
-        'hr.payroll.structure',
-        'parent_id',
-        'Children',
+        "hr.payroll.structure",
+        "parent_id",
+        "Children",
         copy=True,
     )
     rule_ids = fields.Many2many(
-        'hr.salary.rule',
-        'hr_structure_salary_rule_rel',
-        'struct_id',
-        'rule_id',
-        'Salary Rules',
+        "hr.salary.rule",
+        "hr_structure_salary_rule_rel",
+        "struct_id",
+        "rule_id",
+        "Salary Rules",
     )
 
     _constraints = [
         (
             osv.osv._check_recursion,
-            'Error ! You cannot create a recursive Salary Structure.',
-            ['parent_id']
+            "Error ! You cannot create a recursive Salary Structure.",
+            ["parent_id"],
         ),
     ]
 
@@ -86,7 +86,7 @@ class HrPayrollPeriod(models.Model):
         :return: record set of hr.salary.rule
         """
         structures = self.get_parent_structures()
-        return structures.mapped('rule_ids')
+        return structures.mapped("rule_ids")
 
     @api.multi
     def get_parent_structures(self):
@@ -109,11 +109,11 @@ class HrPayrollPeriod(models.Model):
     @api.multi
     def get_children_recursively(self):
         res = self
-        children = res.mapped('children_ids')
+        children = res.mapped("children_ids")
 
         while children:
             res += children
-            children = children.mapped('children_ids')
+            children = children.mapped("children_ids")
             children -= res
 
         return res

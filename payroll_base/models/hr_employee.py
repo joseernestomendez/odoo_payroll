@@ -25,20 +25,16 @@ from openerp import api, fields, models
 
 class HrEmployee(models.Model):
 
-    _inherit = 'hr.employee'
+    _inherit = "hr.employee"
 
     @api.one
     def _payslip_count(self):
         self.payslip_count = len(self.slip_ids)
 
     slip_ids = fields.One2many(
-        'hr.payslip',
-        'employee_id',
-        'Payslips',
-        required=False,
-        readonly=True
+        "hr.payslip", "employee_id", "Payslips", required=False, readonly=True
     )
     payslip_count = fields.Integer(
-        compute='_payslip_count',
-        string='Payslips',
+        compute="_payslip_count",
+        string="Payslips",
     )

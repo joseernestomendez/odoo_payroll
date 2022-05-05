@@ -25,19 +25,20 @@ from openerp.report import report_sxw
 
 
 class PayslipReport(report_sxw.rml_parse):
-
     def __init__(self, cr, uid, name, context):
         super(PayslipReport, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'get_payslip_lines': self.get_payslip_lines,
-        })
+        self.localcontext.update(
+            {
+                "get_payslip_lines": self.get_payslip_lines,
+            }
+        )
 
     def get_payslip_lines(self, obj):
-        return obj.filtered('appears_on_payslip')
+        return obj.filtered("appears_on_payslip")
 
 
 class WrappedReportPayslip(osv.AbstractModel):
-    _name = 'report.payroll_base.report_payslip'
-    _inherit = 'report.abstract_report'
-    _template = 'payroll_base.report_payslip'
+    _name = "report.payroll_base.report_payslip"
+    _inherit = "report.abstract_report"
+    _template = "payroll_base.report_payslip"
     _wrapped_report_class = PayslipReport

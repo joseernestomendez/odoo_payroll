@@ -26,31 +26,31 @@ from openerp import fields, models, _
 class HrSalaryRuleCategory(models.Model):
     """Salary Rule Category"""
 
-    _name = 'hr.salary.rule.category'
+    _name = "hr.salary.rule.category"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Name',
+        "Name",
         required=True,
     )
     code = fields.Char(
-        'Code',
+        "Code",
         required=True,
     )
     note = fields.Text(
-        'Description',
+        "Description",
     )
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
+        "res.company",
+        "Company",
         default=lambda self: self.env.user.company_id.id,
     )
     parent_id = fields.Many2one(
-        'hr.salary.rule.category',
-        'Parent Category',
+        "hr.salary.rule.category",
+        "Parent Category",
     )
     child_ids = fields.One2many(
-        'hr.salary.rule.category',
-        'parent_id',
-        'Child Categories',
+        "hr.salary.rule.category",
+        "parent_id",
+        "Child Categories",
     )

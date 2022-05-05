@@ -24,17 +24,17 @@ from openerp import fields, models, _
 class HrPayslipInputCategory(models.Model):
     """Payslip Input Category"""
 
-    _name = 'hr.payslip.input.category'
+    _name = "hr.payslip.input.category"
     _description = _(__doc__)
 
     name = fields.Char(
-        'Name',
+        "Name",
         required=True,
         translate=True,
     )
 
     salary_rule_ids = fields.Many2many(
-        'hr.salary.rule',
-        'hr_payslip_input_salary_rule_rel',
-        string='Salary Rules',
+        "hr.salary.rule",
+        "hr_payslip_input_salary_rule_rel",
+        string="Salary Rules",
     )

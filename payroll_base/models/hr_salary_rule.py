@@ -31,90 +31,86 @@ from openerp.tools.safe_eval import safe_eval
 class HrSalaryRule(models.Model):
     """Salary Rule"""
 
-    _name = 'hr.salary.rule'
+    _name = "hr.salary.rule"
     _description = _(__doc__)
 
-    name = fields.Char(
-        'Name', required=True, readonly=False
-    )
+    name = fields.Char("Name", required=True, readonly=False)
     code = fields.Char(
-        'Code',
+        "Code",
         size=64,
         required=True,
         help="The code of salary rules can be used as reference in "
-        "computation of other rules. In that case, it is case sensitive."
+        "computation of other rules. In that case, it is case sensitive.",
     )
     sequence = fields.Integer(
-        'Sequence',
+        "Sequence",
         required=True,
-        help='Use to arrange calculation sequence',
+        help="Use to arrange calculation sequence",
         select=True,
         default=5,
     )
     category_id = fields.Many2one(
-        'hr.salary.rule.category',
-        'Category',
-        required=True
+        "hr.salary.rule.category", "Category", required=True
     )
     active = fields.Boolean(
-        'Active',
+        "Active",
         help="If the active field is set to false, it will allow "
         "you to hide the salary rule without removing it.",
         default=True,
     )
     appears_on_payslip = fields.Boolean(
-        'Appears on Payslip',
+        "Appears on Payslip",
         help="Used to display the salary rule on payslip.",
         default=True,
     )
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
+        "res.company",
+        "Company",
         required=False,
         default=lambda self: self.env.user.company_id.id,
     )
     condition_select = fields.Selection(
         [
-            ('none', 'Always True'),
-            ('python', 'Python Expression'),
+            ("none", "Always True"),
+            ("python", "Python Expression"),
         ],
         "Condition Based on",
         required=True,
-        default='none',
+        default="none",
     )
     amount_type = fields.Selection(
         [
-            ('cash', 'Monetary'),
-            ('number', 'Number'),
+            ("cash", "Monetary"),
+            ("number", "Number"),
         ],
-        type='char',
-        string='Amount Type',
-        help="Used to compute the decimal precision on the amount."
+        type="char",
+        string="Amount Type",
+        help="Used to compute the decimal precision on the amount.",
     )
     condition_python = fields.Text(
-        'Python Condition',
+        "Python Condition",
         required=True,
         readonly=False,
         help="Applied this rule for calculation if condition is true. "
         "You can specify condition like basic > 1000.",
-        default=' ',
+        default=" ",
     )
     amount_python_compute = fields.Text(
-        'Python Code',
+        "Python Code",
         required=True,
-        default=' ',
+        default=" ",
     )
     note = fields.Text(
-        'Description',
+        "Description",
     )
     payslip_input_ids = fields.Many2many(
-        'hr.payslip.input.category',
-        'hr_payslip_input_salary_rule_rel',
-        string='Payslip Inputs',
+        "hr.payslip.input.category",
+        "hr_payslip_input_salary_rule_rel",
+        string="Payslip Inputs",
     )
     register_id = fields.Many2one(
-        'hr.contribution.register',
-        'Contribution Register',
+        "hr.contribution.register",
+        "Contribution Register",
         help="Eventual third party involved in the salary payment of "
         "the employees.",
     )
@@ -132,15 +128,15 @@ class HrSalaryRule(models.Model):
 
         try:
             safe_eval(
-                self.amount_python_compute,
-                localdict, mode='exec', nocopy=True
+                self.amount_python_compute, localdict, mode="exec", nocopy=True
             )
-            return float(localdict['result'])
+            return float(localdict["result"])
         except Exception as err:
             traceback.print_exc(file=sys.stdout)
             raise ValidationError(
-                _('Wrong python code defined for salary rule %s (%s): %s') %
-                (self.name, self.code, err))
+                _("Wrong python code defined for salary rule %s (%s): %s")
+                % (self.name, self.code, err)
+            )
 
     @api.multi
     def satisfy_condition(self, localdict):
@@ -150,18 +146,20 @@ class HrSalaryRule(models.Model):
         """
         self.ensure_one()
 
-        if self.condition_select == 'none':
+        if self.condition_select == "none":
             return True
 
         else:
             try:
                 eval(
-                    self.condition_python,
-                    localdict, mode='exec', nocopy=True
+                    self.condition_python, localdict, mode="exec", nocopy=True
                 )
-                return localdict.get('result', False)
+                return localdict.get("result", False)
             except:
                 raise ValidationError(
-                    _('Wrong python condition defined for salary '
-                      'rule %s (%s).') %
-                    (self.name, self.code))
+                    _(
+                        "Wrong python condition defined for salary "
+                        "rule %s (%s)."
+                    )
+                    % (self.name, self.code)
+                )

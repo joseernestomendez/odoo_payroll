@@ -29,28 +29,33 @@ class TestHrPayslipRunBase(TestHrContractBase):
     def setUp(self):
         super(TestHrPayslipRunBase, self).setUp()
 
-        self.run_model = self.env['hr.payslip.run']
-        self.wizard_model = self.env['hr.payslip.employees']
+        self.run_model = self.env["hr.payslip.run"]
+        self.wizard_model = self.env["hr.payslip.employees"]
 
         self.date_from = datetime.now()
         self.date_to = self.date_from + relativedelta(weeks=1, days=-1)
         self.date_payment = self.date_from + relativedelta(weeks=2, days=-1)
 
-        self.run_1 = self.run_model.create({
-            'name': 'Test',
-            'date_start': self.date_from,
-            'date_end': self.date_to,
-            'date_payment': self.date_payment,
-        })
+        self.run_1 = self.run_model.create(
+            {
+                "name": "Test",
+                "date_start": self.date_from,
+                "date_end": self.date_to,
+                "date_payment": self.date_payment,
+            }
+        )
 
 
 class TestHrPayslipRun(TestHrPayslipRunBase):
     def test_payslip_run_wizard(self):
         self.wizard_model = self.wizard_model.with_context(
-            {'active_id': self.run_1.id})
-        wizard = self.wizard_model.create({
-            'employee_ids': [(4, self.employee_1.id)],
-        })
+            {"active_id": self.run_1.id}
+        )
+        wizard = self.wizard_model.create(
+            {
+                "employee_ids": [(4, self.employee_1.id)],
+            }
+        )
         wizard.compute_sheet()
 
         self.assertEqual(len(self.run_1.slip_ids), 1)

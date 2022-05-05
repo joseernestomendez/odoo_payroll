@@ -24,41 +24,49 @@ from openerp.tests import common
 class TestHrPayslipWorkedDays(common.TransactionCase):
     def setUp(self):
         super(TestHrPayslipWorkedDays, self).setUp()
-        self.employee_model = self.env['hr.employee']
+        self.employee_model = self.env["hr.employee"]
         self.user_model = self.env["res.users"]
         self.payslip_model = self.env["hr.payslip"]
         self.worked_days_model = self.env["hr.payslip.worked_days"]
         self.contract_model = self.env["hr.contract"]
 
-        self.employee = self.employee_model.create({
-            'name': 'Employee 1',
-        })
+        self.employee = self.employee_model.create(
+            {
+                "name": "Employee 1",
+            }
+        )
 
-        self.contract = self.contract_model.create({
-            'employee_id': self.employee.id,
-            'name': 'Contract 1',
-            'wage': 50000,
-        })
+        self.contract = self.contract_model.create(
+            {
+                "employee_id": self.employee.id,
+                "name": "Contract 1",
+                "wage": 50000,
+            }
+        )
 
-        self.payslip = self.payslip_model.create({
-            'employee_id': self.employee.id,
-            'contract_id': self.contract.id,
-            'date_from': '2014-01-01',
-            'date_to': '2014-01-31',
-        })
+        self.payslip = self.payslip_model.create(
+            {
+                "employee_id": self.employee.id,
+                "contract_id": self.contract.id,
+                "date_from": "2014-01-01",
+                "date_to": "2014-01-31",
+            }
+        )
 
     def test_total(self):
-        worked_days = self.worked_days_model.create({
-            'date': '2014-01-01',
-            'number_of_hours': 8,
-            'hourly_rate': 25,
-            'rate': 150,
-            'payslip_id': self.payslip.id,
-        })
+        worked_days = self.worked_days_model.create(
+            {
+                "date": "2014-01-01",
+                "number_of_hours": 8,
+                "hourly_rate": 25,
+                "rate": 150,
+                "payslip_id": self.payslip.id,
+            }
+        )
 
         self.assertEqual(worked_days.total, 8 * 25 * 1.5)
 
-        worked_days.write({'rate': 200})
+        worked_days.write({"rate": 200})
         worked_days.refresh()
 
         self.assertEqual(worked_days.total, 8 * 25 * 2.0)

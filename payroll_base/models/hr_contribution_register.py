@@ -27,29 +27,17 @@ from openerp import models, fields, _
 class ContributionRegister(models.Model):
     """Contribution Register"""
 
-    _name = 'hr.contribution.register'
+    _name = "hr.contribution.register"
     _description = _(__doc__)
 
     company_id = fields.Many2one(
-        'res.company',
-        'Company',
+        "res.company",
+        "Company",
         default=lambda self: self.env.user.company_id.id,
     )
-    partner_id = fields.Many2one(
-        'res.partner',
-        'Partner'
-    )
-    name = fields.Char(
-        'Name',
-        required=True,
-        readonly=False
-    )
+    partner_id = fields.Many2one("res.partner", "Partner")
+    name = fields.Char("Name", required=True, readonly=False)
     register_line_ids = fields.One2many(
-        'hr.payslip.line',
-        'register_id',
-        'Register Line',
-        readonly=True
+        "hr.payslip.line", "register_id", "Register Line", readonly=True
     )
-    note = fields.Text(
-        'Description'
-    )
+    note = fields.Text("Description")
