@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from openerp import fields, models
+from odoo import fields, models
 
 
 class HrSalaryRule(models.Model):

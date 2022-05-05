@@ -23,7 +23,7 @@ from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
 
-from openerp.addons.payroll_base.tests.test_hr_contract import (
+from odoo.addons.payroll_base.tests.test_hr_contract import (
     TestHrContractBase,
 )
 

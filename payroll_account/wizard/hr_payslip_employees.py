@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Odoo, Open Source Management Solution
@@ -19,15 +18,14 @@
 #
 ##############################################################################
 
-from openerp import api, models, _
-from openerp.exceptions import ValidationError
+from odoo import api, models, _
+from odoo.exceptions import ValidationError
 
 
 class HrPayslipEmployee(models.TransientModel):
 
     _inherit = "hr.payslip.employees"
 
-    @api.multi
     def compute_sheet(self):
         self.ensure_one()
 

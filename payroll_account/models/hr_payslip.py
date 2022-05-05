@@ -23,9 +23,9 @@
 
 import time
 
-from openerp import _, api, fields, models
-from openerp.exceptions import ValidationError
-from openerp.tools import float_is_zero, float_compare
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+from odoo.tools import float_is_zero, float_compare
 
 
 class HrPayslip(models.Model):
@@ -50,7 +50,6 @@ class HrPayslip(models.Model):
             vals.update({"journal_id": journal_id})
         return super(HrPayslip, self).create(vals)
 
-    @api.multi
     def cancel_sheet(self):
         moves = self.mapped("move_id")
         moves_to_cancel = moves.filtered(lambda m: m.state == "posted")
@@ -60,7 +59,6 @@ class HrPayslip(models.Model):
 
         return super(HrPayslip, self).cancel_sheet()
 
-    @api.multi
     def process_sheet(self):
         move_pool = self.env["account.move"]
         precision = self.env["decimal.precision"].precision_get("Payroll")
